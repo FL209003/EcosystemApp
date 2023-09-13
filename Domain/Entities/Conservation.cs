@@ -8,6 +8,7 @@ namespace Domain.Entities
 {
     public class Conservation
     {
+        public int Id { get; set; }
         public required string Name { get; set; }
         public required string State { get; set; }
 

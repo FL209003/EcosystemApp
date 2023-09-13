@@ -10,5 +10,8 @@ namespace AccessLogic.Repositories
         public DbSet<Species> Species { get; set; }
         public DbSet<Threat> Threats { get; set; }
         public DbSet<User> Users { get; set; }
+        public EcosystemContext(DbContextOptions<EcosystemContext> options): base(options) { }
     }
+    
+    
 }

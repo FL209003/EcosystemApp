@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.RepositoryInterfaces
 {
-    internal class IRepository
+    public interface IRepository<T>
     {
     }
 }

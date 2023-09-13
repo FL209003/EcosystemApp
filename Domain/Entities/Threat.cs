@@ -9,6 +9,7 @@ namespace Domain.Entities
 {
     public class Threat
     {
+        public int Id { get; set; }
         public required string Description { get; set; }
         public required int Danger { get; set; }
 

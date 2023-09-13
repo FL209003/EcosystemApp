@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public abstract class Species
+    public class Species
     {
+        public int Id { get; set; }
         public required string CientificName { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }

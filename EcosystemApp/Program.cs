@@ -1,7 +1,21 @@
+using AccessLogic.Repositories;
+using Domain.RepositoryInterfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IRepositoryUsers, UsersRepository>();
+
+//DB config
+ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+configurationBuilder.AddJsonFile("appsettings.json", false, true);
+var config = configurationBuilder.Build();
+string connectionString = config.GetConnectionString("Connection1");
+builder.Services.AddDbContextPool<EcosystemContext>(Options => Options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
