@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AccessLogic\AccessLogic.csproj" />
+    <ProjectReference Include="..\AppLogic\AppLogic.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
