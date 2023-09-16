@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.DomainInterfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,16 +9,26 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class User
+    public abstract class User : IValidate
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "CAMPO REQUERIDO")]
         public string Username { get; set; }
+
+        [Required(ErrorMessage = "CAMPO REQUERIDO")]
         public string Password { get; set; }
 
         public User(string username, string password)
         {
             Username = username;
             Password = password;
+        }
+
+        public virtual void Validate()
+        {
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            { throw new Exception("Todos los campos son obligatorios."); }
         }
     }
 }

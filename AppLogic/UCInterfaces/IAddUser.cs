@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.RepositoryInterfaces
+namespace AppLogic.UCInterfaces
 {
-    public interface IRepositoryUsers : IRepository<User>
+    public interface IAddUser
     {
         void Add(User user);
     }
