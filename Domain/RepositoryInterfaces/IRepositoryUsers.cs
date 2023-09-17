@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.RepositoryInterfaces
 {
-    public interface IRepositoryUsers : IRepository<User>
+    public interface IRepositoryUsers : IRepository<GenericUser>,  IRepository<Admin>
     {
-        void Add(User user);
+
     }
 }
