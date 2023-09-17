@@ -18,7 +18,7 @@ namespace LogicaAplicacion.CasosUso
             UsersRepo = repo;
         }
 
-        public void Add(User user)
+        public void Add(GenericUser user)
         {
             UsersRepo.Add(user);
         }

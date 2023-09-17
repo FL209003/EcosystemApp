@@ -9,6 +9,6 @@ namespace AppLogic.UCInterfaces
 {
     public interface IAddUser
     {
-        void Add(User user);
+        void Add(GenericUser user);
     }
 }

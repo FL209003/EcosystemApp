@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class GenericUser : User, IValidate
+    public class GenericUser : User, IValidate
     {
         public GenericUser(string username, string password) : base(username, password)
         {

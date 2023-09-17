@@ -18,7 +18,23 @@ namespace AccessLogic.Repositories
             Context = context;
         }
 
-        public void Add(User obj)
+        public void Add(Admin obj)
+        {
+            if (obj != null)
+            {
+                obj.Validate();
+                //OTRAS VALIDACIONES ADICIONALES:
+                //EMAIL REPETIDO
+                //PAIS NO EXISTE 
+                //ETC
+
+                //Context.Entry(obj).State = EntityState.Unchanged;
+                Context.Admins.Add(obj);
+                Context.SaveChanges();
+            }
+            else throw new Exception("");
+        }
+        public void Add(GenericUser obj)
         {
             if (obj != null)
             {
@@ -35,22 +51,42 @@ namespace AccessLogic.Repositories
             else throw new Exception("");
         }
 
-        public void Remove(User obj)
+        public void Remove(GenericUser obj)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(User obj)
+        public void Update(GenericUser obj)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> FindAll()
+        public IEnumerable<GenericUser> FindAll()
         {
             throw new NotImplementedException();
         }
 
-        public User FindById(int id)
+        public GenericUser FindById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(Admin obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Admin obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Admin> IRepository<Admin>.FindAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        Admin IRepository<Admin>.FindById(int id)
         {
             throw new NotImplementedException();
         }
