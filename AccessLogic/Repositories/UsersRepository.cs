@@ -9,5 +9,11 @@ namespace AccessLogic.Repositories
 {
     public class UsersRepository : IRepositoryUsers
     {
+        public EcosystemContext Context { get; set; }
+
+        public UsersRepository(EcosystemContext context)
+        {
+            Context = context;
+        }
     }
 }
