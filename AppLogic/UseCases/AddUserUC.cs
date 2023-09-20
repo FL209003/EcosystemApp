@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.CasosUso
+namespace AppLogic.UseCases
 {
     public class AddUserUC : IAddUser
     {
-        public IRepositoryUsers UsersRepo { get; set; }
+        public IRepositoryGenericUsers UsersRepo { get; set; }
 
-        public AddUserUC(IRepositoryUsers repo)
+        public AddUserUC(IRepositoryGenericUsers repo)
         {
             UsersRepo = repo;
         }

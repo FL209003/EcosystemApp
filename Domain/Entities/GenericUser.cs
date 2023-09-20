@@ -9,9 +9,9 @@ namespace Domain.Entities
 {
     public class GenericUser : User, IValidate
     {
-        public GenericUser(string username, string password) : base(username, password)
-        {
-        }
+        public GenericUser(string username, string password) : base(username, password) { }
+
+        public GenericUser() : base("", "") { }
 
         public override void Validate()
         {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using EcosystemApp.Filters;
+using EcosystemApp.Models;
 
 namespace EcosystemApp.Controllers
 {
@@ -9,6 +10,8 @@ namespace EcosystemApp.Controllers
         public IActionResult Index()
         {
             return View();
-        }
+        }   
+        
+        
     }
 }

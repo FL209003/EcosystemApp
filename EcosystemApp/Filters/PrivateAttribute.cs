@@ -14,8 +14,8 @@ namespace EcosystemApp.Filters
 
             if (!string.IsNullOrEmpty(userName))
             {
-                if (string.IsNullOrEmpty(Rol))base.OnActionExecuting(context);
-                else if (Rol.Contains(userRol))base.OnActionExecuting(context);
+                if (string.IsNullOrEmpty(Rol)) base.OnActionExecuting(context);
+                else if (Rol.Contains(userRol)) base.OnActionExecuting(context);
                 else context.Result = new RedirectToActionResult("Unauthorized", "Home", null);
             }
             else

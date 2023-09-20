@@ -1,4 +1,6 @@
-﻿using EcosystemApp.Models;
+﻿using Domain.Entities;
+using EcosystemApp.Filters;
+using EcosystemApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -13,12 +15,22 @@ namespace EcosystemApp.Controllers
             _logger = logger;
         }
 
+        
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Login() { return View(); }
+        public IActionResult Login() { 
+            return View(); 
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Login(User user) 
+        //{
+           
+        //}
 
         public IActionResult Privacy()
         {
