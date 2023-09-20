@@ -8,9 +8,14 @@ using System.Threading.Tasks;
 
 namespace AccessLogic.Repositories
 {
-    public class AdminsRepository : IRepositoryAdmins
+    public class UsersRepository : IRepositoryUsers
     {
         public void Add(Admin obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(GenericUser obj)
         {
             throw new NotImplementedException();
         }
@@ -30,7 +35,27 @@ namespace AccessLogic.Repositories
             throw new NotImplementedException();
         }
 
+        public void Remove(GenericUser obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Admin obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(GenericUser obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<GenericUser> IRepository<GenericUser>.FindAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        GenericUser IRepository<GenericUser>.FindById(int id)
         {
             throw new NotImplementedException();
         }
