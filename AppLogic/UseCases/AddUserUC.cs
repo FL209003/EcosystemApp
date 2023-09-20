@@ -11,9 +11,9 @@ namespace LogicaAplicacion.CasosUso
 {
     public class AddUserUC : IAddUser
     {
-        public IRepositoryUsers UsersRepo { get; set; }
+        public IRepositoryGenericUsers UsersRepo { get; set; }
 
-        public AddUserUC(IRepositoryUsers repo)
+        public AddUserUC(IRepositoryGenericUsers repo)
         {
             UsersRepo = repo;
         }

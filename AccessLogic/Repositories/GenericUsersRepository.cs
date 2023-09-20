@@ -9,31 +9,15 @@ using System.Threading.Tasks;
 
 namespace AccessLogic.Repositories
 {
-    public class UsersRepository : IRepositoryUsers
+    public class GenericUsersRepository : IRepositoryGenericUsers
     {
         public EcosystemContext Context { get; set; }
 
-        public UsersRepository(EcosystemContext context)
+        public GenericUsersRepository(EcosystemContext context)
         {
             Context = context;
-        }
+        }      
 
-        public void Add(Admin obj)
-        {
-            if (obj != null)
-            {
-                obj.Validate();
-                //OTRAS VALIDACIONES ADICIONALES:
-                //EMAIL REPETIDO
-                //PAIS NO EXISTE 
-                //ETC
-
-                //Context.Entry(obj).State = EntityState.Unchanged;
-                Context.Admins.Add(obj);
-                Context.SaveChanges();
-            }
-            else throw new Exception("");
-        }
         public void Add(GenericUser obj)
         {
             if (obj != null)
@@ -45,7 +29,7 @@ namespace AccessLogic.Repositories
                 //ETC
 
                 //Context.Entry(obj).State = EntityState.Unchanged;
-                Context.Users.Add(obj);
+                Context.GenericUsers.Add(obj);
                 Context.SaveChanges();
             }
             else throw new Exception("");
@@ -69,26 +53,6 @@ namespace AccessLogic.Repositories
         public GenericUser FindById(int id)
         {
             throw new NotImplementedException();
-        }
-
-        public void Remove(Admin obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Admin obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<Admin> IRepository<Admin>.FindAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        Admin IRepository<Admin>.FindById(int id)
-        {
-            throw new NotImplementedException();
-        }
+        }       
     }
 }

@@ -1,5 +1,7 @@
 using AccessLogic.Repositories;
+using AppLogic.UCInterfaces;
 using Domain.RepositoryInterfaces;
+using LogicaAplicacion.CasosUso;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,9 +9,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IRepositoryUsers, UsersRepository>();
 
-//DB config
+builder.Services.AddScoped<IRepositoryGenericUsers, GenericUsersRepository>();
+
+builder.Services.AddScoped<IAddUser, AddUserUC>();
+
+
+// DB config
 ConfigurationBuilder configurationBuilder = new();
 configurationBuilder.AddJsonFile("appsettings.json", false, true);
 var config = configurationBuilder.Build();

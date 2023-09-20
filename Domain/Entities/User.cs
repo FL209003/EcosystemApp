@@ -12,11 +12,9 @@ namespace Domain.Entities
     public abstract class User : IValidate
     {
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "CAMPO REQUERIDO")]
+        
         public string Username { get; set; }
-
-        [Required(ErrorMessage = "CAMPO REQUERIDO")]
+        
         public string Password { get; set; }
 
         public User(string username, string password)
