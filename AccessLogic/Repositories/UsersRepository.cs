@@ -1,61 +1,47 @@
 ﻿using Domain.Entities;
 using Domain.RepositoryInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AccessLogic.Repositories
 {
     public class UsersRepository : IRepositoryUsers
     {
-        public void Add(Admin obj)
+        public EcosystemContext Context { get; set; }
+
+        public UsersRepository(EcosystemContext context)
+        {
+            Context = context;
+        }
+
+        public void Add(User user)
+        {
+            if (user != null)
+            {
+                Context.Users.Add(user);
+                Context.SaveChanges();
+            }
+            else
+            {
+                throw new InvalidOperationException("No se provee información del cliente");
+            }
+        }
+
+        public IEnumerable<User> FindAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Add(GenericUser obj)
+        public User FindById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Admin> FindAll()
+        public void Remove(User obj)
         {
             throw new NotImplementedException();
         }
 
-        public Admin FindById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(Admin obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(GenericUser obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Admin obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(GenericUser obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<GenericUser> IRepository<GenericUser>.FindAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        GenericUser IRepository<GenericUser>.FindById(int id)
+        public void Update(User obj)
         {
             throw new NotImplementedException();
         }

@@ -14,7 +14,6 @@ namespace EcosystemApp.Controllers
         {
             _logger = logger;
         }
-
         
         public IActionResult Index()
         {

@@ -11,14 +11,14 @@ namespace AppLogic.UseCases
 {
     public class AddUserUC : IAddUser
     {
-        public IRepositoryGenericUsers UsersRepo { get; set; }
+        public IRepositoryUsers UsersRepo { get; set; }
 
-        public AddUserUC(IRepositoryGenericUsers repo)
+        public AddUserUC(IRepositoryUsers repo)
         {
             UsersRepo = repo;
         }
 
-        public void Add(GenericUser user)
+        public void Add(User user)
         {
             UsersRepo.Add(user);
         }

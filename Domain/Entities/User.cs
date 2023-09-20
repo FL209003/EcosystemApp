@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public abstract class User : IValidate
+    public class User : IValidate
     {
         public int Id { get; set; }
-        
+
         public string Username { get; set; }
-        
+
         public string Password { get; set; }
 
         public User(string username, string password)
@@ -22,6 +22,8 @@ namespace Domain.Entities
             Username = username;
             Password = password;
         }
+
+        public User() { }
 
         public virtual void Validate()
         {

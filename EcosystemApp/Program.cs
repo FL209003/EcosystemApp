@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
-builder.Services.AddScoped<IRepositoryGenericUsers, GenericUsersRepository>();
+builder.Services.AddScoped<IRepositoryUsers, UsersRepository>();
 
 builder.Services.AddScoped<IAddUser, AddUserUC>();
 

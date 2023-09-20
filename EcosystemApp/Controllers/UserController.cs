@@ -2,15 +2,14 @@
 using EcosystemApp.Filters;
 using AppLogic.UCInterfaces;
 using EcosystemApp.Models;
-using Domain.Entities;
 
 namespace EcosystemApp.Controllers
 {
-    public class GenericUserController : Controller
+    public class UserController : Controller
     {
         public IAddUser AddUC { get; set; }
 
-        public GenericUserController(IAddUser addUC)
+        public UserController(IAddUser addUC)
         {
             AddUC = addUC;
         }
@@ -44,7 +43,7 @@ namespace EcosystemApp.Controllers
                     ViewBag.Error = ex.Message;
                 }
             }
-            return RedirectToAction("");
+            return RedirectToAction("Index","Home");
         }
     }
 }
