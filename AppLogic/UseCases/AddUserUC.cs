@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.CasosUso
+namespace AppLogic.UseCases
 {
     public class AddUserUC : IAddUser
     {

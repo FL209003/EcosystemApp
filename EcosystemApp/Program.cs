@@ -1,7 +1,7 @@
 using AccessLogic.Repositories;
 using AppLogic.UCInterfaces;
+using AppLogic.UseCases;
 using Domain.RepositoryInterfaces;
-using LogicaAplicacion.CasosUso;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
