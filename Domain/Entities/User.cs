@@ -17,17 +17,20 @@ namespace Domain.Entities
 
         public string Password { get; set; }
 
-        public User(string username, string password)
+        public string Rol {  get; set; }
+
+        public User(string username, string password, string rol)
         {
             Username = username;
             Password = password;
+            Rol = rol;
         }
 
         public User() { }
 
         public virtual void Validate()
         {
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Rol))
             { throw new Exception("Todos los campos son obligatorios."); }
         }
     }

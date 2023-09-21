@@ -8,7 +8,7 @@ namespace EcosystemApp.Models
         [Required]
         public User User { get; set; }
 
-        [Required] 
+        [Required]
         public string VerificationPass { get; set; }
     }
 }
