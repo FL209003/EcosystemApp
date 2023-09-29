@@ -10,29 +10,55 @@ namespace AccessLogic.Repositories
 {
     public class SpeciesRepository : IRepositorySpecies
     {
-        public void Add(Species obj)
+        public EcosystemContext Context { get; set; }
+
+        public SpeciesRepository(EcosystemContext context)
         {
-            throw new NotImplementedException();
+            Context = context;
+        }
+
+        public void Add(Species s)
+        {
+            try
+            {
+                if (s != null)
+                {
+                    s.Validate();
+                    Context.Threats.Add(s);
+                    Context.SaveChanges();
+                } throw new InvalidOperationException("Error al crear una especie, intente nuevamente.");
+            } catch (Exception ex) {
+                throw ex;
+            }  
         }
 
         public IEnumerable<Species> FindAll()
         {
-            throw new NotImplementedException();
+            return Context.Species.ToList();
         }
 
         public Species FindById(int id)
         {
-            throw new NotImplementedException();
+            Species s = Context.Species.Find(id);
+            if (s != null) {
+                return s;
+            } throw new InvalidOperationException("No se encontró una especie con ese id.");
         }
 
-        public void Remove(Species obj)
+        public void Remove(Species s)
         {
-            throw new NotImplementedException();
+            if (s != null) {
+                Context.Species.Remove(s);
+                Context.SaveChanges();
+            } throw new InvalidOperationException("La especie que intenta eliminar no existe.");
         }
 
-        public void Update(Species obj)
+        public void Update(Species s)
         {
-            throw new NotImplementedException();
+            if (s != null) {
+                Context.Species.Update(s);
+                Context.SaveChanges();
+            } throw new InvalidOperationException("La especie que intenta actualizar no existe.");
         }
     }
 }

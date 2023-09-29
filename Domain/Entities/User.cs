@@ -23,7 +23,7 @@ namespace Domain.Entities
             Password = password;
         }
 
-        public User() { }
+        public User() {}
 
         public virtual void Validate()
         {

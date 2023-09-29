@@ -10,29 +10,55 @@ namespace AccessLogic.Repositories
 {
     public class ThreatsRepository : IRepositoryThreats
     {
-        public void Add(Threat obj)
+        public EcosystemContext Context { get; set; }
+
+        public ThreatsRepository(EcosystemContext context)
         {
-            throw new NotImplementedException();
+            Context = context;
+        }
+
+        public void Add(Threat t)
+        {
+            try
+            {
+                if (t != null)
+                {
+                    t.Validate();
+                    Context.Threats.Add(t);
+                    Context.SaveChanges();
+                } throw new InvalidOperationException("Error al crear amenaza, intente nuevamente.");
+            } catch (Exception ex) {
+                throw ex;
+            }  
         }
 
         public IEnumerable<Threat> FindAll()
         {
-            throw new NotImplementedException();
+            return Context.Threats.ToList();
         }
 
         public Threat FindById(int id)
         {
-            throw new NotImplementedException();
+            Threat t = Context.Threats.Find(id);
+            if (t != null) {
+                return t;
+            } throw new InvalidOperationException("No se encontró una amenaza con ese id.");
         }
 
-        public void Remove(Threat obj)
+        public void Remove(Threat t)
         {
-            throw new NotImplementedException();
+            if (t != null) {
+                Context.Threats.Remove(t);
+                Context.SaveChanges();
+            } throw new InvalidOperationException("La amenaza que intenta eliminar no existe.");
         }
 
-        public void Update(Threat obj)
+        public void Update(Threat t)
         {
-            throw new NotImplementedException();
+            if (t != null) {
+                Context.Threats.Update(t);
+                Context.SaveChanges();
+            } throw new InvalidOperationException("La amenaza que intenta actualizar no existe.");
         }
     }
 }

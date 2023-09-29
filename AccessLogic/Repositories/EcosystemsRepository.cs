@@ -10,29 +10,55 @@ namespace AccessLogic.Repositories
 {
     public class EcosystemsRepository : IRepositoryEcosystems
     {
-        public void Add(Ecosystem obj)
+        public EcosystemContext Context { get; set; }
+
+        public EcosystemsRepository(EcosystemContext context)
         {
-            throw new NotImplementedException();
+            Context = context;
+        }
+
+        public void Add(Ecosystem e)
+        {
+            try
+            {
+                if (e != null)
+                {
+                    e.Validate();
+                    Context.Threats.Add(e);
+                    Context.SaveChanges();
+                } throw new InvalidOperationException("Error al crear una ecosistema, intente nuevamente.");
+            } catch (Exception ex) {
+                throw ex;
+            }  
         }
 
         public IEnumerable<Ecosystem> FindAll()
         {
-            throw new NotImplementedException();
+            return Context.Ecosystems.ToList();
         }
 
         public Ecosystem FindById(int id)
         {
-            throw new NotImplementedException();
+            Ecosystem e = Context.Ecosystems.Find(id);
+            if (e != null) {
+                return e;
+            } throw new InvalidOperationException("No se encontró un ecosistema con ese id.");
         }
 
-        public void Remove(Ecosystem obj)
+        public void Remove(Ecosystem e)
         {
-            throw new NotImplementedException();
+            if (e != null) {
+                Context.Species.Remove(e);
+                Context.SaveChanges();
+            } throw new InvalidOperationException("El ecosistema que intenta eliminar no existe.");
         }
 
-        public void Update(Ecosystem obj)
+        public void Update(Ecosystem e)
         {
-            throw new NotImplementedException();
+            if (e != null) {
+                Context.Species.Update(e);
+                Context.SaveChanges();
+            } throw new InvalidOperationException("El ecosistema que intenta actualizar no existe.");
         }
     }
 }
