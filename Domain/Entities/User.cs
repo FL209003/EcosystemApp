@@ -11,11 +11,10 @@ namespace Domain.Entities
 {
     public class User : IValidate
     {
-        public int Id { get; set; }
-
-        public string Username { get; set; }
-
-        public string Password { get; set; }
+        public int Id { get; set; }        
+        [Index(IsUnique=true)]
+        public required string Username { get; set; }        
+        public required string Password { get; set; }
 
         public User(string username, string password)
         {
@@ -29,6 +28,11 @@ namespace Domain.Entities
         {
             if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
             { throw new Exception("Todos los campos son obligatorios."); }
+        }
+
+        public void IValidate() {
+            if (string.IsNullOrEmpty(Username)) throw new Exception("El nombre de usuario es requerido.");
+            if (string.IsNullOrEmpty(Password)) throw new Exception("La contraseña es requerida.");
         }
     }
 }

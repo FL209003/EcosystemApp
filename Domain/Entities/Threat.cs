@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Threat
+    public class Threat : IValidate
     {
         public int Id { get; set; }
+        [MinLength(50, ErrorMessage="La descripción debe tener al menos 50 caracteres.")] 
+        [MaxLength(500, ErrorMessage="La descripción no puede superer los 500 caracteres.")]
         public required string Description { get; set; }
         public required int Danger { get; set; }
 
@@ -17,6 +19,11 @@ namespace Domain.Entities
         {
             Description = description;
             Danger = danger;
+        }
+
+        public void IValidate() {
+            if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción es requerida.");
+            if (Danger == null) throw new Exception("El nivel de peligrosidad es requerido.");
         }
     }
 }

@@ -15,17 +15,15 @@ namespace AccessLogic.Repositories
 
         public void Add(User u)
         {
-            try
-            {
-                if (u != null)
-                {
-                    user.Validate();
-                    Context.Users.Add(u);
-                    Context.SaveChanges();
-                } throw new InvalidOperationException("Error al crear usuario, intente nuevamente.");
-            } catch (Exception ex) {
-                throw ex;
-            }       
+            if (u != null) {
+                try {                
+                    u.Validate();
+                    Context.Threats.Add(u);
+                    Context.SaveChanges();                
+                } catch (Exception ex) {
+                    throw ex;
+                }  
+            } throw new InvalidOperationException("Error al crear usuario, intente nuevamente.");     
         }
 
         public IEnumerable<User> FindAll()

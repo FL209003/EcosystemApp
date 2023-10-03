@@ -19,17 +19,15 @@ namespace AccessLogic.Repositories
 
         public void Add(Ecosystem e)
         {
-            try
-            {
-                if (e != null)
-                {
+            if (e != null) {
+                try {                
                     e.Validate();
                     Context.Threats.Add(e);
-                    Context.SaveChanges();
-                } throw new InvalidOperationException("Error al crear una ecosistema, intente nuevamente.");
-            } catch (Exception ex) {
-                throw ex;
-            }  
+                    Context.SaveChanges();                
+                } catch (Exception ex) {
+                    throw ex;
+                }  
+            } throw new InvalidOperationException("Error al crear un ecosistema, intente nuevamente.");
         }
 
         public IEnumerable<Ecosystem> FindAll()
@@ -48,8 +46,12 @@ namespace AccessLogic.Repositories
         public void Remove(Ecosystem e)
         {
             if (e != null) {
-                Context.Species.Remove(e);
-                Context.SaveChanges();
+                try {
+                    Context.Species.Remove(e);
+                    Context.SaveChanges();  
+                } catch (Exception ex) {
+                    throw ex;
+                }               
             } throw new InvalidOperationException("El ecosistema que intenta eliminar no existe.");
         }
 

@@ -19,17 +19,15 @@ namespace AccessLogic.Repositories
 
         public void Add(Species s)
         {
-            try
-            {
-                if (s != null)
-                {
+            if (s != null) {
+                try {                
                     s.Validate();
-                    Context.Threats.Add(s);
-                    Context.SaveChanges();
-                } throw new InvalidOperationException("Error al crear una especie, intente nuevamente.");
-            } catch (Exception ex) {
-                throw ex;
-            }  
+                    Context.Species.Add(s);
+                    Context.SaveChanges();                
+                } catch (Exception ex) {
+                    throw ex;
+                }  
+            } throw new InvalidOperationException("Error al crear una especie, intente nuevamente."); 
         }
 
         public IEnumerable<Species> FindAll()

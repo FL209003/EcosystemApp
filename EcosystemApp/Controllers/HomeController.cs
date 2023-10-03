@@ -27,8 +27,7 @@ namespace EcosystemApp.Controllers
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public IActionResult Login(User user) 
-        //{
-           
+        //{           
         //}
 
         public IActionResult Privacy()

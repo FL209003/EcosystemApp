@@ -19,17 +19,15 @@ namespace AccessLogic.Repositories
 
         public void Add(Threat t)
         {
-            try
-            {
-                if (t != null)
-                {
+            if (t != null) {
+                try {                
                     t.Validate();
                     Context.Threats.Add(t);
-                    Context.SaveChanges();
-                } throw new InvalidOperationException("Error al crear amenaza, intente nuevamente.");
-            } catch (Exception ex) {
-                throw ex;
-            }  
+                    Context.SaveChanges();                
+                } catch (Exception ex) {
+                    throw ex;
+                }  
+            } throw new InvalidOperationException("Error al crear una amenaza, intente nuevamente."); 
         }
 
         public IEnumerable<Threat> FindAll()
