@@ -11,12 +11,10 @@ namespace Domain.Entities
 {
     public class User : IValidate
     {
-        public int Id { get; set; }        
-        [Index(IsUnique=true)]
-        public required string Username { get; set; }        
+        public int Id { get; set; }
+        public required string Username { get; set; }
         public required string Password { get; set; }
-
-        public string Rol {  get; set; }
+        public required string Rol {  get; set; } 
 
         public User(string username, string password, string rol)
         {
@@ -25,9 +23,9 @@ namespace Domain.Entities
             Rol = rol;
         }
 
-        public User() {}
+        public User() { }        
 
-        public virtual void Validate()
+        public void Validate()
         {
             if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Rol))
             { throw new Exception("Todos los campos son obligatorios."); }
@@ -36,6 +34,7 @@ namespace Domain.Entities
         public void IValidate() {
             if (string.IsNullOrEmpty(Username)) throw new Exception("El nombre de usuario es requerido.");
             if (string.IsNullOrEmpty(Password)) throw new Exception("La contraseña es requerida.");
+            if (string.IsNullOrEmpty(Rol)) throw new Exception("Especifique el rol del usuario.");
         }
     }
 }

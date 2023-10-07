@@ -22,7 +22,7 @@ namespace AccessLogic.Repositories
             if (e != null) {
                 try {                
                     e.Validate();
-                    Context.Threats.Add(e);
+                    Context.Ecosystems.Add(e);
                     Context.SaveChanges();                
                 } catch (Exception ex) {
                     throw ex;
@@ -47,7 +47,7 @@ namespace AccessLogic.Repositories
         {
             if (e != null) {
                 try {
-                    Context.Species.Remove(e);
+                    Context.Ecosystems.Remove(e);
                     Context.SaveChanges();  
                 } catch (Exception ex) {
                     throw ex;
@@ -58,7 +58,7 @@ namespace AccessLogic.Repositories
         public void Update(Ecosystem e)
         {
             if (e != null) {
-                Context.Species.Update(e);
+                Context.Ecosystems.Update(e);
                 Context.SaveChanges();
             } throw new InvalidOperationException("El ecosistema que intenta actualizar no existe.");
         }

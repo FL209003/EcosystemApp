@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Domain.DomainInterfaces;
+using Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,19 +12,22 @@ namespace Domain.Entities
     public class Country : IValidate
     {
         public int Id { get; set; }
-        [MinLength(5), MaxLength(20)]
-        [Index(IsUnique=true)]
-        public required string Name { get; set; }
+        public required Name CountryName { get; set; }
         public required string Alpha3 { get; set; }
 
-        public Country(string name, string alpha3)
+        public Country ()
         {
-            Name = name;
+
+        }
+
+        public Country(Name name, string alpha3)
+        {
+            CountryName = name;
             Alpha3 = alpha3;
         }
 
-        public void IValidate() {
-            if (string.IsNullOrEmpty(Name)) throw new Exception("El nombre del país es requerido.");
+        public void Validate()
+        {
             if (string.IsNullOrEmpty(Alpha3)) throw new Exception("El codigo alfanumérico del país es requerido.");
         }
     }

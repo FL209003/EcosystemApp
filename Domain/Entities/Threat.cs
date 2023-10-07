@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Domain.DomainInterfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +23,8 @@ namespace Domain.Entities
             Danger = danger;
         }
 
-        public void IValidate() {
-            if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción es requerida.");
-            if (Danger == null) throw new Exception("El nivel de peligrosidad es requerido.");
+        public void Validate() {
+            if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción es requerida.");            
         }
     }
 }

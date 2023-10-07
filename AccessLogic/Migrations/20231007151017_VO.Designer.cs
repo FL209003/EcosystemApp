@@ -4,6 +4,7 @@ using AccessLogic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    partial class EcosystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231007151017_VO")]
+    partial class VO
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,9 +176,6 @@ namespace AccessLogic.Migrations
 
                             b1.HasKey("ConservationId");
 
-                            b1.HasIndex("Value")
-                                .IsUnique();
-
                             b1.ToTable("Conservation");
 
                             b1.WithOwner()
@@ -200,9 +200,6 @@ namespace AccessLogic.Migrations
 
                             b1.HasKey("CountryId");
 
-                            b1.HasIndex("Value")
-                                .IsUnique();
-
                             b1.ToTable("Countries");
 
                             b1.WithOwner()
@@ -226,9 +223,6 @@ namespace AccessLogic.Migrations
                                 .HasColumnType("nvarchar(20)");
 
                             b1.HasKey("EcosystemId");
-
-                            b1.HasIndex("Value")
-                                .IsUnique();
 
                             b1.ToTable("Ecosystems");
 
@@ -257,9 +251,6 @@ namespace AccessLogic.Migrations
                                 .HasColumnType("nvarchar(20)");
 
                             b1.HasKey("SpeciesId");
-
-                            b1.HasIndex("Value")
-                                .IsUnique();
 
                             b1.ToTable("Species");
 
