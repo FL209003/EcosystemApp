@@ -21,6 +21,8 @@ namespace Domain.Entities
             State = state;
         }
 
+        public Conservation() { }
+
         public void Validate() {            
             if (string.IsNullOrEmpty(State)) throw new Exception("El estado de la conservación es requerido.");
         }

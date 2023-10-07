@@ -18,7 +18,7 @@ namespace AccessLogic.Repositories
             if (u != null) {
                 try {                
                     u.Validate();
-                    Context.Threats.Add(u);
+                    Context.Users.Add(u);
                     Context.SaveChanges();                
                 } catch (Exception ex) {
                     throw ex;
