@@ -4,6 +4,7 @@ using AccessLogic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    partial class EcosystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231007185022_ThreatNameVO")]
+    partial class ThreatNameVO
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,7 +280,7 @@ namespace AccessLogic.Migrations
                         .WithMany("Threats")
                         .HasForeignKey("EcosystemId");
 
-                    b.OwnsOne("Domain.ValueObjects.Name", "ThreatName", b1 =>
+                    b.OwnsOne("Domain.ValueObjects.Name", "Name", b1 =>
                         {
                             b1.Property<int>("ThreatId")
                                 .HasColumnType("int");
@@ -298,7 +301,7 @@ namespace AccessLogic.Migrations
                                 .HasForeignKey("ThreatId");
                         });
 
-                    b.Navigation("ThreatName")
+                    b.Navigation("Name")
                         .IsRequired();
                 });
 
