@@ -11,9 +11,13 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddScoped<IRepositoryUsers, UsersRepository>();
-
 builder.Services.AddScoped<IAddUser, AddUserUC>();
 
+builder.Services.AddScoped<IRepositoryEcosystems, EcosystemsRepository>();
+builder.Services.AddScoped<IAddEcosystem, AddEcoUC>();
+
+builder.Services.AddScoped<IRepositoryThreats, ThreatsRepository>();
+builder.Services.AddScoped<IAddThreat, AddThreatUC>();
 
 // DB config
 ConfigurationBuilder configurationBuilder = new();
