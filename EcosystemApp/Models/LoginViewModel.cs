@@ -5,7 +5,10 @@ namespace EcosystemApp.Models
 {
     public class LoginViewModel
     {
-        [Required]
-        public required User User { get; set; }        
+        [Required]        
+        public string Username { get; set; }
+
+        [Required]        
+        public string Password { get; set; }
     }
 }

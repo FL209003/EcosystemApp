@@ -18,32 +18,31 @@ namespace EcosystemApp.Controllers
         {
             return View();
         }
-        
+
         public IActionResult AddUser() { return View(); }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddUser(VMUser model)
-        {  
+        {
             if (ModelState.IsValid)
             {
                 try
                 {
                     model.User.Validate();
-                    AddUC.Add(model.User);
-                    return RedirectToAction("Index","Home");
+                    if (model.VerificationPass == model.User.Password)
+                    {
+                        AddUC.Add(model.User);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else throw new Exception("Las contraseñas no coinciden.");
                 }
-                //catch (ClienteException ex)
-                //{
-                //    vm.Paises = CUListadoPaises.Listado();
-                //    ViewBag.Error = ex.Message;
-                //}
                 catch (Exception ex)
                 {
                     ViewBag.Error = ex.Message;
                 }
             }
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

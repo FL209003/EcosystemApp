@@ -13,29 +13,27 @@ namespace EcosystemApp.Controllers
         private readonly ILogger<HomeController> _logger;
         public IListUser ListUserUC { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, IListUser users)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            ListUserUC = users;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() { return View(); }
 
         public IActionResult Login() { return View(); }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    List<User> users = (List<User>)ListUserUC;
+                    List<User> users = ListUserUC.ListUsers();
                     foreach (User u in users)
                     {
-                        if (model.User.Username == u.Username && model.User.Password == u.Password)
+                        if (model.Username == u.Username && model.Password == u.Password)
                         {
                             HttpContext.Session.SetString("id", u.Id.ToString());
                             HttpContext.Session.SetString("username", u.Username);
