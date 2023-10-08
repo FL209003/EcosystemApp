@@ -22,13 +22,37 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AddUser">Crear Usuario</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Threat" asp-action="AddThreat">Crear Amenaza</a>
-                        </li>
+                        @if (Context.Session.GetString("username") == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Login"><b>Login</b></a>
+                            </li>
+                        }
+                        @if (Context.Session.GetString("username") != null)
+                        {
+
+                        }
+                        @if (Context.Session.GetString("rol") == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AddUser">Crear Usuario</a>
+                            </li>
+                        }
                     </ul>
+                </div>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+                    @if (Context.Session.GetString("username") != null)
+
+                    {
+                        <div class="container">
+                            <div class="row align-items-end">
+                                <div class="col-3 text-light">
+                                    <a asp-action="Logout" asp-controller="Home">Cerrar sesión</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </nav>

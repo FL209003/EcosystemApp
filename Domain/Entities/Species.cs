@@ -19,14 +19,13 @@ namespace Domain.Entities
         [MaxLength(500, ErrorMessage = "La descripción no puede superer los 500 caracteres.")]
         public required string Description { get; set; }
 
-        public Species() { }
-
         public Species(string cientificName, Name name, string description)
         {
             CientificName = cientificName;
             SpeciesName = name;
             Description = description;
         }
+        public Species() { }
 
         public void Validate()
         {

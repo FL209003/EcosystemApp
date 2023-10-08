@@ -15,16 +15,13 @@ namespace Domain.Entities
         public required Name CountryName { get; set; }
         public required string Alpha3 { get; set; }
 
-        public Country ()
-        {
-
-        }
-
         public Country(Name name, string alpha3)
         {
             CountryName = name;
             Alpha3 = alpha3;
         }
+
+        public Country() { }
 
         public void Validate()
         {

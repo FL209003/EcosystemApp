@@ -32,7 +32,7 @@ namespace Domain.Entities
         public void Validate()
         {
             if (string.IsNullOrEmpty(GeoDetails)) throw new Exception("Los detalles geográficos son requeridos.");
-            if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción del ecosistema es requerido.");
+            if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción del ecosistema es requerida.");
             if (Species == null) throw new Exception("Se requiere al menos una especie en el ecosistema.");
             if (Threats == null) throw new Exception("Se requiere al menos una amenaza en el ecosistema.");
         }
