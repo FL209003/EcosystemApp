@@ -12,6 +12,8 @@ namespace Domain.Entities
     public class User : IValidate
     {
         public int Id { get; set; }
+
+        [Index(nameof(Username), IsUnique = true , ErrorMessage="El nombre de usuario ya esta en uso.")]
         public required string Username { get; set; }
         public required string Password { get; set; }
         public required string Rol {  get; set; } 
