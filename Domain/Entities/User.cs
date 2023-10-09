@@ -1,4 +1,5 @@
 ﻿using Domain.DomainInterfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
+    [Index(nameof(Username), IsUnique = true)]
     public class User : IValidate
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Nombre de usuario requerido.")]
-        [Index(nameof(Username), IsUnique = true , ErrorMessage="El nombre de usuario ya esta en uso.")]
+        [Required(ErrorMessage = "Nombre de usuario requerido.")]        
         public required string Username { get; set; }
 
         [Required(ErrorMessage = "Contraseña requerida.")]
