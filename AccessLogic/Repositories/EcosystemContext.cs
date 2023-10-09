@@ -15,6 +15,8 @@ namespace AccessLogic.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>(entity => {entity.HasIndex(e => e.Username).IsUnique();});
+            
             modelBuilder.Entity<Ecosystem>().OwnsOne( e => e.EcosystemName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Country>().OwnsOne(c => c.CountryName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Conservation>().OwnsOne(c => c.ConservationName).HasIndex(n => n.Value).IsUnique();
