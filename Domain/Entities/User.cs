@@ -13,7 +13,8 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Nombre de usuario requerido.")]        
+        [Required(ErrorMessage = "Nombre de usuario requerido.")]
+        [Index(nameof(Username), IsUnique = true , ErrorMessage="El nombre de usuario ya esta en uso.")]
         public required string Username { get; set; }
 
         [Required(ErrorMessage = "Contraseña requerida.")]

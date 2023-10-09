@@ -46,9 +46,11 @@ namespace AccessLogic.Repositories
         public void Remove(Ecosystem e)
         {
             if (e != null) {
-                try {
-                    Context.Ecosystems.Remove(e);
-                    Context.SaveChanges();  
+                try {                    
+                    if (e.Species == null) {
+                        Context.Ecosystems.Remove(e);
+                        Context.SaveChanges();  
+                    } else throw new InvalidOperationException("El ecosistema no debe tener especies que lo habiten para poder eliminarlo.");                    
                 } catch (Exception ex) {
                     throw ex;
                 }               
