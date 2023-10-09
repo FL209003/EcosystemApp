@@ -23,10 +23,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Ecosystem" asp-action="ListEcosystems"><b>Ecosistemas</b></a>
                         </li>
                         <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ecosystem" asp-action="AddEcosystem">Ecosistema</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Ecosystem" asp-action="AddEcosystem"><b>Crear Ecosistema</b></a>
                         </li>
                         <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="AddSpecies">Especie</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="AddSpecies"><b>Crear Ecspecie</b></a>
                         </li>
                         @if (Context.Session.GetString("rol") == "Admin")
                         {
@@ -44,7 +44,7 @@
                                 <div class="container">
                                     <div class="row align-items-end">
                                         <div class="col-3 text-dark">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login"><b>Login</b></a>
                                         </div>
                                     </div>
                                 </div>
