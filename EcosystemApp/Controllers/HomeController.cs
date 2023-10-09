@@ -35,7 +35,6 @@ namespace EcosystemApp.Controllers
                     {
                         if (model.Username == u.Username && model.Password == u.Password)
                         {
-                            HttpContext.Session.SetString("id", u.Id.ToString());
                             HttpContext.Session.SetString("username", u.Username);
                             HttpContext.Session.SetString("rol", u.Rol);
                             return RedirectToAction("Index", "Home");

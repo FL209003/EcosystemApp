@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Img\" />
     <Folder Include="Views\Admin\" />
   </ItemGroup>
 

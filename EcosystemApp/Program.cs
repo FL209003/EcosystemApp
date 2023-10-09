@@ -22,6 +22,9 @@ builder.Services.AddScoped<IAddUser, AddUserUC>();
 builder.Services.AddScoped<IRepositoryEcosystems, EcosystemsRepository>();
 builder.Services.AddScoped<IAddEcosystem, AddEcoUC>();
 
+builder.Services.AddScoped<IRepositorySpecies, SpeciesRepository>();
+builder.Services.AddScoped<IAddSpecies, AddSpeciesUC>();
+
 builder.Services.AddScoped<IRepositoryThreats, ThreatsRepository>();
 builder.Services.AddScoped<IAddThreat, AddThreatUC>();
 

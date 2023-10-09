@@ -12,7 +12,11 @@ namespace Domain.Entities
     public class User : IValidate
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Nombre de usuario requerido.")]
         public required string Username { get; set; }
+
+        [Required(ErrorMessage = "Contraseña requerida.")]
         public required string Password { get; set; }
         public required string Rol { get; set; }
 
@@ -29,8 +33,7 @@ namespace Domain.Entities
         {
             if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Rol))
             { throw new Exception("Todos los campos son obligatorios."); }
-            if (string.IsNullOrEmpty(Username)) throw new Exception("El nombre de usuario es requerido.");
-            if (string.IsNullOrEmpty(Password)) throw new Exception("La contraseña es requerida.");
+            if (Username.Length < 6) throw new Exception("El nombre de usuario debe tener al menos 6 caracteres.");
             if (Password.Length < 8) throw new Exception("La contraseña debe tener al menos 8 caracteres.");
             if (string.IsNullOrEmpty(Rol)) throw new Exception("Especifique el rol del usuario.");
         }

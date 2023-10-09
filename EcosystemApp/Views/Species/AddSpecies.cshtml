@@ -1,0 +1,58 @@
+﻿@model EcosystemApp.Models.VMSpecies;
+
+@{
+    ViewData["Title"] = "AddSpecies";
+}
+
+<h2>Nueva especie</h2>
+
+<h4>@ViewBag.Error</h4>
+<br />
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddSpecies">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <div class="form-group">
+                <label asp-for="Species.CientificName" class="control-label">Nombre científico</label>
+                <input asp-for="Species.CientificName" class="form-control" />
+                <span asp-validation-for="Species.CientificName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Species.Description" class="control-label">Descripción</label>
+                <input asp-for="Species.Description" class="form-control" />
+                <span asp-validation-for="Species.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Species.WeightRangeMin" class="control-label">Peso mínimo(kg)</label>
+                <input asp-for="Species.WeightRangeMin" class="form-control" />
+                <span asp-validation-for="Species.WeightRangeMin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Species.WeightRangeMax" class="control-label">Peso máximo(kg)</label>
+                <input asp-for="Species.WeightRangeMax" class="form-control" />
+                <span asp-validation-for="Species.WeightRangeMax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Species.LongRangeAdultMin" class="control-label">Longitud mínima(mts) de specimen adulto</label>
+                <input asp-for="Species.LongRangeAdultMin" class="form-control" />
+                <span asp-validation-for="Species.LongRangeAdultMin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Species.LongRangeAdultMax" class="control-label">Longitud máxima(mts) de specimen adulto</label>
+                <input asp-for="Species.LongRangeAdultMax" class="form-control" />
+                <span asp-validation-for="Species.LongRangeAdultMax" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<h4>@ViewBag.Success</h4>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

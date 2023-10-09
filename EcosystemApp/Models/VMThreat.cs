@@ -9,6 +9,5 @@ namespace EcosystemApp.Models
         public Threat Threat { get; set; }
 
         public String ThreatNameVAL { get; set; }
-
     }
 }

@@ -14,13 +14,12 @@ namespace EcosystemApp.Controllers
             AddUC = addUC;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index() { return View(); }
 
+        [Private(Rol = "Admin")]
         public IActionResult AddUser() { return View(); }
 
+        [Private(Rol = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddUser(VMUser model)
@@ -40,9 +39,11 @@ namespace EcosystemApp.Controllers
                 catch (Exception ex)
                 {
                     ViewBag.Error = ex.Message;
+                    return View("AddSpecies", model);
                 }
             }
-            return RedirectToAction("Index", "Home");
+            ViewBag.Error = "Especie no válida.";
+            return View("AddSpecies");
         }
     }
 }

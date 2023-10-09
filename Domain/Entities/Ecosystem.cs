@@ -7,10 +7,18 @@ namespace Domain.Entities
     public class Ecosystem : IValidate
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Nombre del ecosistema requerido.")]
         public required Name EcosystemName { get; set; }
+
+        [Required(ErrorMessage = "Detalles de ubicación geográfica requeridos.")]
         public required string GeoDetails { get; set; }
+
+        [Required(ErrorMessage = "Área requerida.")]
         [Range(1, int.MaxValue, ErrorMessage = "El area no debe ser menor a 1")]
         public required decimal Area { get; set; }
+
+        [Required(ErrorMessage = "Descripción requerida.")]
         [MinLength(50, ErrorMessage = "La descripción debe tener al menos 50 caracteres.")]
         [MaxLength(500, ErrorMessage = "La descripción no puede superer los 500 caracteres.")]
         public required string Description { get; set; }

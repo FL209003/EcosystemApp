@@ -13,17 +13,45 @@ namespace Domain.Entities
     public class Species : IValidate
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Nombre científico requerido.")]
         public required string CientificName { get; set; }
+
+        [Required(ErrorMessage = "Nombre del espécimen requerido.")]
         public required Name SpeciesName { get; set; }
+
+        [Required(ErrorMessage = "Descripción requerida.")]
         [MinLength(50, ErrorMessage = "La descripción debe tener al menos 50 caracteres.")]
         [MaxLength(500, ErrorMessage = "La descripción no puede superer los 500 caracteres.")]
         public required string Description { get; set; }
 
-        public Species(string cientificName, Name name, string description)
+        [Required(ErrorMessage = "Peso mínimo requerido.")]
+        public decimal WeightRangeMin { get; set; }
+
+        [Required(ErrorMessage = "Peso máximo requerido.")]
+        public decimal WeightRangeMax { get; set; }
+
+        [Required(ErrorMessage = "Largo mínimo del adulto requerido.")]
+        public decimal LongRangeAdultMin { get; set; }
+
+        [Required(ErrorMessage = "Largo máximo del adulto requerido.")]
+        public decimal LongRangeAdultMax { get; set; }
+
+        public List<Ecosystem>? Habitats { get; set; }
+
+        public List<Threat>? Threats { get; set; }
+
+        public Species(string cientificName, Name name, string description, decimal weightRangeMin, decimal weightRangeMax, decimal longRangeAdultMin, decimal longRangeAdultMax, List<Ecosystem>? ecosystems, List<Threat>? threats)
         {
             CientificName = cientificName;
             SpeciesName = name;
             Description = description;
+            WeightRangeMin = weightRangeMin;
+            WeightRangeMax = weightRangeMax;
+            LongRangeAdultMin = longRangeAdultMin;
+            LongRangeAdultMax = longRangeAdultMax;
+            Habitats = ecosystems;
+            Threats = threats;
         }
         public Species() { }
 
@@ -31,6 +59,10 @@ namespace Domain.Entities
         {
             if (string.IsNullOrEmpty(CientificName)) throw new Exception("El nombre científico de la especie es requerido.");
             if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción es requerida.");
+            if (WeightRangeMin <= 0 ||
+                WeightRangeMax <= 0 ||
+                LongRangeAdultMin <= 0 ||
+                LongRangeAdultMax <= 0) throw new Exception("Los rangos no pueden ser menores a 1.");
         }
     }
 }
