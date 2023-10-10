@@ -26,9 +26,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Ecosystem" asp-action="AddEcosystem"><b>Crear Ecosistema</b></a>
                         </li>
                         <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="AddSpecies"><b>Crear Ecspecie</b></a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="AddSpecies"><b>Crear Especie</b></a>
                         </li>
-                        @if (Context.Session.GetString("rol") == "Admin")
+                        @if (Context.Session.GetString("role") == "Admin")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AddUser">Crear Usuario</a>

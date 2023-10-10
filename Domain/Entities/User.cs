@@ -20,24 +20,24 @@ namespace Domain.Entities
 
         [Required(ErrorMessage = "Contraseña requerida.")]
         public required string Password { get; set; }
-        public required string Rol { get; set; }
+        public required string Role { get; set; }
 
-        public User(string username, string password, string rol)
+        public User(string username, string password, string role)
         {
             Username = username;
             Password = password;
-            Rol = rol;
+            Role = role;
         }
 
         public User() { }
 
         public void Validate()
         {
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Rol))
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Role))
             { throw new Exception("Todos los campos son obligatorios."); }
             if (Username.Length < 6) throw new Exception("El nombre de usuario debe tener al menos 6 caracteres.");
             if (Password.Length < 8) throw new Exception("La contraseña debe tener al menos 8 caracteres.");
-            if (string.IsNullOrEmpty(Rol)) throw new Exception("Especifique el rol del usuario.");
+            if (string.IsNullOrEmpty(Role)) throw new Exception("Especifique el rol del usuario.");
         }
     }
 }

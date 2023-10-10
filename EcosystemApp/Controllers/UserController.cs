@@ -5,6 +5,7 @@ using EcosystemApp.Models;
 
 namespace EcosystemApp.Controllers
 {
+    [Private(Role = "Admin")]
     public class UserController : Controller
     {
         public IAddUser AddUC { get; set; }
@@ -15,11 +16,9 @@ namespace EcosystemApp.Controllers
         }
 
         public ActionResult Index() { return View(); }
-
-        [Private(Rol = "Admin")]
+        
         public IActionResult AddUser() { return View(); }
-
-        [Private(Rol = "Admin")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddUser(VMUser model)

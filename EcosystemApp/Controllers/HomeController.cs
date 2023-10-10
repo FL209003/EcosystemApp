@@ -36,7 +36,7 @@ namespace EcosystemApp.Controllers
                         if (model.Username == u.Username && model.Password == u.Password)
                         {
                             HttpContext.Session.SetString("username", u.Username);
-                            HttpContext.Session.SetString("rol", u.Rol);
+                            HttpContext.Session.SetString("rol", u.Role);
                             return RedirectToAction("Index", "Home");
                         }
                         else throw new Exception("El usuario no existe.");

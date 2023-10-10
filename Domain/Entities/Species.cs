@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +15,11 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
 
+        [Column("Cientific name")]
         [Required(ErrorMessage = "Nombre científico requerido.")]
         public required string CientificName { get; set; }
 
+        [Column("Name")]
         [Required(ErrorMessage = "Nombre del espécimen requerido.")]
         public required Name SpeciesName { get; set; }
 
@@ -25,15 +28,19 @@ namespace Domain.Entities
         [MaxLength(500, ErrorMessage = "La descripción no puede superer los 500 caracteres.")]
         public required string Description { get; set; }
 
+        [Column("Min weight")]
         [Required(ErrorMessage = "Peso mínimo requerido.")]
         public decimal WeightRangeMin { get; set; }
 
+        [Column("Max weight")]
         [Required(ErrorMessage = "Peso máximo requerido.")]
         public decimal WeightRangeMax { get; set; }
 
+        [Column("Min length")]
         [Required(ErrorMessage = "Largo mínimo del adulto requerido.")]
         public decimal LongRangeAdultMin { get; set; }
 
+        [Column("Max length")]
         [Required(ErrorMessage = "Largo máximo del adulto requerido.")]
         public decimal LongRangeAdultMax { get; set; }
 

@@ -5,17 +5,17 @@ namespace EcosystemApp.Filters
 {
     public class PrivateAttribute : ActionFilterAttribute
     {
-        public string? Rol { get; set; }
+        public string? Role { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var userName = context.HttpContext.Session.GetString("username");
-            var userRol = context.HttpContext.Session.GetString("rol");
+            var userRole = context.HttpContext.Session.GetString("role");
 
             if (!string.IsNullOrEmpty(userName))
             {
-                if (string.IsNullOrEmpty(Rol)) base.OnActionExecuting(context);
-                else if (Rol.Contains(userRol)) base.OnActionExecuting(context);
+                if (string.IsNullOrEmpty(Role)) base.OnActionExecuting(context);
+                else if (Role.Contains(userRole)) base.OnActionExecuting(context);
                 else context.Result = new RedirectToActionResult("Unauthorized", "Home", null);
             }
             else

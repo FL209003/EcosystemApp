@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Domain.DomainInterfaces;
 using Domain.ValueObjects;
 
@@ -8,9 +9,11 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
 
+        [Column("Name")]
         [Required(ErrorMessage = "Nombre del ecosistema requerido.")]
         public required Name EcosystemName { get; set; }
 
+        [Column("Geographic details")]
         [Required(ErrorMessage = "Detalles de ubicación geográfica requeridos.")]
         public required string GeoDetails { get; set; }
 

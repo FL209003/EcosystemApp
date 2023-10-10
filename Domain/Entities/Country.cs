@@ -3,6 +3,7 @@ using Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,11 @@ namespace Domain.Entities
     public class Country : IValidate
     {
         public int Id { get; set; }
+
+        [Column("Name")]
         public required Name CountryName { get; set; }
+
+        [Column("Alpha 3 code")]
         public required string Alpha3 { get; set; }
 
         public Country(Name name, string alpha3)

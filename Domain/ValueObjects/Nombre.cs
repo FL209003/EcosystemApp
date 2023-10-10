@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 namespace Domain.ValueObjects
 {
     public class Name : IValidate
-    {
-
+    {        
         [MinLength(5), MaxLength(20)]
         public string Value { get; private set; }
 
@@ -20,7 +19,7 @@ namespace Domain.ValueObjects
             Validate();
         }
 
-        public Name() { }
+        private Name() { }
 
         public void Validate() 
         {

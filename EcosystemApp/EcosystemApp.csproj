@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Img\" />
+    <Folder Include="wwwroot\img\" />
     <Folder Include="Views\Admin\" />
   </ItemGroup>
 
