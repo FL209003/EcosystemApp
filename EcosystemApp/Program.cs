@@ -9,12 +9,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSession(options => {
+    options.IdleTimeout = TimeSpan.FromMinutes(5);
+    options.Cookie.IsEssential = true;
+    options.Cookie.HttpOnly = true;
+    options.Cookie.Name = "EcosystemApp";
+});
 
 builder.Services.AddScoped<IRepositoryUsers, UsersRepository>();
 builder.Services.AddScoped<IAddUser, AddUserUC>();
 
 builder.Services.AddScoped<IRepositoryEcosystems, EcosystemsRepository>();
 builder.Services.AddScoped<IAddEcosystem, AddEcoUC>();
+
+builder.Services.AddScoped<IRepositorySpecies, SpeciesRepository>();
+builder.Services.AddScoped<IAddSpecies, AddSpeciesUC>();
 
 builder.Services.AddScoped<IRepositoryThreats, ThreatsRepository>();
 builder.Services.AddScoped<IAddThreat, AddThreatUC>();
@@ -42,6 +51,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

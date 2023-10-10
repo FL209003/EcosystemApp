@@ -4,9 +4,9 @@
     ViewData["Title"] = "AddThreat";
 }
 
-<h1>Agregar Amenaza</h1>
-
+<h3 class="text-dark"><i><b>Nueva Amenaza</b></i></h3>
 <h4>@ViewBag.Error</h4>
+<br />
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,26 +17,27 @@
                 <input asp-for="ThreatNameVAL" class="form-control" />
                 <span asp-validation-for="Threat.ThreatName" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="Threat.Description" class="control-label"></label>
-                <input asp-for="Threat.Description" class="form-control" />
+                <textarea asp-for="Threat.Description" class="form-control"></textarea>
                 <span asp-validation-for="Threat.Description" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="Threat.Danger" class="control-label"></label>
                 <input asp-for="Threat.Danger" class="form-control" />
                 <span asp-validation-for="Threat.Danger" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+<br />
 <h4>@ViewBag.Success</h4>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{

@@ -15,28 +15,25 @@ namespace EcosystemApp.Controllers
         }
 
         // GET: ThreatController/Create
-        public ActionResult AddThreat()
-        {
-            return View();
-        }
+        public ActionResult AddThreat() { return View(); }
 
         // POST: ThreatController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddThreat(VMThreat model)
+        public IActionResult AddThreat(VMThreat model)
         {
             model.Threat.ThreatName = new Domain.ValueObjects.Name(model.ThreatNameVAL);
-                try
-                {
-                    model.Threat.Validate();
-                    AddUC.Add(model.Threat);
-                    return RedirectToAction("Index", "Home");
-                }
-                catch(Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                    return View();
-                }
+            try
+            {
+                model.Threat.Validate();
+                AddUC.Add(model.Threat);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View();
+            }
         }
     }
 }

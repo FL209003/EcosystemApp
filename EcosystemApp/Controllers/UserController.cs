@@ -5,6 +5,7 @@ using EcosystemApp.Models;
 
 namespace EcosystemApp.Controllers
 {
+    [Private(Role = "Admin")]
     public class UserController : Controller
     {
         public IAddUser AddUC { get; set; }
@@ -14,36 +15,34 @@ namespace EcosystemApp.Controllers
             AddUC = addUC;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index() { return View(); }
         
         public IActionResult AddUser() { return View(); }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddUser(VMUser model)
-        {  
+        {
             if (ModelState.IsValid)
             {
                 try
                 {
                     model.User.Validate();
-                    AddUC.Add(model.User);
-                    return RedirectToAction("Index","Home");
+                    if (model.VerificationPass == model.User.Password)
+                    {
+                        AddUC.Add(model.User);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else throw new Exception("Las contraseñas no coinciden.");
                 }
-                //catch (ClienteException ex)
-                //{
-                //    vm.Paises = CUListadoPaises.Listado();
-                //    ViewBag.Error = ex.Message;
-                //}
                 catch (Exception ex)
                 {
                     ViewBag.Error = ex.Message;
+                    return View("AddSpecies", model);
                 }
             }
-            return RedirectToAction("Index","Home");
+            ViewBag.Error = "Especie no válida.";
+            return View("AddSpecies");
         }
     }
 }

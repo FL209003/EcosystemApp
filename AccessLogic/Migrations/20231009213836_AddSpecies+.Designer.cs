@@ -4,6 +4,7 @@ using AccessLogic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    partial class EcosystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231009213836_AddSpecies+")]
+    partial class AddSpecies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,8 +55,7 @@ namespace AccessLogic.Migrations
 
                     b.Property<string>("Alpha3")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Alpha 3 code");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -78,8 +80,7 @@ namespace AccessLogic.Migrations
 
                     b.Property<string>("GeoDetails")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Geographic details");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -96,8 +97,7 @@ namespace AccessLogic.Migrations
 
                     b.Property<string>("CientificName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Cientific name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -105,20 +105,16 @@ namespace AccessLogic.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<decimal>("LongRangeAdultMax")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Max length");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("LongRangeAdultMin")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Min length");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("WeightRangeMax")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Max weight");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("WeightRangeMin")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Min weight");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -168,18 +164,15 @@ namespace AccessLogic.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
+                    b.Property<string>("Rol")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Username")
-                        .IsUnique();
 
                     b.ToTable("Users");
                 });
