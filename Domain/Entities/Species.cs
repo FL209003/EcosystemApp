@@ -44,8 +44,7 @@ namespace Domain.Entities
         [Required(ErrorMessage = "Largo máximo del adulto requerido.")]
         public decimal LongRangeAdultMax { get; set; }
 
-        public List<Ecosystem>? Habitats { get; set; }
-
+        public List<Ecosystem>? Ecosystems { get; set; }
         public List<Threat>? Threats { get; set; }
 
         public Species(string cientificName, Name name, string description, decimal weightRangeMin, decimal weightRangeMax, decimal longRangeAdultMin, decimal longRangeAdultMax, List<Ecosystem>? ecosystems, List<Threat>? threats)
@@ -57,7 +56,7 @@ namespace Domain.Entities
             WeightRangeMax = weightRangeMax;
             LongRangeAdultMin = longRangeAdultMin;
             LongRangeAdultMax = longRangeAdultMax;
-            Habitats = ecosystems;
+            Ecosystems = ecosystems;
             Threats = threats;
         }
         public Species() { }
@@ -66,10 +65,9 @@ namespace Domain.Entities
         {
             if (string.IsNullOrEmpty(CientificName)) throw new Exception("El nombre científico de la especie es requerido.");
             if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción es requerida.");
-            if (WeightRangeMin <= 0 ||
-                WeightRangeMax <= 0 ||
-                LongRangeAdultMin <= 0 ||
-                LongRangeAdultMax <= 0) throw new Exception("Los rangos no pueden ser menores a 1.");
+            if (WeightRangeMin <= 0 || WeightRangeMax <= 0 || LongRangeAdultMin <= 0 || LongRangeAdultMax <= 0) {
+                throw new Exception("Los rangos no pueden ser menores a 1.");
+            }            
         }
     }
 }

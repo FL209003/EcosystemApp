@@ -18,6 +18,7 @@ namespace AppLogic.UseCases
         {
             EcosRepo = repo;
         }
+        
         public void Add(Ecosystem eco)
         {
             EcosRepo.Add(eco);

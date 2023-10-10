@@ -10,6 +10,7 @@ namespace Domain.ValueObjects
 {
     public class Name : IValidate
     {        
+        
         [MinLength(5), MaxLength(20)]
         public string Value { get; private set; }
 

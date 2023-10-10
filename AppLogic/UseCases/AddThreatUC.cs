@@ -17,6 +17,7 @@ namespace AppLogic.UseCases
         {
             ThreatRepo = repo;
         }
+        
         public void Add(Threat threat)
         {
             ThreatRepo.Add(threat);
