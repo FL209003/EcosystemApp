@@ -9,6 +9,6 @@ namespace AppLogic.UCInterfaces
 {
     public interface IListUser
     {
-        List<User> ListUsers();
+        void List();
     }
 }

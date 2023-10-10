@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
+    [Index(nameof(Alpha3), IsUnique = true)]
     public class Country : IValidate
     {
         public int Id { get; set; }

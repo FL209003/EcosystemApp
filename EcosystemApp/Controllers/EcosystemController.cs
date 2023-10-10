@@ -1,91 +1,79 @@
 ﻿using AppLogic.UCInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using EcosystemApp.Filters;
 
 namespace EcosystemApp.Controllers
 {
     public class EcosystemController : Controller
-    {
-
+    {        
         public IAddEcosystem AddUC { get; set; }
+        public IRemoveEcosystem RemoveUC { get; set; }
+        public IListEcosystem ListUC { get; set; }
+        public IFindEcosystem FindUC { get; set; }
 
-        public EcosystemController(IAddEcosystem addUC)
-        {
+        public EcosystemController(IAddEcosystem addUC, IRemoveEcosystem removeUC, IListEcosystem listUC, IFindEcosystem findUC)
+        {            
             AddUC = addUC;
+            RemoveUC = removeUC;
+            ListUC = listUC;
+            FindUC = findUC;
         }
-        // GET: EcosystemController
-        public ActionResult Index()
+        
+        public ActionResult Index() { return View(); }
+        
+        public ActionResult ListEcosystems() 
         {
-            return View();
-        }
-
-        // GET: EcosystemController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: EcosystemController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+            IEnumerable<Ecosystem> ecos = ListUC.List(); 
+            if (ecos != null) {
+                return View(ecos);
+            } else {
+                ViewBag.Error = "No se encontraron ecosistemas.";
+                return RedirectToAction("ListEcos", "Ecosystem", new { error = ViewBag.Error });
+            }
+        }      
+                
+        [Private]
+        public ActionResult AddEcosystem() { return View(); }
 
         // POST: EcosystemController/Create
+        [Private]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult AddEcosystem(VMEcosystem model)
         {
+            model.Ecosystem.EcosystemName = new Domain.ValueObjects.Name(model.EcosystemNameVAL);
             try
             {
-                return RedirectToAction(nameof(Index));
+                model.Ecosystem.Validate();
+                AddUC.Add(model.Ecosystem);                
+                return RedirectToAction("AddEcosystem", "Ecosystem");
             }
-            catch
+            catch (Exception ex) 
             {
+                ModelState.AddModelError(string.Empty, ex.Message);
                 return View();
             }
-        }
-
-        // GET: EcosystemController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: EcosystemController/Edit/5
+        }     
+                
+        // POST: EcosystemController/Delete
+        [Private]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
+            var e = FindUC.Find(id);            
+            try 
+            {    
+                if (e != null) {                
+                    RemoveUC.Remove(e);
+                    return RedirectToAction("Delete", "Ecosystem");
+                } else throw InvalidOperationException("No se encontró el ecosistema que desea borrar.");
             }
-            catch
-            {
+            catch (Exception ex) {
+                ViewBag.Error = ex.Message;
                 return View();
-            }
-        }
-
-        // GET: EcosystemController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: EcosystemController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            }                    
         }
     }
 }

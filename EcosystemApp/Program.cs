@@ -16,15 +16,22 @@ builder.Services.AddSession(options => {
     options.Cookie.Name = "EcosystemApp";
 });
 
+// Users
 builder.Services.AddScoped<IRepositoryUsers, UsersRepository>();
 builder.Services.AddScoped<IAddUser, AddUserUC>();
 
+// Ecosystems
 builder.Services.AddScoped<IRepositoryEcosystems, EcosystemsRepository>();
 builder.Services.AddScoped<IAddEcosystem, AddEcoUC>();
+builder.Services.AddScoped<IRemoveEcosystem, RemoveEcoUC>();
+builder.Services.AddScoped<IListEcosystem, ListEcosUC>();
+builder.Services.AddScoped<IFindEcosystem, FindEcoUC>();
 
+// Species
 builder.Services.AddScoped<IRepositorySpecies, SpeciesRepository>();
 builder.Services.AddScoped<IAddSpecies, AddSpeciesUC>();
 
+// Threats
 builder.Services.AddScoped<IRepositoryThreats, ThreatsRepository>();
 builder.Services.AddScoped<IAddThreat, AddThreatUC>();
 

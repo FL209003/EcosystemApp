@@ -33,7 +33,7 @@ namespace EcosystemApp.Controllers
                         AddUC.Add(model.User);
                         return RedirectToAction("Index", "Home");
                     }
-                    else throw new Exception("Las contraseñas no coinciden.");
+                    else throw new InvalidOperationException("Las contraseñas no coinciden.");
                 }
                 catch (Exception ex)
                 {

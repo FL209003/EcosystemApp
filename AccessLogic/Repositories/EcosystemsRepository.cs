@@ -46,15 +46,15 @@ namespace AccessLogic.Repositories
         public void Remove(Ecosystem e)
         {
             if (e != null) {
-                try {                    
-                    if (e.Species == null) {
+                if (e.Species == null) {
+                    try {                  
                         Context.Ecosystems.Remove(e);
-                        Context.SaveChanges();  
-                    } else throw new InvalidOperationException("El ecosistema no debe tener especies que lo habiten para poder eliminarlo.");                    
-                } catch (Exception ex) {
-                    throw ex;
-                }               
-            } throw new InvalidOperationException("El ecosistema que intenta eliminar no existe.");
+                        Context.SaveChanges();                                          
+                    } catch (Exception ex) {
+                        throw ex;
+                    } 
+                } else throw new InvalidOperationException("El ecosistema no debe tener especies que lo habiten para poder eliminarlo.");              
+            } else throw new InvalidOperationException("El ecosistema que intenta eliminar no existe.");
         }
 
         public void Update(Ecosystem e)
