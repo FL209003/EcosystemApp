@@ -16,9 +16,9 @@ namespace EcosystemApp.Controllers
         }
 
         public ActionResult Index() { return View(); }
-        
+
         public IActionResult AddUser() { return View(); }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddUser(VMUser model)
@@ -35,10 +35,15 @@ namespace EcosystemApp.Controllers
                     }
                     else throw new InvalidOperationException("Las contraseñas no coinciden.");
                 }
+                catch (InvalidOperationException ex)
+                {
+                    ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                    return View(model);
+                }
                 catch (Exception ex)
                 {
-                    ViewBag.Error = ex.Message;
-                    return View("AddSpecies", model);
+                    ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                    return View(model);
                 }
             }
             ViewBag.Error = "Especie no válida.";

@@ -8,9 +8,9 @@
 <h4>@ViewBag.Error</h4>
 <br />
 <hr />
-<p>
-    <a asp-action="AddEcosystem">Nuevo Ecosistema</a>
-</p>
+
+<h4 class="text-dark"><b><a asp-action="AddEcosystem">Nuevo Ecosistema</a></b></h4>
+
 <table class="table">
     <thead>
         <tr>
@@ -49,7 +49,7 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <img src="/Banderas/@item.ImgRoute" height="60" />
+                    <img src="/img/Ecosystems/@item.ImgRoute" height="60" />
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

@@ -6,12 +6,12 @@ namespace EcosystemApp.Models
     public class VMEcosystem
     {
         [Required]
-        public Ecosystem Ecosystem { get; set; }
+        public required Ecosystem Ecosystem { get; set; }
 
-        [Required]
-        public String EcosystemNameVAL { get; set; }
+        [Required(ErrorMessage = "Nombre del ecosistema requerido")]
+        public required String EcosystemNameVAL { get; set; }
 
-        [Required]
-        public IFormFile ImgEco { get; set; }
+        [Required(ErrorMessage = "Imagen del ecosistema requerida.")]
+        public required IFormFile ImgEco { get; set; }
     }
 }

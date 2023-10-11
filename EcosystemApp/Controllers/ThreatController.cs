@@ -31,8 +31,8 @@ namespace EcosystemApp.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
-                return View();
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                return View(model);
             }
         }
     }

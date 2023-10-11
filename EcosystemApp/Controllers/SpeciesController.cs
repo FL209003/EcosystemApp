@@ -11,10 +11,14 @@ namespace EcosystemApp.Controllers
     {
         public IAddSpecies AddUC { get; set; }
 
-        public SpeciesController(IAddSpecies addUC)
+        public IWebHostEnvironment WHE { get; set; }
+
+        public SpeciesController(IAddSpecies addUC, IWebHostEnvironment whe)
         {
             AddUC = addUC;
+            WHE = whe;
         }
+
         public ActionResult Index() { return View(); }
 
         // public IActionResult Details() { return View(); }
@@ -32,18 +36,42 @@ namespace EcosystemApp.Controllers
             try
             {
                 model.Species.Validate();
-                AddUC.Add(model.Species);
-                return RedirectToAction("AddSPecies", "Species");
+
+                FileInfo fi = new(model.ImgSpecies.FileName);
+                string ext = fi.Extension;
+
+                if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
+                {
+                    model.Species.Validate();
+
+                    string fileName = model.Species.Id + ext;
+                    model.Species.ImgRoute = fileName;
+
+                    string rootDir = WHE.WebRootPath;
+                    string route = Path.Combine(rootDir, "img/Ecosystems", fileName);
+                    FileStream fs = new(route, FileMode.Create);
+
+                    model.ImgSpecies.CopyTo(fs);
+                    AddUC.Add(model.Species);
+
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Error = "El tipo de imagen debe ser png, jpg o jpeg.";
+                    ModelState.AddModelError(string.Empty, ViewBag.Error);
+                    return View(model);
+                }
             }
             catch (SpeciesException ex)
             {
-                ViewBag.Error = ex.Message;
-                return RedirectToAction("AddSpecies", "Species", new { error = ViewBag.Error });
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                return View(model);
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
-                return RedirectToAction("AddSpecies", "Species", new { error = ViewBag.Error });
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                return View(model);
             }
         }
 

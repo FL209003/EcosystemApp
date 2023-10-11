@@ -40,14 +40,18 @@ namespace EcosystemApp.Controllers
                             HttpContext.Session.SetString("rol", u.Role);
                             return RedirectToAction("Index", "Home");
                         }
-                        else throw new Exception("El usuario no existe.");
+                        else throw new InvalidOperationException("El usuario no existe.");
                     }
-                    return RedirectToAction("Index", "Home");
+                }
+                catch (InvalidOperationException ex)
+                {
+                    ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                    return View(model);
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Error = ex.Message;
-                    return View("Login");
+                    ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                    return View(model);
                 }
             }
             return View(model);

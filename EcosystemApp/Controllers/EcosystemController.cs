@@ -59,32 +59,35 @@ namespace EcosystemApp.Controllers
 
                 if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
                 {
-                    string fileName = model.EcosystemNameVAL + ext;
+                    string fileName = model.Ecosystem.Id + ext;
                     model.Ecosystem.ImgRoute = fileName;
 
                     string rootDir = WHE.WebRootPath;
                     string route = Path.Combine(rootDir, "img/Ecosystems", fileName);
-                    FileStream fs = new FileStream(route, FileMode.Create);
+                    FileStream fs = new(route, FileMode.Create);
+
                     model.ImgEco.CopyTo(fs);
                     model.Ecosystem.Validate();
                     AddUC.Add(model.Ecosystem);
+
                     return RedirectToAction(nameof(Index));
                 }
                 else
                 {
-                    ViewBag.Mensaje = "El tipo de imagen debe ser png, jpg o jpeg.";
-                    return View();
+                    ViewBag.Error = "El tipo de imagen debe ser png, jpg o jpeg.";
+                    ModelState.AddModelError(string.Empty, ViewBag.Error);
+                    return View(model);
                 }
             }
             catch (EcosystemException ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return View();
+                return View(model);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return View();
+                return View(model);
             }
         }
 
@@ -106,12 +109,17 @@ namespace EcosystemApp.Controllers
             }
             catch (EcosystemException ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                return View();
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
                 return View();
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
                 return View();
             }
         }

@@ -14,10 +14,17 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
 
-        [Column("Name")]
+        [Column("Nombre")]
         public required Name ConservationName { get; set; }
+
+        [Required(ErrorMessage = "rango de seguridad requerido.")]
+        [Range(0, 100, ErrorMessage = "El valor debe ser entre 0 y 100.")]
+
+        [Column("Rango de seguridad")]
         public required int Security { get; set; }
-        public required string State { get; set; }
+
+        [Column("Estado")]
+        public string State { get; set; }
 
         public Conservation(Name name, int security)
         {

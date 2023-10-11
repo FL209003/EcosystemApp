@@ -8,10 +8,10 @@ namespace EcosystemApp.Models
         [Required]
         public Species Species { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Nombre de la especie requerido.")]
         public String SpeciesNameVAL { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Imagen de la especie requerida.")]
         public IFormFile ImgSpecies { get; set; }
     }
 }

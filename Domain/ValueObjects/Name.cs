@@ -11,7 +11,7 @@ namespace Domain.ValueObjects
     public class Name : IValidate
     {        
         
-        [MinLength(5), MaxLength(20)]
+        [MinLength(2), MaxLength(50)]
         public string Value { get; private set; }
 
         public Name(string value)

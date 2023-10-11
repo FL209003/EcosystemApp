@@ -46,7 +46,7 @@ namespace Domain.Entities
 
         [Column("Image")]
         [Display(Name = "Imagen")]        
-        public string SpeciesImgRoute { get; set; }
+        public string ImgRoute { get; set; }
         public List<Ecosystem>? Ecosystems { get; set; }
         public List<Threat>? Threats { get; set; }
 
