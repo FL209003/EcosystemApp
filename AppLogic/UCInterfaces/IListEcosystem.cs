@@ -9,6 +9,6 @@ namespace AppLogic.UCInterfaces
 {
     public interface IListEcosystem
     {
-        void List();
+        List<Ecosystem> List();
     }
 }

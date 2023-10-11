@@ -5,10 +5,10 @@ namespace EcosystemApp.Models
 {
     public class LoginViewModel
     {
-        [Required]        
+        [Required(ErrorMessage = "Escriba su nombre de usuario.")]
         public string Username { get; set; }
 
-        [Required]        
+        [Required(ErrorMessage = "Escriba su contraseña.")]
         public string Password { get; set; }
     }
 }

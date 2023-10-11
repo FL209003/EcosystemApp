@@ -14,33 +14,44 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
 
-        [Column("Name")]
-        public required Name ConservationName { get; set; }
-        public required int Security { get; set; }
-        public required string State { get; set; }
+        [Column("Estado")]
+        [Required(ErrorMessage = "Estado de conservación requerido.")]        
+        public required Name ConservationName { get; set; }       
 
-        public Conservation(Name name, int security)
+        [Column("Rango de conservación mínimo")]
+        [Range(0, 100, ErrorMessage = "El valor debe ser entre 0 y 100.")]
+        public required int MinSecurityRange { get; set; }   
+
+        [Column("Rango de conservación máximo")]
+        [Range(0, 100, ErrorMessage = "El valor debe ser entre 0 y 100.")]
+        public required int MaxSecurityRange { get; set; }        
+
+        public Conservation(Name conservationNamen,int minSecurity, int maxSecurity)
         {
-            ConservationName = name;
-            Security = security;
-            State = SetState(security);
+            ConservationName = conservationName;
+            MinSecurityRange = minSecurity;   
+            MaxSecurityRange = maxSecurity;        
         }
 
         public Conservation() { }
 
         public void Validate()
         {
-            if (string.IsNullOrEmpty(State)) throw new Exception("El estado de la conservación es requerido.");
-            if (Security < 0) { throw new Exception("El valor no puede ser menor a 0."); }
-            if (Security > 100) { throw new Exception("El valor no puede ser mayor a 100."); }
-        }
-
-        public static string SetState(int security)
-        {
-            if (security < 60) { return "Malo"; }
-            if (security >= 60 && security <= 70) { return "Aceptable"; }
-            if (security > 70 && security < 95) { return "Muy bueno"; }
-            else return "Óptimo";
-        }
+            if (string.IsNullOrEmpty(ConservationName)) throw new Exception("El estado de la conservación es requerido.");
+            if (MinSecurityRange < 0 || MaxSecurityRange < 0 || MinSecurityRange > 100 || MaxSecurityRange > 100) 
+            { throw new Exception("Debe ser un valor entre 0 y 100."); }
+            if (MaxSecurityRange <= MinSecurityRange) 
+            { throw new Exception("El rango de conservación mínimo debe ser menor al máximo y visceversa."); }
+            if (ConservationName.Name.Value == "Malo" && MaxSecurityRange >= 60) throw new Exception("Rango de conservación Mala: 0 - 59.");
+            if (ConservationName.Name.Value == "Aceptable" && MinSecurityRange < 60 || 
+                ConservationName.Name.Value == "Aceptable" && MaxSecurityRange > 70) 
+            { throw new Exception("Rango de conservación Aceptable: 60 - 70."); }
+            if (ConservationName.Name.Value == "Bueno" && MinSecurityRange < 71 || 
+                ConservationName.Name.Value == "Bueno" && MaxSecurityRange > 94) 
+            { throw new Exception("Rango de conservación Bueno: 71 - 94."); }
+            if (ConservationName.Name.Value == "Óptimo" && MinSecurityRange < 95 || 
+                ConservationName.Name.Value == "Óptimo" && MaxSecurityRange > 100) 
+            { throw new Exception("Rango de conservación Óptimo: 95 - 100."); }
+        }        
     }
 }

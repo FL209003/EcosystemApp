@@ -1,5 +1,6 @@
 ﻿using Domain.DomainInterfaces;
 using Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,10 +16,10 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
 
-        [Column("Name")]
+        [Column("Nombre")]
         public required Name CountryName { get; set; }
 
-        [Column("Alpha 3 code")]
+        [Column("Código alfa-3")]
         public required string Alpha3 { get; set; }
 
         public Country(Name name, string alpha3)
@@ -32,6 +33,7 @@ namespace Domain.Entities
         public void Validate()
         {
             if (string.IsNullOrEmpty(Alpha3)) throw new Exception("El codigo alfanumérico del país es requerido.");
+            if (Alpha3.Length != 3) throw new Exception("Se requieren 3 caracteres.");
         }
     }
 }

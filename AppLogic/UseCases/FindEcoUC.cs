@@ -1,14 +1,6 @@
 using AppLogic.UCInterfaces;
 using Domain.Entities;
 using Domain.RepositoryInterfaces;
-using AppLogic.UCInterfaces;
-using Domain.Entities;
-using Domain.RepositoryInterfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppLogic.UseCases
 {
@@ -21,9 +13,9 @@ namespace AppLogic.UseCases
             EcosRepo = repo;
         }
         
-        public Ecosystem FindEco(int id) 
+        public Ecosystem Find(int id) 
         {
-            return EcosRepo.Find(id);
+            return EcosRepo.FindById(id);
         }
     }
 }

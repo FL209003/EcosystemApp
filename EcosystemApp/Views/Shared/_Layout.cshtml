@@ -20,13 +20,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ecosystem" asp-action="ListEcosystems"><b>Ecosistemas</b></a>
-                        </li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Ecosystem" asp-action="Index"><b>Ecosistemas</b></a>
+                        </li>                        
                         <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ecosystem" asp-action="AddEcosystem"><b>Crear Ecosistema</b></a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="AddSpecies"><b>Crear Especie</b></a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="Index"><b>Especies</b></a>
                         </li>
                         @if (Context.Session.GetString("role") == "Admin")
                         {
@@ -56,7 +53,7 @@
                                 <div class="container">
                                     <div class="row align-items-end">
                                         <div class="col-3 text-dark">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Cerrar sesión</a>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout"><b>Cerrar sesión</b></a>
                                         </div>
                                     </div>
                                 </div>

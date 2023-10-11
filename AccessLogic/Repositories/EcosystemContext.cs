@@ -10,6 +10,7 @@ namespace AccessLogic.Repositories
         public DbSet<Species> Species { get; set; }
         public DbSet<Threat> Threats { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Conservation> Conservations { get; set; }
               
         public EcosystemContext(DbContextOptions<EcosystemContext> options) : base(options) { }
 
@@ -17,7 +18,7 @@ namespace AccessLogic.Repositories
         {
             modelBuilder.Entity<User>(entity => {entity.HasIndex(e => e.Username).IsUnique();});
             
-            modelBuilder.Entity<Ecosystem>().OwnsOne( e => e.EcosystemName).HasIndex(n => n.Value).IsUnique();
+            modelBuilder.Entity<Ecosystem>().OwnsOne( e => e.EcosystemName).HasIndex(n => n.Value).IsUnique();            
             modelBuilder.Entity<Country>().OwnsOne(c => c.CountryName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Conservation>().OwnsOne(c => c.ConservationName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Species>().OwnsOne(s => s.SpeciesName).HasIndex(n => n.Value).IsUnique();
