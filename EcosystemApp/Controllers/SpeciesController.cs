@@ -3,6 +3,7 @@ using EcosystemApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using EcosystemApp.Filters;
+using Exceptions;
 
 namespace EcosystemApp.Controllers
 {
@@ -18,9 +19,11 @@ namespace EcosystemApp.Controllers
 
         // public IActionResult Details() { return View(); }
 
+        [Private]
         public ActionResult AddSpecies() { return View(); }
 
         // POST: SpeciesController/Create
+        [Private]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddSpecies(VMSpecies model)
@@ -31,6 +34,11 @@ namespace EcosystemApp.Controllers
                 model.Species.Validate();
                 AddUC.Add(model.Species);
                 return RedirectToAction("AddSPecies", "Species");
+            }
+            catch (SpeciesException ex)
+            {
+                ViewBag.Error = ex.Message;
+                return RedirectToAction("AddSpecies", "Species", new { error = ViewBag.Error });
             }
             catch (Exception ex)
             {

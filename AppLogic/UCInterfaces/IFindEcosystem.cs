@@ -9,6 +9,6 @@ namespace AppLogic.UCInterfaces
 {
     public interface IFindEcosystem
     {
-        void Find(int id);
+        Ecosystem Find(int id);
     }
 }

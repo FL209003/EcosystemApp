@@ -10,5 +10,8 @@ namespace EcosystemApp.Models
 
         [Required]
         public String SpeciesNameVAL { get; set; }
+
+        [Required]
+        public IFormFile ImgSpecies { get; set; }
     }
 }

@@ -1,0 +1,51 @@
+﻿@model EcosystemApp.Models.VMEcosystem
+
+@{
+    ViewData["Title"] = "AddEcosystem";
+}
+
+<h3 class="text-dark"><i><b>Nuevo Ecosistema</b></i></h3>
+<h4>@ViewBag.Error</h4>
+<br />
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddEcosystem" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>    
+            <div class="form-group">
+                <label asp-for="EcosystemNameVAL" class="control-label">Nombre del ecosistema</label>
+                <input asp-for="EcosystemNameVAL" class="form-control" />
+                <span asp-validation-for="EcosystemNameVAL" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <label asp-for="Ecosystem.Area" class="control-label"></label>
+                <input asp-for="Ecosystem.Area" class="form-control" />
+                <span asp-validation-for="Ecosystem.Area" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ecosystem.GeoDetails" class="control-label"></label>
+                <input asp-for="Ecosystem.GeoDetails" class="form-control" />
+                <span asp-validation-for="Ecosystem.GeoDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ecosystem.Description" class="control-label"></label>
+                <input asp-for="Ecosystem.Description" class="form-control" />
+                <span asp-validation-for="Ecosystem.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgEco" class="control-label"></label>
+                <input asp-for="ImgEco" class="form-control" />
+                <span asp-validation-for="ImgEco" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<h4>@ViewBag.Success</h4>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -19,6 +19,7 @@ builder.Services.AddSession(options => {
 // Users
 builder.Services.AddScoped<IRepositoryUsers, UsersRepository>();
 builder.Services.AddScoped<IAddUser, AddUserUC>();
+builder.Services.AddScoped<IListUser, ListUsersUC>();
 
 // Ecosystems
 builder.Services.AddScoped<IRepositoryEcosystems, EcosystemsRepository>();

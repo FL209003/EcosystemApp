@@ -44,6 +44,9 @@ namespace Domain.Entities
         [Required(ErrorMessage = "Largo máximo del adulto requerido.")]
         public decimal LongRangeAdultMax { get; set; }
 
+        [Column("Image")]
+        [Display(Name = "Imagen")]        
+        public string SpeciesImgRoute { get; set; }
         public List<Ecosystem>? Ecosystems { get; set; }
         public List<Threat>? Threats { get; set; }
 

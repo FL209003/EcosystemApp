@@ -18,7 +18,7 @@ namespace AppLogic.UseCases
             EcosRepo = repo;
         }
         
-        public List<Ecosystem> ListEcos() 
+        public List<Ecosystem> List() 
         {
             return EcosRepo.FindAll().ToList();
         }

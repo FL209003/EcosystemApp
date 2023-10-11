@@ -18,7 +18,7 @@ namespace AppLogic.UseCases
             UsersRepo = repo;
         }
         
-        public List<User> ListUsers() 
+        public List<User> List() 
         {
             return UsersRepo.FindAll().ToList();
         }

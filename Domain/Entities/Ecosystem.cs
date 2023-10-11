@@ -14,7 +14,7 @@ namespace Domain.Entities
         public required Name EcosystemName { get; set; }
 
         [Column("Geographic details")]
-        [Required(ErrorMessage = "Detalles de ubicación geográfica requeridos.")]
+        [Required(ErrorMessage = "Ubicación geográfica requerida.")]
         public required string GeoDetails { get; set; }
 
         [Required(ErrorMessage = "Área requerida.")]
@@ -25,10 +25,20 @@ namespace Domain.Entities
         [MinLength(50, ErrorMessage = "La descripción debe tener al menos 50 caracteres.")]
         [MaxLength(500, ErrorMessage = "La descripción no puede superer los 500 caracteres.")]
         public required string Description { get; set; }
+
+        // Convertir en VO que tenga ambos values y modificar con ToString() para que se muestre como coordenada.
+        
+        //public decimal Latitude { get; set; }
+        
+        //public decimal Longitude { get; set; }
+
+        [Column("Image")]
+        [Display(Name = "Imagen")]
+        public string ImgRoute { get; set; }
         public List<Species>? Species { get; set; }
         public List<Threat>? Threats { get; set; }
 
-        public Ecosystem(Name name, string geoDetails, decimal area, string description, List<Species>? species, List<Threat>? threats)
+        public Ecosystem(Name name, decimal area, string description, string geoDetails, List<Species>? species, List<Threat>? threats)
         {
             EcosystemName = name;
             GeoDetails = geoDetails;
@@ -43,9 +53,7 @@ namespace Domain.Entities
         public void Validate()
         {
             if (string.IsNullOrEmpty(GeoDetails)) throw new Exception("Los detalles geográficos son requeridos.");
-            if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción del ecosistema es requerida.");
-            if (Species == null) throw new Exception("Se requiere al menos una especie en el ecosistema.");
-            if (Threats == null) throw new Exception("Se requiere al menos una amenaza en el ecosistema.");
-        }
+            if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción del ecosistema es requerida.");             
+        }        
     }
 }

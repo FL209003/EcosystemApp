@@ -4,6 +4,7 @@ using AccessLogic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    partial class EcosystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231010224223_imgUploader")]
+    partial class imgUploader
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,6 +115,11 @@ namespace AccessLogic.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("ImgRoute")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Image");
+
                     b.Property<decimal>("LongRangeAdultMax")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("Max length");
@@ -119,11 +127,6 @@ namespace AccessLogic.Migrations
                     b.Property<decimal>("LongRangeAdultMin")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("Min length");
-
-                    b.Property<string>("SpeciesImgRoute")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Image");
 
                     b.Property<decimal>("WeightRangeMax")
                         .HasColumnType("decimal(18,2)")

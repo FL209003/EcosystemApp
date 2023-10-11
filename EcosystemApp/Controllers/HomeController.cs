@@ -13,9 +13,10 @@ namespace EcosystemApp.Controllers
         private readonly ILogger<HomeController> _logger;
         public IListUser ListUserUC { get; set; }
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IListUser listUsers)
         {
             _logger = logger;
+            ListUserUC = listUsers;
         }
 
         public IActionResult Index() { return View(); }
@@ -30,7 +31,7 @@ namespace EcosystemApp.Controllers
             {
                 try
                 {
-                    List<User> users = ListUserUC.ListUsers();
+                    List<User> users = ListUserUC.List();
                     foreach (User u in users)
                     {
                         if (model.Username == u.Username && model.Password == u.Password)

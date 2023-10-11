@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Domain.Entities.Ecosystem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3 class="text-dark"><i><b>Ecosistemas</b></i></h3>
+<h4>@ViewBag.Error</h4>
+<br />
+<hr />
+<p>
+    <a asp-action="AddEcosystem">Nuevo Ecosistema</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EcosystemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GeoDetails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImgRoute)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EcosystemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GeoDetails)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Area)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <img src="/Banderas/@item.ImgRoute" height="60" />
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
