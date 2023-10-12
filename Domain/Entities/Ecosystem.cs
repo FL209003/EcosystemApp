@@ -19,11 +19,15 @@ namespace Domain.Entities
 
         [Column("Área")]
         [Required(ErrorMessage = "Área requerida.")]
-        [Range(1, int.MaxValue, ErrorMessage = "El area no debe ser menor a 1")]
+        [Range(1, int.MaxValue, ErrorMessage = "El area no debe ser menor a 1.")]
         public required decimal Area { get; set; }
 
         [Column("Descripción")]              
         public required Description EcoDescription { get; set; }
+
+        [Column("Estado de conservación")]
+        [Required(ErrorMessage = "Estado de conservación requerido.")]
+        public Conservation EcoConservation { get; set; }
 
         // Convertir en VO que tenga ambos values y modificar con ToString() para que se muestre como coordenada.
 
@@ -45,12 +49,13 @@ namespace Domain.Entities
         [Required(ErrorMessage = "Seleccione al menos un país.")]
         public required List<Country> Countries { get; set; }
 
-        public Ecosystem(Name name, decimal area, Description description, string geoDetails, string imgRoute, List<Species>? species, List<Threat>? threats, List<Country> countries)
+        public Ecosystem(Name name, decimal area, Description description, string geoDetails, Conservation ecoConservation, string imgRoute, List<Species>? species, List<Threat>? threats, List<Country> countries)
         {
             EcosystemName = name;
             GeoDetails = geoDetails;
             Area = area;
             EcoDescription = description;
+            EcoConservation = ecoConservation;
             ImgRoute = imgRoute;
             Species = species;
             Threats = threats;

@@ -42,13 +42,17 @@ namespace Domain.Entities
         [Required(ErrorMessage = "Largo máximo del adulto requerido.")]
         public decimal LongRangeAdultMax { get; set; }
 
+        [Column("Estado de conservación")]
+        [Required(ErrorMessage = "Estado de conservación para la especie requerido.")]
+        public Conservation SpeciesConservation { get; set; }
+
         [Column("Image")]
         [Display(Name = "Imagen")]        
         public string ImgRoute { get; set; }
         public List<Ecosystem>? Ecosystems { get; set; }
         public List<Threat>? Threats { get; set; }
 
-        public Species(string cientificName, Name name, Description description, decimal weightRangeMin, decimal weightRangeMax, decimal longRangeAdultMin, decimal longRangeAdultMax, string imgRoute, List<Ecosystem>? ecosystems, List<Threat>? threats)
+        public Species(string cientificName, Name name, Description description, decimal weightRangeMin, decimal weightRangeMax, decimal longRangeAdultMin, decimal longRangeAdultMax, Conservation speciesConservation, string imgRoute, List<Ecosystem>? ecosystems, List<Threat>? threats)
         {
             CientificName = cientificName;
             SpeciesName = name;
@@ -57,10 +61,12 @@ namespace Domain.Entities
             WeightRangeMax = weightRangeMax;
             LongRangeAdultMin = longRangeAdultMin;
             LongRangeAdultMax = longRangeAdultMax;
+            SpeciesConservation = speciesConservation;
             ImgRoute = imgRoute;
             Ecosystems = ecosystems;
             Threats = threats;
         }
+        
         public Species() { }
 
         public void Validate()
