@@ -42,15 +42,15 @@ namespace Domain.Entities
             { throw new Exception("Debe ser un valor entre 0 y 100."); }
             if (MaxSecurityRange <= MinSecurityRange) 
             { throw new Exception("El rango de conservación mínimo debe ser menor al máximo y visceversa."); }
-            if (ConservationName.Value.Value == "Malo" && MaxSecurityRange >= 60) throw new Exception("Rango de conservación Mala: 0 - 59.");
-            if (ConservationName.Value.Value == "Aceptable" && MinSecurityRange < 60 || 
-                ConservationName.Value.Value == "Aceptable" && MaxSecurityRange > 70) 
+            if (ConservationName.Value == "Malo" && MaxSecurityRange >= 60) throw new Exception("Rango de conservación Mala: 0 - 59.");
+            if (ConservationName.Value == "Aceptable" && MinSecurityRange < 60 || 
+                ConservationName.Value == "Aceptable" && MaxSecurityRange > 70) 
             { throw new Exception("Rango de conservación Aceptable: 60 - 70."); }
-            if (ConservationName.Value.Value == "Bueno" && MinSecurityRange < 71 || 
-                ConservationName.Value.Value == "Bueno" && MaxSecurityRange > 94) 
+            if (ConservationName.Value == "Bueno" && MinSecurityRange < 71 || 
+                ConservationName.Value == "Bueno" && MaxSecurityRange > 94) 
             { throw new Exception("Rango de conservación Bueno: 71 - 94."); }
-            if (ConservationName.Value.Value == "Óptimo" && MinSecurityRange < 95 || 
-                ConservationName.Value.Value == "Óptimo" && MaxSecurityRange > 100) 
+            if (ConservationName.Value == "Óptimo" && MinSecurityRange < 95 || 
+                ConservationName.Value == "Óptimo" && MaxSecurityRange > 100) 
             { throw new Exception("Rango de conservación Óptimo: 95 - 100."); }
         }        
     }
