@@ -12,8 +12,8 @@ namespace Domain.ValueObjects
     {        
         [Required(ErrorMessage = "Descripción requerida.")]
         public string Value { get; private set; }
-        public int MinLength { get; set; }
-        public int MaxLength { get; set; }
+        public static int MinLength { get; set; }
+        public static int MaxLength { get; set; }
 
         public Description(string value)
         {
@@ -27,7 +27,7 @@ namespace Domain.ValueObjects
         {
             if (string.IsNullOrEmpty(Value)) throw new Exception("Descripción es requerida.");
             if (Value.Length < MinLength || Value.Length > MaxLength)
-            { throw new Exception("Descripción debe tener entre " + MinLength.ToString() + " y " + MaxLength.ToString() + " caracteres."); }
+            { throw new Exception("Descripción debe tener entre " + MinLength + " y " + MaxLength + " caracteres."); }
         }
     }
 }
