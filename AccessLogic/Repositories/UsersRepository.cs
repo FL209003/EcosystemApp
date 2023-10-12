@@ -15,15 +15,24 @@ namespace AccessLogic.Repositories
 
         public void Add(User u)
         {
-            if (u != null) {
-                try {                
+
+            try
+            {
+                if (u != null)
+                {
                     u.Validate();
                     Context.Users.Add(u);
-                    Context.SaveChanges();                
-                } catch (Exception ex) {
-                    throw ex;
-                }  
-            } throw new InvalidOperationException("Error al crear usuario, intente nuevamente.");     
+                    Context.SaveChanges();
+                } else throw new InvalidOperationException("Error al crear usuario, intente nuevamente.");
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public IEnumerable<User> FindAll()
@@ -33,27 +42,42 @@ namespace AccessLogic.Repositories
 
         public User FindById(int id)
         {
-            User user = Context.Users.Find(id);
-            if (user != null) {
+            User? user = Context.Users.Find(id);
+            if (user != null)
+            {
                 return user;
-            } throw new InvalidOperationException("No se encontró un usuario con ese id.");
+            }
+            throw new InvalidOperationException("No se encontró un usuario con ese id.");
+        }
+
+        public User FindByName(string username)
+        {
+            User? user = Context.Users.Where(us => us.Username == username).SingleOrDefault();
+            if (user != null)
+            {
+                return user;
+            }
+            throw new InvalidOperationException("No se encontró un usuario con ese nombre de usuario.");
         }
 
         public void Remove(User u)
         {
-            if (u != null) {
+            if (u != null)
+            {
                 Context.Users.Remove(u);
                 Context.SaveChanges();
-            } throw new InvalidOperationException("El usuario que intenta eliminar no existe.");
+            }
+            throw new InvalidOperationException("El usuario que intenta eliminar no existe.");
         }
 
         public void Update(User u)
         {
-            if (u != null) {
+            if (u != null)
+            {
                 Context.Users.Update(u);
                 Context.SaveChanges();
-            } throw new InvalidOperationException("El usuario que intenta actualizar no existe.");
+            }
+            throw new InvalidOperationException("El usuario que intenta actualizar no existe.");
         }
     }
 }
- 

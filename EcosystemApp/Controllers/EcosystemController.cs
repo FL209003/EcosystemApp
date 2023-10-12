@@ -52,6 +52,7 @@ namespace EcosystemApp.Controllers
         public IActionResult AddEcosystem(VMEcosystem model)
         {
             model.Ecosystem.EcosystemName = new Domain.ValueObjects.Name(model.EcosystemNameVAL);
+            model.Ecosystem.EcoDescription = new Domain.ValueObjects.Description(model.EcoDescriptionVAL);
             try
             {
                 FileInfo fi = new(model.ImgEco.FileName);

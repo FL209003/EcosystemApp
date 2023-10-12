@@ -9,5 +9,6 @@ namespace Domain.RepositoryInterfaces
 {
     public interface IRepositoryUsers : IRepository<User>
     {
+        User FindByName(string username);
     }
 }

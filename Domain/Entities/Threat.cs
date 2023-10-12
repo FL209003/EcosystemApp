@@ -19,26 +19,21 @@ namespace Domain.Entities
         public Name ThreatName { get; set; }
 
         [Required(ErrorMessage = "Descripción requerida.")]
-        [MinLength(50, ErrorMessage = "La descripción debe tener al menos 50 caracteres.")]
-        [MaxLength(500, ErrorMessage = "La descripción no puede superer los 500 caracteres.")]
 
         [Column("Descripción")]
-        public required string Description { get; set; }
+        public required Description ThreatDescription { get; set; }
 
         [Column("Nivel de peligrosidad")]
         public required int Danger { get; set; }
-        public Threat(Name name, string description, int danger)
+        public Threat(Name name, Description description, int danger)
         {
             ThreatName = name;
-            Description = description;
+            ThreatDescription = description;
             Danger = danger;
         }
 
         public Threat() { }
 
-        public void Validate()
-        {
-            if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción es requerida.");
-        }
+        public void Validate() { }
     }
 }

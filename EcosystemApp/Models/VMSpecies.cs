@@ -11,6 +11,9 @@ namespace EcosystemApp.Models
         [Required(ErrorMessage = "Nombre de la especie requerido.")]
         public String SpeciesNameVAL { get; set; }
 
+        [Required(ErrorMessage = "Descripción de la especie requerida.")]
+        public String SpeciesDescriptionVal { get; set; }
+
         [Required(ErrorMessage = "Imagen de la especie requerida.")]
         public IFormFile ImgSpecies { get; set; }
     }
