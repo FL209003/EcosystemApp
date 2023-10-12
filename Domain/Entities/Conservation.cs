@@ -26,7 +26,7 @@ namespace Domain.Entities
         [Range(0, 100, ErrorMessage = "El valor debe ser entre 0 y 100.")]
         public required int MaxSecurityRange { get; set; }        
 
-        public Conservation(Name conservationNamen,int minSecurity, int maxSecurity)
+        public Conservation(Name conservationName,int minSecurity, int maxSecurity)
         {
             ConservationName = conservationName;
             MinSecurityRange = minSecurity;   
