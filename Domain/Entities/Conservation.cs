@@ -37,20 +37,20 @@ namespace Domain.Entities
 
         public void Validate()
         {
-            if (string.IsNullOrEmpty(ConservationName)) throw new Exception("El estado de la conservación es requerido.");
+            if (string.IsNullOrEmpty(ConservationName.Value)) throw new Exception("El estado de la conservación es requerido.");
             if (MinSecurityRange < 0 || MaxSecurityRange < 0 || MinSecurityRange > 100 || MaxSecurityRange > 100) 
             { throw new Exception("Debe ser un valor entre 0 y 100."); }
             if (MaxSecurityRange <= MinSecurityRange) 
             { throw new Exception("El rango de conservación mínimo debe ser menor al máximo y visceversa."); }
-            if (ConservationName.Name.Value == "Malo" && MaxSecurityRange >= 60) throw new Exception("Rango de conservación Mala: 0 - 59.");
-            if (ConservationName.Name.Value == "Aceptable" && MinSecurityRange < 60 || 
-                ConservationName.Name.Value == "Aceptable" && MaxSecurityRange > 70) 
+            if (ConservationName.Value.Value == "Malo" && MaxSecurityRange >= 60) throw new Exception("Rango de conservación Mala: 0 - 59.");
+            if (ConservationName.Value.Value == "Aceptable" && MinSecurityRange < 60 || 
+                ConservationName.Value.Value == "Aceptable" && MaxSecurityRange > 70) 
             { throw new Exception("Rango de conservación Aceptable: 60 - 70."); }
-            if (ConservationName.Name.Value == "Bueno" && MinSecurityRange < 71 || 
-                ConservationName.Name.Value == "Bueno" && MaxSecurityRange > 94) 
+            if (ConservationName.Value.Value == "Bueno" && MinSecurityRange < 71 || 
+                ConservationName.Value.Value == "Bueno" && MaxSecurityRange > 94) 
             { throw new Exception("Rango de conservación Bueno: 71 - 94."); }
-            if (ConservationName.Name.Value == "Óptimo" && MinSecurityRange < 95 || 
-                ConservationName.Name.Value == "Óptimo" && MaxSecurityRange > 100) 
+            if (ConservationName.Value.Value == "Óptimo" && MinSecurityRange < 95 || 
+                ConservationName.Value.Value == "Óptimo" && MaxSecurityRange > 100) 
             { throw new Exception("Rango de conservación Óptimo: 95 - 100."); }
         }        
     }
