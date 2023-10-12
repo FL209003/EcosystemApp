@@ -1,6 +1,6 @@
-﻿using Domain.DomainInterfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -8,25 +8,26 @@ using System.Threading.Tasks;
 
 namespace Domain.ValueObjects
 {
-    public class Name : IValidate
-    {
+    public class Description
+    {        
+        [Required(ErrorMessage = "Descripción requerida.")]
         public string Value { get; private set; }
         public int MinLength { get; set; }
         public int MaxLength { get; set; }
 
-        public Name(string value)
+        public Description(string value)
         {
             Value = value;            
             Validate();
         }
 
-        private Name() { }
+        private Description() { }
 
         public void Validate()
         {
-            if (string.IsNullOrEmpty(Value)) throw new Exception("El nombre es requerido.");
+            if (string.IsNullOrEmpty(Value)) throw new Exception("Descripción es requerida.");
             if (Value.Length < MinLength || Value.Length > MaxLength)
-            { throw new Exception("Nombre debe tener entre " + MinLength.ToString() + " y " + MaxLength.ToString() + " caracteres."); }
+            { throw new Exception("Descripción debe tener entre " + MinLength.ToString() + " y " + MaxLength.ToString() + " caracteres."); }
         }
     }
 }

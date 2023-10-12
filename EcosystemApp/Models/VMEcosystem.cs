@@ -8,8 +8,11 @@ namespace EcosystemApp.Models
         [Required]
         public required Ecosystem Ecosystem { get; set; }
 
-        [Required(ErrorMessage = "Nombre del ecosistema requerido")]
+        [Required(ErrorMessage = "Nombre del ecosistema requerido.")]
         public required String EcosystemNameVAL { get; set; }
+
+        [Required(ErrorMessage = "Descripción del ecosistema requerida.")]
+        public required String EcoDescriptionVAL { get; set; }
 
         [Required(ErrorMessage = "Imagen del ecosistema requerida.")]
         public required IFormFile ImgEco { get; set; }

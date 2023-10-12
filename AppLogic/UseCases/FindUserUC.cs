@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace AppLogic.UseCases
 {
-    public class ListUsersUC : IListUser
+    public class FindUserUC : IFindUser
     {
         public IRepositoryUsers UsersRepo { get; set; }
 
-        public ListUsersUC(IRepositoryUsers repo)
+        public FindUserUC(IRepositoryUsers repo)
         {
             UsersRepo = repo;
         }
         
-        public List<User> List() 
+        public User Find(string username) 
         {
-            return UsersRepo.FindAll().ToList();
+            return UsersRepo.FindByName(username);
         }
     }
 }

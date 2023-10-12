@@ -18,11 +18,18 @@ namespace AccessLogic.Repositories
         {
             modelBuilder.Entity<User>(entity => {entity.HasIndex(e => e.Username).IsUnique();});
             
-            modelBuilder.Entity<Ecosystem>().OwnsOne( e => e.EcosystemName).HasIndex(n => n.Value).IsUnique();            
+            modelBuilder.Entity<Ecosystem>().OwnsOne( e => e.EcosystemName).HasIndex(n => n.Value).IsUnique();
+            modelBuilder.Entity<Ecosystem>().OwnsOne(e => e.EcoDescription);
+
             modelBuilder.Entity<Country>().OwnsOne(c => c.CountryName).HasIndex(n => n.Value).IsUnique();
+
             modelBuilder.Entity<Conservation>().OwnsOne(c => c.ConservationName).HasIndex(n => n.Value).IsUnique();
+
             modelBuilder.Entity<Species>().OwnsOne(s => s.SpeciesName).HasIndex(n => n.Value).IsUnique();
+            modelBuilder.Entity<Species>().OwnsOne(e => e.SpeciesDescription);
+
             modelBuilder.Entity<Threat>().OwnsOne(t => t.ThreatName).HasIndex(n => n.Value).IsUnique();
+            modelBuilder.Entity<Threat>().OwnsOne(e => e.ThreatDescription);
         }
     }
 }

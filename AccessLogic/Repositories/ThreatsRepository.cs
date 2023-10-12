@@ -19,22 +19,19 @@ namespace AccessLogic.Repositories
 
         public void Add(Threat t)
         {
-            if (t != null)
+            try
             {
-                try
+                if (t != null)
                 {
                     t.Validate();
                     Context.Threats.Add(t);
                     Context.SaveChanges();
                 }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                else throw new InvalidOperationException("Error al crear una amenaza, intente nuevamente.");
             }
-            else
+            catch (Exception)
             {
-                throw new InvalidOperationException("Error al crear una amenaza, intente nuevamente.");
+                throw;
             }
         }
 
@@ -46,25 +43,31 @@ namespace AccessLogic.Repositories
         public Threat FindById(int id)
         {
             Threat t = Context.Threats.Find(id);
-            if (t != null) {
+            if (t != null)
+            {
                 return t;
-            } throw new InvalidOperationException("No se encontró una amenaza con ese id.");
+            }
+            throw new InvalidOperationException("No se encontró una amenaza con ese id.");
         }
 
         public void Remove(Threat t)
         {
-            if (t != null) {
+            if (t != null)
+            {
                 Context.Threats.Remove(t);
                 Context.SaveChanges();
-            } throw new InvalidOperationException("La amenaza que intenta eliminar no existe.");
+            }
+            throw new InvalidOperationException("La amenaza que intenta eliminar no existe.");
         }
 
         public void Update(Threat t)
         {
-            if (t != null) {
+            if (t != null)
+            {
                 Context.Threats.Update(t);
                 Context.SaveChanges();
-            } throw new InvalidOperationException("La amenaza que intenta actualizar no existe.");
+            }
+            throw new InvalidOperationException("La amenaza que intenta actualizar no existe.");
         }
     }
 }

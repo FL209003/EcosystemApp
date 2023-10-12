@@ -11,12 +11,12 @@ namespace EcosystemApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public IListUser ListUserUC { get; set; }
+        public IFindUser FindUserUC { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, IListUser listUsers)
+        public HomeController(ILogger<HomeController> logger, IFindUser findUser)
         {
             _logger = logger;
-            ListUserUC = listUsers;
+            FindUserUC = findUser;
         }
 
         public IActionResult Index() { return View(); }
@@ -31,17 +31,14 @@ namespace EcosystemApp.Controllers
             {
                 try
                 {
-                    List<User> users = ListUserUC.List();
-                    foreach (User u in users)
+                    User u = FindUserUC.Find(model.Username);
+                    if (u != null && model.Password == u.Password)
                     {
-                        if (model.Username == u.Username && model.Password == u.Password)
-                        {
-                            HttpContext.Session.SetString("username", u.Username);
-                            HttpContext.Session.SetString("rol", u.Role);
-                            return RedirectToAction("Index", "Home");
-                        }
-                        else throw new InvalidOperationException("El usuario no existe.");
+                        HttpContext.Session.SetString("username", u.Username);
+                        HttpContext.Session.SetString("rol", u.Role);
+                        return RedirectToAction("Index", "Home");
                     }
+                    else throw new InvalidOperationException("El usuario no existe.");
                 }
                 catch (InvalidOperationException ex)
                 {

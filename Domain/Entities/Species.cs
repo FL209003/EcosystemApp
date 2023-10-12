@@ -23,10 +23,8 @@ namespace Domain.Entities
         [Required(ErrorMessage = "Nombre del espécimen requerido.")]
         public required Name SpeciesName { get; set; }
 
-        [Required(ErrorMessage = "Descripción requerida.")]
-        [MinLength(50, ErrorMessage = "La descripción debe tener al menos 50 caracteres.")]
-        [MaxLength(500, ErrorMessage = "La descripción no puede superer los 500 caracteres.")]
-        public required string Description { get; set; }
+        [Column("Descripción")]
+        public required Description SpeciesDescription { get; set; }
 
         [Column("Min weight")]
         [Required(ErrorMessage = "Peso mínimo requerido.")]
@@ -54,17 +52,17 @@ namespace Domain.Entities
         public List<Ecosystem>? Ecosystems { get; set; }
         public List<Threat>? Threats { get; set; }
 
-        public Species(string cientificName, Name name, string description, decimal weightRangeMin, decimal weightRangeMax, decimal longRangeAdultMin, 
-                       decimal longRangeAdultMax, Conservation speciesConservation, List<Ecosystem>? ecosystems, List<Threat>? threats)
+        public Species(string cientificName, Name name, Description description, decimal weightRangeMin, decimal weightRangeMax, decimal longRangeAdultMin, decimal longRangeAdultMax, Conservation speciesConservation, string imgRoute, List<Ecosystem>? ecosystems, List<Threat>? threats)
         {
             CientificName = cientificName;
             SpeciesName = name;
-            Description = description;
+            SpeciesDescription = description;
             WeightRangeMin = weightRangeMin;
             WeightRangeMax = weightRangeMax;
             LongRangeAdultMin = longRangeAdultMin;
             LongRangeAdultMax = longRangeAdultMax;
             SpeciesConservation = speciesConservation;
+            ImgRoute = imgRoute;
             Ecosystems = ecosystems;
             Threats = threats;
         }
@@ -73,8 +71,7 @@ namespace Domain.Entities
 
         public void Validate()
         {
-            if (string.IsNullOrEmpty(CientificName)) throw new Exception("El nombre científico de la especie es requerido.");
-            if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción es requerida.");
+            if (string.IsNullOrEmpty(CientificName)) throw new Exception("El nombre científico de la especie es requerido.");            
             if (WeightRangeMin <= 0 || WeightRangeMax <= 0 || LongRangeAdultMin <= 0 || LongRangeAdultMax <= 0) {
                 throw new Exception("Los rangos no pueden ser menores a 1.");
             }            

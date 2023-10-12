@@ -22,11 +22,8 @@ namespace Domain.Entities
         [Range(1, int.MaxValue, ErrorMessage = "El area no debe ser menor a 1.")]
         public required decimal Area { get; set; }
 
-        [Column("Descripción")]
-        [Required(ErrorMessage = "Descripción requerida.")]
-        [MinLength(50, ErrorMessage = "La descripción debe tener al menos 50 caracteres.")]
-        [MaxLength(500, ErrorMessage = "La descripción no puede superer los 500 caracteres.")]
-        public required string Description { get; set; }
+        [Column("Descripción")]              
+        public required Description EcoDescription { get; set; }
 
         [Column("Estado de conservación")]
         [Required(ErrorMessage = "Estado de conservación requerido.")]
@@ -43,23 +40,26 @@ namespace Domain.Entities
         //public decimal Longitude { get; set; }
 
         [Column("Imagen")]
+        [Required(ErrorMessage = "Se requiere una imagen.")]
         [Display(Name = "Imagen")]
-        public string ImgRoute { get; set; }
+        public required string ImgRoute { get; set; }
         public List<Species>? Species { get; set; }
         public List<Threat>? Threats { get; set; }
 
         [Required(ErrorMessage = "Seleccione al menos un país.")]
         public required List<Country> Countries { get; set; }
 
-        public Ecosystem(Name name, string geoDetails, decimal area, Conservation ecoConservation, string geoDetails, List<Species>? species, List<Threat>? threats)
+        public Ecosystem(Name name, decimal area, Description description, string geoDetails, Conservation ecoConservation, string imgRoute, List<Species>? species, List<Threat>? threats, List<Country> countries)
         {
             EcosystemName = name;
             GeoDetails = geoDetails;
             Area = area;
-            Description = description;
+            EcoDescription = description;
             EcoConservation = ecoConservation;
+            ImgRoute = imgRoute;
             Species = species;
             Threats = threats;
+            Countries = countries;
         }
 
         public Ecosystem() { }
@@ -67,7 +67,9 @@ namespace Domain.Entities
         public void Validate()
         {
             if (string.IsNullOrEmpty(GeoDetails)) throw new Exception("Los detalles geográficos son requeridos.");
-            if (string.IsNullOrEmpty(Description)) throw new Exception("La descripción del ecosistema es requerida.");
+            if (Area < 1) throw new Exception("El área no debe ser menor a 1 km cuadrado.");
+            if (string.IsNullOrEmpty(ImgRoute)) throw new Exception("Imagen del ecosistema requerida.");
+            if (Countries == null) throw new Exception("El ecosistema debe estar en al menos un país.");
         }
     }
 }

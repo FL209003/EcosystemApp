@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace AppLogic.UCInterfaces
 {
-    public interface IListUser
+    public interface IFindUser
     {
-        List<User> List();
+        User Find(string username);
     }
 }
