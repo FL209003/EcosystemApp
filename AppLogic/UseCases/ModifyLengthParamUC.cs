@@ -19,32 +19,33 @@ namespace AppLogic.UseCases
         {
             Repo = repo;
         }
+        
         public void ModifyNameParams(int newMinLength, int newMaxLength)
-        {
-            Param minLength = Repo.FindParam("MinLength");
+        {    
+            Param minLength = Repo.FindParam("MinNameLength");
             minLength.Value = newMinLength.ToString();
             Repo.Update(minLength);
 
-            Param maxLength = Repo.FindParam("MaxLength");
+            Param maxLength = Repo.FindParam("MaxNameLength");
             maxLength.Value = newMaxLength.ToString();
             Repo.Update(maxLength);
 
-            Name.MinLength = newMinLength;
-            Name.MaxLength = newMaxLength;
+            Name.MinNameLength = newMinLength;
+            Name.MaxNameLength = newMaxLength;
         }
 
         public void ModifyDescParams(int newMinLength, int newMaxLength)
         {
-            Param minLength = Repo.FindParam("MinLength");
+            Param minLength = Repo.FindParam("MinDescLength");
             minLength.Value = newMinLength.ToString();
             Repo.Update(minLength);
 
-            Param maxLength = Repo.FindParam("MaxLength");
+            Param maxLength = Repo.FindParam("MaxDescLength");
             maxLength.Value = newMaxLength.ToString();
             Repo.Update(maxLength);
 
-            Description.MinLength = newMinLength;
-            Description.MaxLength = newMaxLength;
+            Description.MinDescLength = newMinLength;
+            Description.MaxDescLength = newMaxLength;
         }
     }
 }

@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Domain.ValueObjects
 {
     public class Name : IValidate
-    {
+    {        
         public string Value { get; private set; }
-        public static int MinLength { get; set; }
-        public static int MaxLength { get; set; }
+        public static int MinNameLength { get; set; }
+        public static int MaxNameLength { get; set; }
 
         public Name(string value)
         {
@@ -25,8 +25,8 @@ namespace Domain.ValueObjects
         public void Validate()
         {
             if (string.IsNullOrEmpty(Value)) throw new Exception("El nombre es requerido.");
-            if (Value.Length < MinLength || Value.Length > MaxLength)
-            { throw new Exception("Nombre debe tener entre " + MinLength.ToString() + " y " + MaxLength.ToString() + " caracteres."); }
+            if (Value.Length < MinNameLength || Value.Length > MaxNameLength)
+            { throw new Exception("Nombre debe tener entre " + MinNameLength + " y " + MaxNameLength + " caracteres."); }
         }
     }
 }
