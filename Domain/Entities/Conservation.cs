@@ -30,7 +30,7 @@ namespace Domain.Entities
         {
             ConservationName = conservationName;
             MinSecurityRange = minSecurity;   
-            MaxSecurityRange = maxSecurity;        
+            MaxSecurityRange = maxSecurity;              
         }
 
         public Conservation() { }

@@ -12,5 +12,7 @@ namespace Domain.RepositoryInterfaces
     {
         string? FindValue(string name);
         Param? FindParam(string name);
+        void CheckNameParams(int newMin, int newMax);
+        void CheckDescParams(int newMin, int newMax);
     }
 }
