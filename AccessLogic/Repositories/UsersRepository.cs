@@ -24,11 +24,7 @@ namespace AccessLogic.Repositories
                     Context.Users.Add(u);
                     Context.SaveChanges();
                 } else throw new InvalidOperationException("Error al crear usuario, intente nuevamente.");
-            }
-            catch (InvalidOperationException)
-            {
-                throw;
-            }
+            }            
             catch (Exception)
             {
                 throw;

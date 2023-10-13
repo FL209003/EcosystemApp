@@ -39,7 +39,7 @@ namespace AppLogic.UseCases
             catch (Exception)
             {
                 throw;
-            }
+            }     
         }
 
         public void ModifyDescParams(int newMinLength, int newMaxLength)

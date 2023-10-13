@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Domain.ValueObjects
 {
     public class Name : IValidate
-    {
+    {        
         public string Value { get; private set; }
         public static int MinNameLength { get; set; }
         public static int MaxNameLength { get; set; }

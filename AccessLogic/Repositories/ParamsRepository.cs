@@ -46,7 +46,6 @@ namespace AccessLogic.Repositories
                         .Where(par => par.Name == name)
                         .Select(par => par.Value)
                         .SingleOrDefault();
-
             return value;
         }
 
@@ -121,7 +120,7 @@ namespace AccessLogic.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(Param obj)
+        public void Update(Param p)
         {
             throw new NotImplementedException();
         }
