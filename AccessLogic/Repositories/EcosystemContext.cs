@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
+using System.Reflection.Metadata;
+using Domain.Params;
 
 namespace AccessLogic.Repositories
 {
@@ -11,7 +13,8 @@ namespace AccessLogic.Repositories
         public DbSet<Threat> Threats { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Conservation> Conservations { get; set; }
-              
+        public DbSet<Param> Params { get; set; }
+
         public EcosystemContext(DbContextOptions<EcosystemContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

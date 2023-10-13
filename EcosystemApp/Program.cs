@@ -2,6 +2,7 @@ using AccessLogic.Repositories;
 using AppLogic.UCInterfaces;
 using AppLogic.UseCases;
 using Domain.RepositoryInterfaces;
+using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +43,16 @@ configurationBuilder.AddJsonFile("appsettings.json", false, true);
 var config = configurationBuilder.Build();
 string connectionString = config.GetConnectionString("Connection1");
 builder.Services.AddDbContextPool<EcosystemContext>(Options => Options.UseSqlServer(connectionString));
+
+// Params
+DbContextOptionsBuilder<EcosystemContext> b = new DbContextOptionsBuilder<EcosystemContext>();
+b.UseSqlServer(connectionString);
+var options = b.Options;
+EcosystemContext context = new(options);
+ParamsRepository repo = new(context);
+
+Name.MinLength = int.Parse(repo.FindValue("MinCharNom"));
+Name.MaxLength = int.Parse(repo.FindValue("MaxCharNom"));
 
 var app = builder.Build();
 
