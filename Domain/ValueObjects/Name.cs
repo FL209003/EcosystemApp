@@ -27,6 +27,7 @@ namespace Domain.ValueObjects
             if (string.IsNullOrEmpty(Value)) throw new Exception("El nombre es requerido.");
             if (Value.Length < MinNameLength || Value.Length > MaxNameLength)
             { throw new Exception("Nombre debe tener entre " + MinNameLength + " y " + MaxNameLength + " caracteres."); }
+            if (MinNameLength < 0 || MaxNameLength < 0) throw new Exception("Debe ser un número positivo.");
         }
     }
 }

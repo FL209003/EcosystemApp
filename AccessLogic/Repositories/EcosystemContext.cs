@@ -13,16 +13,18 @@ namespace AccessLogic.Repositories
         public DbSet<Threat> Threats { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Conservation> Conservations { get; set; }
-        public DbSet<Param> Params { get; set; }
+        public DbSet<Limit> Limits { get; set; }
 
         public EcosystemContext(DbContextOptions<EcosystemContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(entity => {entity.HasIndex(e => e.Username).IsUnique();});
-            
-            modelBuilder.Entity<Ecosystem>().OwnsOne( e => e.EcosystemName).HasIndex(n => n.Value).IsUnique();
+            modelBuilder.Entity<User>(entity => { entity.HasIndex(e => e.Username).IsUnique(); });
+
+            modelBuilder.Entity<Ecosystem>().OwnsOne(e => e.EcosystemName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Ecosystem>().OwnsOne(e => e.EcoDescription);
+            modelBuilder.Entity<Ecosystem>().HasOne(s => s.EcoConservation)
+                        .WithMany(c => c.ConservationEcosystems).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Country>().OwnsOne(c => c.CountryName).HasIndex(n => n.Value).IsUnique();
 
@@ -30,6 +32,8 @@ namespace AccessLogic.Repositories
 
             modelBuilder.Entity<Species>().OwnsOne(s => s.SpeciesName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Species>().OwnsOne(e => e.SpeciesDescription);
+            modelBuilder.Entity<Species>().HasOne(s => s.SpeciesConservation)
+                        .WithMany(c => c.ConservationSpecies).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Threat>().OwnsOne(t => t.ThreatName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Threat>().OwnsOne(e => e.ThreatDescription);

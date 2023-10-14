@@ -4,6 +4,7 @@ using AccessLogic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    partial class EcosystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231014164948_params")]
+    partial class @params
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -302,9 +305,9 @@ namespace AccessLogic.Migrations
             modelBuilder.Entity("Domain.Entities.Ecosystem", b =>
                 {
                     b.HasOne("Domain.Entities.Conservation", "EcoConservation")
-                        .WithMany("ConservationEcosystems")
+                        .WithMany()
                         .HasForeignKey("EcoConservationId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.OwnsOne("Domain.ValueObjects.Description", "EcoDescription", b1 =>
@@ -356,9 +359,9 @@ namespace AccessLogic.Migrations
             modelBuilder.Entity("Domain.Entities.Species", b =>
                 {
                     b.HasOne("Domain.Entities.Conservation", "SpeciesConservation")
-                        .WithMany("ConservationSpecies")
+                        .WithMany()
                         .HasForeignKey("SpeciesConservationId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.OwnsOne("Domain.ValueObjects.Description", "SpeciesDescription", b1 =>
@@ -474,13 +477,6 @@ namespace AccessLogic.Migrations
                         .HasForeignKey("SpeciesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.Conservation", b =>
-                {
-                    b.Navigation("ConservationEcosystems");
-
-                    b.Navigation("ConservationSpecies");
                 });
 
             modelBuilder.Entity("Domain.Entities.Ecosystem", b =>

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using EcosystemApp.Filters;
 using Exceptions;
+using Domain.Entities;
+using System.Collections.Generic;
 
 namespace EcosystemApp.Controllers
 {
@@ -11,15 +13,30 @@ namespace EcosystemApp.Controllers
     {
         public IAddSpecies AddUC { get; set; }
 
-        public IWebHostEnvironment WHE { get; set; }
+        public IListSpecies ListUC { get; set; }
 
-        public SpeciesController(IAddSpecies addUC, IWebHostEnvironment whe)
+        public IWebHostEnvironment WHE { get; set; }        
+
+        public SpeciesController(IAddSpecies addUC, IWebHostEnvironment whe, IListSpecies listUC)
         {
             AddUC = addUC;
+            ListUC = listUC;
             WHE = whe;
+            ListUC = listUC;
         }
-
-        public ActionResult Index() { return View(); }
+        public ActionResult Index()
+        {
+            IEnumerable<Species> species = ListUC.List();
+            if (species != null)
+            {
+                return View(species);
+            }
+            else
+            {
+                ViewBag.Error = "No se encontraron especies.";
+                return RedirectToAction("Index", "Species", new { error = ViewBag.Error });
+            }
+        }
 
         // public IActionResult Details() { return View(); }
 

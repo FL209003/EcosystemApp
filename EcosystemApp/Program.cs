@@ -45,16 +45,16 @@ string connectionString = config.GetConnectionString("Connection1");
 builder.Services.AddDbContextPool<EcosystemContext>(Options => Options.UseSqlServer(connectionString));
 
 // Params
-DbContextOptionsBuilder<EcosystemContext> b = new DbContextOptionsBuilder<EcosystemContext>();
-b.UseSqlServer(connectionString);
-var options = b.Options;
-EcosystemContext context = new(options);
-ParamsRepository repo = new(context);
+//DbContextOptionsBuilder<EcosystemContext> b = new();
+//b.UseSqlServer(connectionString);
+//var options = b.Options;
+//EcosystemContext context = new(options);
+//ParamsRepository repo = new(context);
 
-Name.MinNameLength = int.Parse(repo.FindValue("MinNameLength"));
-Name.MaxNameLength = int.Parse(repo.FindValue("MaxNameLength"));
-Description.MinDescLength = int.Parse(repo.FindValue("MinDescLength"));
-Description.MaxDescLength = int.Parse(repo.FindValue("MaxDescLength"));
+//Name.MinNameLength = int.Parse(repo.FindValue("MinNameLength"));
+//Name.MaxNameLength = int.Parse(repo.FindValue("MaxNameLength"));
+//Description.MinDescLength = int.Parse(repo.FindValue("MinDescLength"));
+//Description.MaxDescLength = int.Parse(repo.FindValue("MaxDescLength"));
 
 var app = builder.Build();
 
