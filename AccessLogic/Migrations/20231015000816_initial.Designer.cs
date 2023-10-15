@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    [Migration("20231009213836_AddSpecies+")]
-    partial class AddSpecies
+    [Migration("20231015000816_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,16 +33,17 @@ namespace AccessLogic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Security")
-                        .HasColumnType("int");
+                    b.Property<int>("MaxSecurityRange")
+                        .HasColumnType("int")
+                        .HasColumnName("Rango de conservación máximo");
 
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MinSecurityRange")
+                        .HasColumnType("int")
+                        .HasColumnName("Rango de conservación mínimo");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Conservation");
+                    b.ToTable("Conservations");
                 });
 
             modelBuilder.Entity("Domain.Entities.Country", b =>
@@ -55,9 +56,18 @@ namespace AccessLogic.Migrations
 
                     b.Property<string>("Alpha3")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Código alfa-3");
+
+                    b.Property<int?>("EcosystemId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Alpha3")
+                        .IsUnique();
+
+                    b.HasIndex("EcosystemId");
 
                     b.ToTable("Countries");
                 });
@@ -71,18 +81,25 @@ namespace AccessLogic.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Area")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Área");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                    b.Property<int>("EcoConservationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("GeoDetails")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Ubicación");
+
+                    b.Property<string>("ImgRoute")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Imagen");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EcoConservationId");
 
                     b.ToTable("Ecosystems");
                 });
@@ -97,26 +114,36 @@ namespace AccessLogic.Migrations
 
                     b.Property<string>("CientificName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Cientific name");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("ImgRoute")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Image");
 
                     b.Property<decimal>("LongRangeAdultMax")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Max length");
 
                     b.Property<decimal>("LongRangeAdultMin")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Min length");
+
+                    b.Property<int>("SpeciesConservationId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("WeightRangeMax")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Max weight");
 
                     b.Property<decimal>("WeightRangeMin")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Min weight");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SpeciesConservationId");
 
                     b.ToTable("Species");
                 });
@@ -130,12 +157,8 @@ namespace AccessLogic.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Danger")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("int")
+                        .HasColumnName("Nivel de peligrosidad");
 
                     b.Property<int?>("EcosystemId")
                         .HasColumnType("int");
@@ -164,28 +187,59 @@ namespace AccessLogic.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rol")
+                    b.Property<DateTime>("RegDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Fecha de registro");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Domain.Params.Limit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Limits");
+                });
+
             modelBuilder.Entity("EcosystemSpecies", b =>
                 {
-                    b.Property<int>("HabitatsId")
+                    b.Property<int>("EcosystemsId")
                         .HasColumnType("int");
 
                     b.Property<int>("SpeciesId")
                         .HasColumnType("int");
 
-                    b.HasKey("HabitatsId", "SpeciesId");
+                    b.HasKey("EcosystemsId", "SpeciesId");
 
                     b.HasIndex("SpeciesId");
 
@@ -201,15 +255,14 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)");
+                                .HasColumnType("nvarchar(450)");
 
                             b1.HasKey("ConservationId");
 
                             b1.HasIndex("Value")
                                 .IsUnique();
 
-                            b1.ToTable("Conservation");
+                            b1.ToTable("Conservations");
 
                             b1.WithOwner()
                                 .HasForeignKey("ConservationId");
@@ -221,6 +274,10 @@ namespace AccessLogic.Migrations
 
             modelBuilder.Entity("Domain.Entities.Country", b =>
                 {
+                    b.HasOne("Domain.Entities.Ecosystem", null)
+                        .WithMany("Countries")
+                        .HasForeignKey("EcosystemId");
+
                     b.OwnsOne("Domain.ValueObjects.Name", "CountryName", b1 =>
                         {
                             b1.Property<int>("CountryId")
@@ -228,8 +285,7 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)");
+                                .HasColumnType("nvarchar(450)");
 
                             b1.HasKey("CountryId");
 
@@ -248,6 +304,29 @@ namespace AccessLogic.Migrations
 
             modelBuilder.Entity("Domain.Entities.Ecosystem", b =>
                 {
+                    b.HasOne("Domain.Entities.Conservation", "EcoConservation")
+                        .WithMany("ConservationEcosystems")
+                        .HasForeignKey("EcoConservationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.OwnsOne("Domain.ValueObjects.Description", "EcoDescription", b1 =>
+                        {
+                            b1.Property<int>("EcosystemId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("EcosystemId");
+
+                            b1.ToTable("Ecosystems");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EcosystemId");
+                        });
+
                     b.OwnsOne("Domain.ValueObjects.Name", "EcosystemName", b1 =>
                         {
                             b1.Property<int>("EcosystemId")
@@ -255,8 +334,7 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)");
+                                .HasColumnType("nvarchar(450)");
 
                             b1.HasKey("EcosystemId");
 
@@ -269,12 +347,40 @@ namespace AccessLogic.Migrations
                                 .HasForeignKey("EcosystemId");
                         });
 
+                    b.Navigation("EcoConservation");
+
+                    b.Navigation("EcoDescription")
+                        .IsRequired();
+
                     b.Navigation("EcosystemName")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Species", b =>
                 {
+                    b.HasOne("Domain.Entities.Conservation", "SpeciesConservation")
+                        .WithMany("ConservationSpecies")
+                        .HasForeignKey("SpeciesConservationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.OwnsOne("Domain.ValueObjects.Description", "SpeciesDescription", b1 =>
+                        {
+                            b1.Property<int>("SpeciesId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("SpeciesId");
+
+                            b1.ToTable("Species");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SpeciesId");
+                        });
+
                     b.OwnsOne("Domain.ValueObjects.Name", "SpeciesName", b1 =>
                         {
                             b1.Property<int>("SpeciesId")
@@ -282,8 +388,7 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)");
+                                .HasColumnType("nvarchar(450)");
 
                             b1.HasKey("SpeciesId");
 
@@ -295,6 +400,11 @@ namespace AccessLogic.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("SpeciesId");
                         });
+
+                    b.Navigation("SpeciesConservation");
+
+                    b.Navigation("SpeciesDescription")
+                        .IsRequired();
 
                     b.Navigation("SpeciesName")
                         .IsRequired();
@@ -310,6 +420,23 @@ namespace AccessLogic.Migrations
                         .WithMany("Threats")
                         .HasForeignKey("SpeciesId");
 
+                    b.OwnsOne("Domain.ValueObjects.Description", "ThreatDescription", b1 =>
+                        {
+                            b1.Property<int>("ThreatId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ThreatId");
+
+                            b1.ToTable("Threats");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ThreatId");
+                        });
+
                     b.OwnsOne("Domain.ValueObjects.Name", "ThreatName", b1 =>
                         {
                             b1.Property<int>("ThreatId")
@@ -317,8 +444,7 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)");
+                                .HasColumnType("nvarchar(450)");
 
                             b1.HasKey("ThreatId");
 
@@ -331,6 +457,9 @@ namespace AccessLogic.Migrations
                                 .HasForeignKey("ThreatId");
                         });
 
+                    b.Navigation("ThreatDescription")
+                        .IsRequired();
+
                     b.Navigation("ThreatName")
                         .IsRequired();
                 });
@@ -339,7 +468,7 @@ namespace AccessLogic.Migrations
                 {
                     b.HasOne("Domain.Entities.Ecosystem", null)
                         .WithMany()
-                        .HasForeignKey("HabitatsId")
+                        .HasForeignKey("EcosystemsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -350,8 +479,17 @@ namespace AccessLogic.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Entities.Conservation", b =>
+                {
+                    b.Navigation("ConservationEcosystems");
+
+                    b.Navigation("ConservationSpecies");
+                });
+
             modelBuilder.Entity("Domain.Entities.Ecosystem", b =>
                 {
+                    b.Navigation("Countries");
+
                     b.Navigation("Threats");
                 });
 

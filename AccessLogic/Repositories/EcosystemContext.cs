@@ -23,8 +23,7 @@ namespace AccessLogic.Repositories
 
             modelBuilder.Entity<Ecosystem>().OwnsOne(e => e.EcosystemName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Ecosystem>().OwnsOne(e => e.EcoDescription);
-            modelBuilder.Entity<Ecosystem>().HasOne(s => s.EcoConservation)
-                        .WithMany(c => c.ConservationEcosystems).OnDelete(DeleteBehavior.NoAction);
+
 
             modelBuilder.Entity<Country>().OwnsOne(c => c.CountryName).HasIndex(n => n.Value).IsUnique();
 
@@ -32,11 +31,31 @@ namespace AccessLogic.Repositories
 
             modelBuilder.Entity<Species>().OwnsOne(s => s.SpeciesName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Species>().OwnsOne(e => e.SpeciesDescription);
-            modelBuilder.Entity<Species>().HasOne(s => s.SpeciesConservation)
-                        .WithMany(c => c.ConservationSpecies).OnDelete(DeleteBehavior.NoAction);
+
 
             modelBuilder.Entity<Threat>().OwnsOne(t => t.ThreatName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Threat>().OwnsOne(e => e.ThreatDescription);
+
+            modelBuilder.Entity<Species>()
+                .HasOne(s => s.SpeciesConservation)
+                .WithMany(c => c.ConservationSpecies)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Conservation>()
+                .HasMany(c => c.ConservationSpecies)
+                .WithOne(s => s.SpeciesConservation)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<Ecosystem>()
+                .HasOne(e => e.EcoConservation)
+                .WithMany(c => c.ConservationEcosystems)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Conservation>()
+                .HasMany(c => c.ConservationEcosystems)
+                .WithOne(e => e.EcoConservation)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
