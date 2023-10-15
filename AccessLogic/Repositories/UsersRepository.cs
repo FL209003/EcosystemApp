@@ -33,7 +33,7 @@ namespace AccessLogic.Repositories
 
         public IEnumerable<User> FindAll()
         {
-            return Context.Users.ToList();
+            return Context.Users;
         }
 
         public User FindById(int id)

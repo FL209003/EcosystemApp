@@ -92,6 +92,8 @@ namespace EcosystemApp.Controllers
             }
         }
 
+        public ActionResult DeleteConfirmation(int id) { return View(id); }
+
         // POST: EcosystemController/Delete
         [Private]
         [HttpPost]
