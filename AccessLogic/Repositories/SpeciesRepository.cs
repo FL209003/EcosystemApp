@@ -38,7 +38,7 @@ namespace AccessLogic.Repositories
 
         public IEnumerable<Species> FindAll()
         {
-            return Context.Species.ToList();
+            return Context.Species;
         }
 
         public Species FindById(int id)

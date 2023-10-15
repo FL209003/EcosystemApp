@@ -18,41 +18,41 @@ namespace AccessLogic.Repositories
             Context = context;
         }
 
-        public void Add(Param obj)
+        public void Add(Limit obj)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Param> FindAll()
+        public IEnumerable<Limit> FindAll()
         {
             throw new NotImplementedException();
         }
 
-        public Param FindById(int id)
+        public Limit FindById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Param? FindParam(string name)
+        public Limit? FindParam(string name)
         {
-            return Context.Params.Where(par => par.Name == name).SingleOrDefault();
+            return Context.Limits.Where(par => par.Name == name).SingleOrDefault();
         }
 
         public string? FindValue(string name)
         {
-            var value = Context.Params
+            var value = Context.Limits
                         .Where(par => par.Name == name)
                         .Select(par => par.Value)
                         .SingleOrDefault();
             return value;
         }
 
-        public void Remove(Param obj)
+        public void Remove(Limit obj)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Param p)
+        public void Update(Limit p)
         {
             throw new NotImplementedException();
         }

@@ -38,8 +38,10 @@ namespace AccessLogic.Repositories
 
         public IEnumerable<Ecosystem> FindAll()
         {
-            return Context.Ecosystems.ToList();
+            return Context.Ecosystems;
         }
+
+        //public void 
 
         public Ecosystem FindById(int id)
         {

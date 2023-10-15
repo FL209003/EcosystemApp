@@ -24,7 +24,11 @@ namespace Domain.Entities
 
         [Column("Rango de conservación máximo")]
         [Range(0, 100, ErrorMessage = "El valor debe ser entre 0 y 100.")]
-        public required int MaxSecurityRange { get; set; }        
+        public required int MaxSecurityRange { get; set; }     
+        
+        public List<Ecosystem>? ConservationEcosystems { get; set; }
+
+        public List<Species>? ConservationSpecies { get; set; }
 
         public Conservation(Name conservationName,int minSecurity, int maxSecurity)
         {

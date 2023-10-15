@@ -22,11 +22,11 @@ namespace AppLogic.UseCases
         
         public void ModifyNameParams(int newMinLength, int newMaxLength)
         {    
-            Param minLength = Repo.FindParam("MinNameLength");
+            Limit minLength = Repo.FindParam("MinNameLength");
             minLength.Value = newMinLength.ToString();
             Repo.Update(minLength);
 
-            Param maxLength = Repo.FindParam("MaxNameLength");
+            Limit maxLength = Repo.FindParam("MaxNameLength");
             maxLength.Value = newMaxLength.ToString();
             Repo.Update(maxLength);
 
@@ -36,11 +36,11 @@ namespace AppLogic.UseCases
 
         public void ModifyDescParams(int newMinLength, int newMaxLength)
         {
-            Param minLength = Repo.FindParam("MinDescLength");
+            Limit minLength = Repo.FindParam("MinDescLength");
             minLength.Value = newMinLength.ToString();
             Repo.Update(minLength);
 
-            Param maxLength = Repo.FindParam("MaxDescLength");
+            Limit maxLength = Repo.FindParam("MaxDescLength");
             maxLength.Value = newMaxLength.ToString();
             Repo.Update(maxLength);
 

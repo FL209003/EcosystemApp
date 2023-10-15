@@ -47,7 +47,7 @@ namespace EcosystemApp.Controllers
                 }
             }
             ViewBag.Error = "Especie no válida.";
-            return View("AddSpecies");
+            return View(model);
         }
     }
 }
