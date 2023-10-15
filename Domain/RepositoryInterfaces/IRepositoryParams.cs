@@ -11,6 +11,8 @@ namespace Domain.RepositoryInterfaces
     public interface IRepositoryParams : IRepository<Limit>
     {
         string? FindValue(string name);
-        Limit? FindParam(string name);
+        Param? FindParam(string name);
+        void CheckNameParams(int newMin, int newMax);
+        void CheckDescParams(int newMin, int newMax);
     }
 }
