@@ -53,13 +53,7 @@ namespace EcosystemApp.Controllers
         public ActionResult AddSpecies()
         {
             IEnumerable<Threat> threats = ListThreatsUC.List();
-
-            VMSpecies vm = new()
-            {                
-                Threats = threats
-            };
-
-            return View(vm);           
+            return View(threats);
         }
 
         // POST: SpeciesController/Create
