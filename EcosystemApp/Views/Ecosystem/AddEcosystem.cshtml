@@ -43,6 +43,11 @@
                 <span asp-validation-for="ImgEco" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Ecosystem.Security" class="control-label">Nivel de seguridad (0-100)</label>
+                <input type="number" asp-for="Ecosystem.Security" class="form-control" />
+                <span asp-validation-for="Ecosystem.Security" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label class="control-label">Paises</label>
                 <select name="IdSelectedCountry" multiple>
                     @foreach (Domain.Entities.Country country in Model.Countries)

@@ -17,9 +17,10 @@ namespace EcosystemApp.Controllers
         public IWebHostEnvironment WHE { get; set; }
         public IListCountries ListCountriesUC { get; set; }
         public IFindCountry FindCountryUC { get; set; }
+        public IFindConservationBySec FindConservationBySec { get; set; }
 
         public EcosystemController(IAddEcosystem addUC, IRemoveEcosystem removeUC, IListEcosystem listUC,
-            IFindEcosystem findUC, IWebHostEnvironment whe, IListCountries listCountries, IFindCountry findCountryUC)
+            IFindEcosystem findUC, IWebHostEnvironment whe, IListCountries listCountries, IFindCountry findCountryUC, IFindConservationBySec findConservationBySec)
         {
             AddUC = addUC;
             RemoveUC = removeUC;
@@ -28,6 +29,7 @@ namespace EcosystemApp.Controllers
             WHE = whe;
             ListCountriesUC = listCountries;
             FindCountryUC = findCountryUC;
+            FindConservationBySec = findConservationBySec;
         }
 
         public ActionResult Index()
@@ -61,7 +63,7 @@ namespace EcosystemApp.Controllers
         public IActionResult AddEcosystem(VMEcosystem model)
         {
 
-
+            model.Ecosystem.EcoConservation = FindConservationBySec.FindBySecutiry(model.Ecosystem.Security);
             model.Countries = ListCountriesUC.List();
             if (model.Ecosystem.Countries == null) { model.Ecosystem.Countries = new List<Country>(); };
             foreach (int country in model.IdSelectedCountry) { model.Ecosystem.Countries.Add(FindCountryUC.FindById(country)); };        

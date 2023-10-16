@@ -28,27 +28,20 @@ namespace Domain.Entities
         [Required(ErrorMessage = "Estado de conservación requerido.")]
         public Conservation EcoConservation { get; set; }
 
-        // Convertir en VO que tenga ambos values y modificar con ToString() para que se muestre como coordenada.
-
-        //[Required(ErrorMessage = "Latitud requerida.")]
-        //[Range(-90 , 90)]
-        //public decimal Latitude { get; set; }
-
-        //[Required(ErrorMessage = "Longitud requerida.")]
-        //[Range(-180, 180)]
-        //public decimal Longitude { get; set; }
-
         [Column("Imagen")]
         [Required(ErrorMessage = "Se requiere una imagen.")]
         [Display(Name = "Imagen")]
         public required string ImgRoute { get; set; }
+
+        [Column("Seguridad")]
+        public int Security { get; set; }
         public List<Species>? Species { get; set; }
         public List<Threat>? Threats { get; set; }
 
         [Required(ErrorMessage = "Seleccione al menos un país.")]
         public List<Country> Countries { get; set; }
 
-        public Ecosystem(Name name, decimal area, Description description, string geoDetails, Conservation ecoConservation, string imgRoute, List<Species>? species, List<Threat>? threats, List<Country> countries)
+        public Ecosystem(Name name, decimal area, Description description, string geoDetails, Conservation ecoConservation, string imgRoute, List<Species>? species, List<Threat>? threats, List<Country> countries, int security)
         {
             EcosystemName = name;
             GeoDetails = geoDetails;
@@ -59,6 +52,7 @@ namespace Domain.Entities
             Species = species;
             Threats = threats;
             Countries = countries;
+            Security = security;
         }
 
         public Ecosystem() { }

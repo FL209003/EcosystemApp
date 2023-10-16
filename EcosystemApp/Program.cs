@@ -42,6 +42,9 @@ builder.Services.AddScoped<IRepositoryCountries, CountriesRepository>();
 builder.Services.AddScoped<IListCountries, ListCountriesUC>();
 builder.Services.AddScoped<IFindCountry, FindCountryUC>();
 
+//Conservation
+builder.Services.AddScoped<IRepositoryConservations, ConservationsRepository>();
+builder.Services.AddScoped<IFindConservationBySec, FindConservationBySecUC>();
 
 // DB config
 ConfigurationBuilder configurationBuilder = new();

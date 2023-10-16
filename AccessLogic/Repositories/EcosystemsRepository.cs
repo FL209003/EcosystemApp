@@ -28,7 +28,7 @@ namespace AccessLogic.Repositories
                     Context.Ecosystems.Add(e);
                     Context.SaveChanges();
                 }
-                throw new EcosystemException("Error al crear un ecosistema, intente nuevamente.");
+                else throw new EcosystemException("Error al crear un ecosistema, intente nuevamente.");
             }
             catch (Exception)
             {
