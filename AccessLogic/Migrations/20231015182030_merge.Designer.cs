@@ -4,6 +4,7 @@ using AccessLogic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    partial class EcosystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231015182030_merge")]
+    partial class merge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace AccessLogic.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CountryEcosystem", b =>
-                {
-                    b.Property<int>("CountriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EcosystemsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CountriesId", "EcosystemsId");
-
-                    b.HasIndex("EcosystemsId");
-
-                    b.ToTable("CountryEcosystem");
-                });
 
             modelBuilder.Entity("Domain.Entities.Conservation", b =>
                 {
@@ -71,10 +59,15 @@ namespace AccessLogic.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Código alfa-3");
 
+                    b.Property<int?>("EcosystemId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Alpha3")
                         .IsUnique();
+
+                    b.HasIndex("EcosystemId");
 
                     b.ToTable("Countries");
                 });
@@ -253,21 +246,6 @@ namespace AccessLogic.Migrations
                     b.ToTable("EcosystemSpecies");
                 });
 
-            modelBuilder.Entity("CountryEcosystem", b =>
-                {
-                    b.HasOne("Domain.Entities.Country", null)
-                        .WithMany()
-                        .HasForeignKey("CountriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Ecosystem", null)
-                        .WithMany()
-                        .HasForeignKey("EcosystemsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entities.Conservation", b =>
                 {
                     b.OwnsOne("Domain.ValueObjects.Name", "ConservationName", b1 =>
@@ -296,6 +274,10 @@ namespace AccessLogic.Migrations
 
             modelBuilder.Entity("Domain.Entities.Country", b =>
                 {
+                    b.HasOne("Domain.Entities.Ecosystem", null)
+                        .WithMany("Countries")
+                        .HasForeignKey("EcosystemId");
+
                     b.OwnsOne("Domain.ValueObjects.Name", "CountryName", b1 =>
                         {
                             b1.Property<int>("CountryId")
@@ -506,6 +488,8 @@ namespace AccessLogic.Migrations
 
             modelBuilder.Entity("Domain.Entities.Ecosystem", b =>
                 {
+                    b.Navigation("Countries");
+
                     b.Navigation("Threats");
                 });
 
