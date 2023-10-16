@@ -24,11 +24,17 @@ namespace Domain.Entities
 
         [Column("Nivel de peligrosidad")]
         public required int Danger { get; set; }
+
+        public required List<Ecosystem> Ecosystems { get; set; }
+
+        public required List<Species> Species { get; set; }
         public Threat(Name name, Description description, int danger)
         {
             ThreatName = name;
             ThreatDescription = description;
             Danger = danger;
+            Species = new List<Species>();
+            Ecosystems = new List<Ecosystem>();
         }
 
         public Threat() { }

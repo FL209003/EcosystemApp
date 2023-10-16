@@ -4,6 +4,7 @@ using AccessLogic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    partial class EcosystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231016211346_after-merge")]
+    partial class aftermerge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,7 +174,17 @@ namespace AccessLogic.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Nivel de peligrosidad");
 
+                    b.Property<int?>("EcosystemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SpeciesId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("EcosystemId");
+
+                    b.HasIndex("SpeciesId");
 
                     b.ToTable("Threats");
                 });
@@ -245,36 +258,6 @@ namespace AccessLogic.Migrations
                     b.HasIndex("SpeciesId");
 
                     b.ToTable("EcosystemSpecies");
-                });
-
-            modelBuilder.Entity("EcosystemThreat", b =>
-                {
-                    b.Property<int>("EcosystemsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ThreatsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EcosystemsId", "ThreatsId");
-
-                    b.HasIndex("ThreatsId");
-
-                    b.ToTable("EcosystemThreat");
-                });
-
-            modelBuilder.Entity("SpeciesThreat", b =>
-                {
-                    b.Property<int>("SpeciesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ThreatsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SpeciesId", "ThreatsId");
-
-                    b.HasIndex("ThreatsId");
-
-                    b.ToTable("SpeciesThreat");
                 });
 
             modelBuilder.Entity("CountryEcosystem", b =>
@@ -458,6 +441,14 @@ namespace AccessLogic.Migrations
 
             modelBuilder.Entity("Domain.Entities.Threat", b =>
                 {
+                    b.HasOne("Domain.Entities.Ecosystem", null)
+                        .WithMany("Threats")
+                        .HasForeignKey("EcosystemId");
+
+                    b.HasOne("Domain.Entities.Species", null)
+                        .WithMany("Threats")
+                        .HasForeignKey("SpeciesId");
+
                     b.OwnsOne("Domain.ValueObjects.Description", "ThreatDescription", b1 =>
                         {
                             b1.Property<int>("ThreatId")
@@ -518,41 +509,21 @@ namespace AccessLogic.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EcosystemThreat", b =>
-                {
-                    b.HasOne("Domain.Entities.Ecosystem", null)
-                        .WithMany()
-                        .HasForeignKey("EcosystemsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Threat", null)
-                        .WithMany()
-                        .HasForeignKey("ThreatsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SpeciesThreat", b =>
-                {
-                    b.HasOne("Domain.Entities.Species", null)
-                        .WithMany()
-                        .HasForeignKey("SpeciesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Threat", null)
-                        .WithMany()
-                        .HasForeignKey("ThreatsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Entities.Conservation", b =>
                 {
                     b.Navigation("ConservationEcosystems");
 
                     b.Navigation("ConservationSpecies");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Ecosystem", b =>
+                {
+                    b.Navigation("Threats");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Species", b =>
+                {
+                    b.Navigation("Threats");
                 });
 #pragma warning restore 612, 618
         }
