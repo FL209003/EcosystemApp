@@ -17,13 +17,16 @@ namespace Domain.Entities
         public int Id { get; set; }
 
         [Column("Nombre")]
-        public required Name CountryName { get; set; }
+        public Name CountryName { get; set; }
 
         [Column("Código alfa-3")]
-        public required string Alpha3 { get; set; }
+        public string Alpha3 { get; set; }
+
+        public List<Ecosystem> Ecosystems { get; set; }
 
         public Country(Name name, string alpha3)
         {
+            Ecosystems = new List<Ecosystem>();
             CountryName = name;
             Alpha3 = alpha3;
         }

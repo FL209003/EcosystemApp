@@ -9,7 +9,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Domain.Params
 {
     [Index(nameof(Name), IsUnique = true)]
-    public class Limit
+    public class Param
     {
         public int Id { get; set; }
         public string Name { get; set; }

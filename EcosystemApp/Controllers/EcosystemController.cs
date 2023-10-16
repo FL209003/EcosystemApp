@@ -15,35 +15,42 @@ namespace EcosystemApp.Controllers
         public IListEcosystem ListUC { get; set; }
         public IFindEcosystem FindUC { get; set; }
         public IWebHostEnvironment WHE { get; set; }
+        public IListCountries ListCountriesUC { get; set; }
 
         public EcosystemController(IAddEcosystem addUC, IRemoveEcosystem removeUC, IListEcosystem listUC,
-            IFindEcosystem findUC, IWebHostEnvironment whe)
+            IFindEcosystem findUC, IWebHostEnvironment whe, IListCountries listCountries)
         {
             AddUC = addUC;
             RemoveUC = removeUC;
             ListUC = listUC;
             FindUC = findUC;
             WHE = whe;
+            ListCountriesUC = listCountries;
         }
 
         public ActionResult Index()
         {
             IEnumerable<Ecosystem> ecos = ListUC.List();
-            if (ecos != null)
+            if (ecos != null && ecos.Count() > 0)
             {
+
                 return View(ecos);
             }
             else
             {
                 ViewBag.Error = "No se encontraron ecosistemas.";
-                return RedirectToAction("Index", "Ecosystem", new { error = ViewBag.Error });
+                return View(ecos);
             }
         }
 
         // public IActionResult Details() { return View(); }
 
         [Private]
-        public ActionResult AddEcosystem() { return View(); }
+        public ActionResult AddEcosystem() {
+            IEnumerable<Country> countries = ListCountriesUC.List();
+            VMEcosystem vmEcosystem = new VMEcosystem() { Countries = countries };
+            return View(vmEcosystem);
+        }
 
         // POST: EcosystemController/Create
         [Private]
@@ -51,8 +58,15 @@ namespace EcosystemApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddEcosystem(VMEcosystem model)
         {
+
+            Country c = new Country() { Id = model.IdSelectedCountry };
+            
+
             model.Ecosystem.EcosystemName = new Domain.ValueObjects.Name(model.EcosystemNameVAL);
             model.Ecosystem.EcoDescription = new Domain.ValueObjects.Description(model.EcoDescriptionVAL);
+            model.Ecosystem.GeoDetails = model.Lat + model.Long;
+            model.Ecosystem.Countries = new List<Country>();
+            model.Ecosystem.Countries.Add(c);
             try
             {
                 FileInfo fi = new(model.ImgEco.FileName);

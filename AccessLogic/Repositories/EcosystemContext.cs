@@ -13,7 +13,7 @@ namespace AccessLogic.Repositories
         public DbSet<Threat> Threats { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Conservation> Conservations { get; set; }
-        public DbSet<Limit> Limits { get; set; }
+        public DbSet<Param> Limits { get; set; }
 
         public EcosystemContext(DbContextOptions<EcosystemContext> options) : base(options) { }
 

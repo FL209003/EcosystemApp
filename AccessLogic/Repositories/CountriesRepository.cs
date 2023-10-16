@@ -10,6 +10,14 @@ namespace AccessLogic.Repositories
 {
     public class CountriesRepository : IRepositoryCountries
     {
+
+        public EcosystemContext Context { get; set; }
+
+        public CountriesRepository(EcosystemContext context)
+        {
+            Context = context;
+        }
+
         public void Add(Country obj)
         {
             throw new NotImplementedException();
@@ -17,7 +25,7 @@ namespace AccessLogic.Repositories
 
         public IEnumerable<Country> FindAll()
         {
-            throw new NotImplementedException();
+            return Context.Countries;
         }
 
         public Country FindById(int id)
