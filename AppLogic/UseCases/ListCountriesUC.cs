@@ -11,8 +11,6 @@ namespace AppLogic.UseCases
 {
     public class ListCountriesUC : IListCountries
     {
-       
-
         public IRepositoryCountries CountriesRepo { get; set; }
 
         public ListCountriesUC(IRepositoryCountries repo)
@@ -24,6 +22,5 @@ namespace AppLogic.UseCases
         {
             return CountriesRepo.FindAll().ToList();
         }
-
     }
 }

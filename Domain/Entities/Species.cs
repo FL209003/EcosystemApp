@@ -1,5 +1,6 @@
 ﻿using Domain.DomainInterfaces;
 using Domain.ValueObjects;
+using Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,35 +16,27 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
 
-        [Column("Cientific name")]
-        [Required(ErrorMessage = "Nombre científico requerido.")]
+        [Column("Cientific name")]        
         public required string CientificName { get; set; }
-
-        [Column("Name")]
-        [Required(ErrorMessage = "Nombre del espécimen requerido.")]
+        
         public required Name SpeciesName { get; set; }
 
         [Column("Descripción")]
         public required Description SpeciesDescription { get; set; }
 
-        [Column("Min weight")]
-        [Required(ErrorMessage = "Peso mínimo requerido.")]
+        [Column("Min weight")]        
         public decimal WeightRangeMin { get; set; }
 
-        [Column("Max weight")]
-        [Required(ErrorMessage = "Peso máximo requerido.")]
+        [Column("Max weight")]        
         public decimal WeightRangeMax { get; set; }
 
-        [Column("Min length")]
-        [Required(ErrorMessage = "Largo mínimo del adulto requerido.")]
+        [Column("Min length")]        
         public decimal LongRangeAdultMin { get; set; }
 
-        [Column("Max length")]
-        [Required(ErrorMessage = "Largo máximo del adulto requerido.")]
+        [Column("Max length")]        
         public decimal LongRangeAdultMax { get; set; }
 
-        [Column("Estado de conservación")]
-        [Required(ErrorMessage = "Estado de conservación para la especie requerido.")]
+        [Column("Estado de conservación")]        
         public Conservation SpeciesConservation { get; set; }
 
         [Column("Image")]
@@ -71,10 +64,13 @@ namespace Domain.Entities
 
         public void Validate()
         {
-            if (string.IsNullOrEmpty(CientificName)) throw new Exception("El nombre científico de la especie es requerido.");            
+            if (string.IsNullOrEmpty(CientificName)) throw new SpeciesException("El nombre científico de la especie es requerido.");            
             if (WeightRangeMin <= 0 || WeightRangeMax <= 0 || LongRangeAdultMin <= 0 || LongRangeAdultMax <= 0) {
-                throw new Exception("Los rangos no pueden ser menores a 1.");
-            }            
+                throw new SpeciesException("Los rangos no pueden ser menores a 1.");
+            }
+            if (string.IsNullOrEmpty(SpeciesName.Value)) throw new SpeciesException("El nombre de la especie es requerido.");
+            if (string.IsNullOrEmpty(SpeciesDescription.Value)) throw new SpeciesException("La descripción es requerida.");
+            if (string.IsNullOrEmpty(ImgRoute)) throw new SpeciesException("La imagen de la especie es requerida.");
         }
     }
 }

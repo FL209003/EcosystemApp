@@ -11,14 +11,13 @@ namespace AccessLogic.Repositories
 {
     public class CountriesRepository : IRepositoryCountries
     {
-
         public EcosystemContext Context { get; set; }
 
         public CountriesRepository(EcosystemContext context)
         {
             Context = context;
         }
-
+        
         public void Add(Country obj)
         {
             throw new NotImplementedException();

@@ -9,10 +9,14 @@ namespace EcosystemApp.Models
         public Species Species { get; set; }
 
         [Required(ErrorMessage = "Nombre de la especie requerido.")]
-        public String SpeciesNameVAL { get; set; }
+        public String SpeciesNameVal { get; set; }
 
         [Required(ErrorMessage = "Descripción de la especie requerida.")]
         public String SpeciesDescriptionVal { get; set; }
+
+        public IEnumerable<Threat>? Threats { get; set; }
+
+        public int IdSelectedThreat { get; set; }
 
         [Required(ErrorMessage = "Imagen de la especie requerida.")]
         public IFormFile ImgSpecies { get; set; }

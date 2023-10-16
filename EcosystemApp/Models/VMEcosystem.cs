@@ -5,12 +5,9 @@ namespace EcosystemApp.Models
 {
     public class VMEcosystem
     {
-
         public  Ecosystem Ecosystem { get; set; }
 
-
         public  String EcosystemNameVAL { get; set; }
-
 
         public  String EcoDescriptionVAL { get; set; }
 
