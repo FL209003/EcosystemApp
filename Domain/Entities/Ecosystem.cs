@@ -47,7 +47,7 @@ namespace Domain.Entities
         public List<Threat>? Threats { get; set; }
 
         [Required(ErrorMessage = "Seleccione al menos un país.")]
-        public required List<Country> Countries { get; set; }
+        public List<Country> Countries { get; set; }
 
         public Ecosystem(Name name, decimal area, Description description, string geoDetails, Conservation ecoConservation, string imgRoute, List<Species>? species, List<Threat>? threats, List<Country> countries)
         {

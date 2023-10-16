@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.RepositoryInterfaces
 {
-    public interface IRepositoryParams : IRepository<Limit>
+    public interface IRepositoryParams : IRepository<Param>
     {
         string? FindValue(string name);
         Param? FindParam(string name);
