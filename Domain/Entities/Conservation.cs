@@ -15,26 +15,28 @@ namespace Domain.Entities
         public int Id { get; set; }
 
         [Column("Estado")]
-        [Required(ErrorMessage = "Estado de conservación requerido.")]        
-        public required Name ConservationName { get; set; }       
+        [Required(ErrorMessage = "Estado de conservación requerido.")]
+        public Name ConservationName { get; set; }
 
-        [Column("Rango de conservación mínimo")]
-        [Range(0, 100, ErrorMessage = "El valor debe ser entre 0 y 100.")]
-        public required int MinSecurityRange { get; set; }   
+        [Column("Rango de seguridad mínimo")]
+        public int MinSecurityRange { get; set; }
 
-        [Column("Rango de conservación máximo")]
-        [Range(0, 100, ErrorMessage = "El valor debe ser entre 0 y 100.")]
-        public required int MaxSecurityRange { get; set; }     
-        
+        [Column("Rango de seguridad máximo")]
+        public int MaxSecurityRange { get; set; }
+
+        [Column("Seguridad")]
+        public int Security { get; set; }
+
         public List<Ecosystem>? ConservationEcosystems { get; set; }
 
         public List<Species>? ConservationSpecies { get; set; }
 
-        public Conservation(Name conservationName,int minSecurity, int maxSecurity)
+        public Conservation(Name conservationName, int security)
         {
             ConservationName = conservationName;
-            MinSecurityRange = minSecurity;   
-            MaxSecurityRange = maxSecurity;              
+            Security = security;
+            MinSecurityRange = SetMinSecurityRange(conservationName.Value);
+            MaxSecurityRange = SetMaxSecurityRange(conservationName.Value);
         }
 
         public Conservation() { }
@@ -42,20 +44,33 @@ namespace Domain.Entities
         public void Validate()
         {
             if (string.IsNullOrEmpty(ConservationName.Value)) throw new Exception("El estado de la conservación es requerido.");
-            if (MinSecurityRange < 0 || MaxSecurityRange < 0 || MinSecurityRange > 100 || MaxSecurityRange > 100) 
-            { throw new Exception("Debe ser un valor entre 0 y 100."); }
-            if (MaxSecurityRange <= MinSecurityRange) 
-            { throw new Exception("El rango de conservación mínimo debe ser menor al máximo y visceversa."); }
-            if (ConservationName.Value == "Malo" && MaxSecurityRange >= 60) throw new Exception("Rango de conservación Mala: 0 - 59.");
-            if (ConservationName.Value == "Aceptable" && MinSecurityRange < 60 || 
-                ConservationName.Value == "Aceptable" && MaxSecurityRange > 70) 
-            { throw new Exception("Rango de conservación Aceptable: 60 - 70."); }
-            if (ConservationName.Value == "Bueno" && MinSecurityRange < 71 || 
-                ConservationName.Value == "Bueno" && MaxSecurityRange > 94) 
-            { throw new Exception("Rango de conservación Bueno: 71 - 94."); }
-            if (ConservationName.Value == "Óptimo" && MinSecurityRange < 95 || 
-                ConservationName.Value == "Óptimo" && MaxSecurityRange > 100) 
-            { throw new Exception("Rango de conservación Óptimo: 95 - 100."); }
-        }        
+            if (Security < 0 || Security > 100) throw new Exception("Indique un valor entre 0 y 100.");
+            if (ConservationName.Value == "Malo" && Security > 59) throw new Exception("Conservación mala: 0 - 59");
+            if (ConservationName.Value == "Aceptable" && Security < 60 || ConservationName.Value == "Aceptable" && Security > 70)
+            {
+                throw new Exception("Conservación aceptable: 60 - 70");
+            }
+            if (ConservationName.Value == "Bueno" && Security < 71 || ConservationName.Value == "Bueno" && Security > 94)
+            {
+                throw new Exception("Conservación aceptable: 71 - 94");
+            }
+            if (ConservationName.Value == "Óptimo" && Security < 95) throw new Exception("Conservación aceptable: 95 - 100");
+        }
+
+        public static int SetMinSecurityRange(string conservationName)
+        {
+            if (conservationName == "Malo") return 0;
+            if (conservationName == "Aceptacble") return 60;
+            if (conservationName == "Bueno") return 71;
+            else return 95;
+        }
+
+        public static int SetMaxSecurityRange(string conservationName)
+        {
+            if (conservationName == "Malo") return 59;
+            if (conservationName == "Aceptacble") return 70;
+            if (conservationName == "Bueno") return 94;
+            else return 100;
+        }
     }
 }

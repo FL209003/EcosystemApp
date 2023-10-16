@@ -60,7 +60,7 @@ namespace EcosystemApp.Controllers
 
                 if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
                 {
-                    string fileName = model.Ecosystem.Id + ext;
+                    string fileName = model.Ecosystem.Id + "_001" + ext;
                     model.Ecosystem.ImgRoute = fileName;
 
                     string rootDir = WHE.WebRootPath;

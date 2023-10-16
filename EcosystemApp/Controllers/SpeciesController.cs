@@ -61,7 +61,7 @@ namespace EcosystemApp.Controllers
                 {
                     model.Species.Validate();
 
-                    string fileName = model.Species.Id + ext;
+                    string fileName = model.Species.Id + "_001" + ext;
                     model.Species.ImgRoute = fileName;
 
                     string rootDir = WHE.WebRootPath;

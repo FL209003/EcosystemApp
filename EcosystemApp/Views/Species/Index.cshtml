@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Domain.Entities.Species>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3 class="text-dark"><i><b>Especies</b></i></h3>
+<h4>@ViewBag.Error</h4>
+<br />
+<hr />
+
+<h4 class="text-dark"><b><a asp-action="AddSpecies">Nuevo Ecosistema</a></b></h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CientificName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeightRangeMin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeightRangeMax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LongRangeAdultMin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LongRangeAdultMax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImgRoute)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CientificName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeightRangeMin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeightRangeMax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LongRangeAdultMin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LongRangeAdultMax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImgRoute)
+            </td>
+            <td>
+                @* @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) | *@
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>}
+    </tbody>
+</table>
