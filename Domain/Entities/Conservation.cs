@@ -13,8 +13,7 @@ namespace Domain.Entities
     public class Conservation : IValidate
     {
         public int Id { get; set; }
-
-        [Column("Estado")]
+        
         [Required(ErrorMessage = "Estado de conservación requerido.")]
         public Name ConservationName { get; set; }
 

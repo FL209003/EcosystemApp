@@ -15,8 +15,7 @@ namespace Domain.Entities
     public class Country : IValidate
     {
         public int Id { get; set; }
-
-        [Column("Nombre")]
+        
         public required Name CountryName { get; set; }
 
         [Column("Código alfa-3")]

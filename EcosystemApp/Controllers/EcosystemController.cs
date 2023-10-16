@@ -85,6 +85,11 @@ namespace EcosystemApp.Controllers
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return View(model);
             }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                return View(model);
+            }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
@@ -106,9 +111,9 @@ namespace EcosystemApp.Controllers
                 if (e != null)
                 {
                     RemoveUC.Remove(e);
-                    return RedirectToAction("Delete", "Ecosystem");
+                    return RedirectToAction("Index", "Ecosystem");
                 }
-                else throw new InvalidOperationException("No se encontró el ecosistema que desea borrar.");
+                else throw new InvalidOperationException("No se encontró el ecosistema que desea eliminar.");
             }
             catch (EcosystemException ex)
             {

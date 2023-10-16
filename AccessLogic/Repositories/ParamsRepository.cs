@@ -20,22 +20,22 @@ namespace AccessLogic.Repositories
             Context = context;
         }
 
-        public void Add(Limit obj)
+        public void Add(Param obj)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Limit> FindAll()
+        public IEnumerable<Param> FindAll()
         {
             throw new NotImplementedException();
         }
 
-        public Limit FindById(int id)
+        public Param FindById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Limit? FindParam(string name)
+        public Param? FindParam(string name)
         {
             return Context.Limits.Where(par => par.Name == name).SingleOrDefault();
         }
@@ -120,7 +120,7 @@ namespace AccessLogic.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(Limit p)
+        public void Update(Param p)
         {
             throw new NotImplementedException();
         }

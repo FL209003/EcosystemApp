@@ -14,8 +14,7 @@ namespace Domain.Entities
     public class Threat : IValidate
     {
         public int Id { get; set; }
-
-        [Column("Nombre")]
+        
         public Name ThreatName { get; set; }
 
         [Required(ErrorMessage = "Descripción requerida.")]

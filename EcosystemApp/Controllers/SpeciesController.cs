@@ -15,14 +15,23 @@ namespace EcosystemApp.Controllers
 
         public IListSpecies ListUC { get; set; }
 
-        public IWebHostEnvironment WHE { get; set; }        
+        public IFindSpecies FindUC { get; set; }
 
-        public SpeciesController(IAddSpecies addUC, IWebHostEnvironment whe, IListSpecies listUC)
+        public IRemoveSpecies RemoveUC { get; set; }
+
+        public IListThreats ListThreatsUC { get; set; }
+
+        public IWebHostEnvironment WHE { get; set; }
+
+        public SpeciesController(IAddSpecies addUC, IWebHostEnvironment whe, IListSpecies listUC,
+            IRemoveSpecies removeUC, IFindSpecies findUC, IListThreats listThreatsUC)
         {
             AddUC = addUC;
             ListUC = listUC;
             WHE = whe;
-            ListUC = listUC;
+            FindUC = findUC;
+            RemoveUC = removeUC;
+            ListThreatsUC = listThreatsUC;
         }
         public ActionResult Index()
         {
@@ -41,7 +50,17 @@ namespace EcosystemApp.Controllers
         // public IActionResult Details() { return View(); }
 
         [Private]
-        public ActionResult AddSpecies() { return View(); }
+        public ActionResult AddSpecies()
+        {
+            IEnumerable<Threat> threats = ListThreatsUC.List();
+
+            VMSpecies vm = new()
+            {                
+                Threats = threats
+            };
+
+            return View(vm);           
+        }
 
         // POST: SpeciesController/Create
         [Private]
@@ -49,7 +68,12 @@ namespace EcosystemApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddSpecies(VMSpecies model)
         {
-            model.Species.SpeciesName = new Domain.ValueObjects.Name(model.SpeciesNameVAL);
+            model.Species.SpeciesName = new Domain.ValueObjects.Name(model.SpeciesNameVal);
+            model.Species.SpeciesDescription = new Domain.ValueObjects.Description(model.SpeciesDescriptionVal);
+
+            //Threat t = new Threat() { Id = model.IdSelectedThreat };
+            //model.Species.Threats.Add(t);
+
             try
             {
                 model.Species.Validate();
@@ -65,7 +89,7 @@ namespace EcosystemApp.Controllers
                     model.Species.ImgRoute = fileName;
 
                     string rootDir = WHE.WebRootPath;
-                    string route = Path.Combine(rootDir, "img/Ecosystems", fileName);
+                    string route = Path.Combine(rootDir, "img/Species", fileName);
                     FileStream fs = new(route, FileMode.Create);
 
                     model.ImgSpecies.CopyTo(fs);
@@ -81,6 +105,11 @@ namespace EcosystemApp.Controllers
                 }
             }
             catch (SpeciesException ex)
+            {
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                return View(model);
+            }
+            catch (InvalidOperationException ex)
             {
                 ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
                 return View(model);
@@ -109,24 +138,37 @@ namespace EcosystemApp.Controllers
             }
         }
 
-        // GET: SpeciesController/Delete
-        public ActionResult Delete(int id)
-        {
-            return View(id);
-        }
+        public ActionResult DeleteConfirmation(int id) { return View(id); }
 
         // POST: SpeciesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Delete(int id)
         {
+            var s = FindUC.Find(id);
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (s != null)
+                {
+                    RemoveUC.Remove(s);
+                    return RedirectToAction("Index", "Species");
+                }
+                else throw new InvalidOperationException("No se encontró la espcie que desea eliminar.");
             }
-            catch
+            catch (SpeciesException ex)
             {
-                return View();
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                return View("Index");
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                return View("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                return View("Index");
             }
         }
     }

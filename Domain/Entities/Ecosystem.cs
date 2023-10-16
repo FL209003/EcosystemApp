@@ -8,8 +8,7 @@ namespace Domain.Entities
     public class Ecosystem : IValidate
     {
         public int Id { get; set; }
-
-        [Column("Nombre")]
+        
         [Required(ErrorMessage = "Nombre del ecosistema requerido.")]
         public required Name EcosystemName { get; set; }
 

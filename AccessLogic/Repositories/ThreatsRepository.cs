@@ -37,7 +37,7 @@ namespace AccessLogic.Repositories
 
         public IEnumerable<Threat> FindAll()
         {
-            return Context.Threats.ToList();
+            return Context.Threats;
         }
 
         public Threat FindById(int id)

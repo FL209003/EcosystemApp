@@ -18,9 +18,9 @@
                 <span asp-validation-for="Species.CientificName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SpeciesNameVAL" class="control-label">Nombre de la especie</label>
-                <input asp-for="SpeciesNameVAL" class="form-control" />
-                <span asp-validation-for="SpeciesNameVAL" class="text-danger"></span>
+                <label asp-for="SpeciesNameVal" class="control-label">Nombre de la especie</label>
+                <input asp-for="SpeciesNameVal" class="form-control" />
+                <span asp-validation-for="SpeciesNameVal" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="SpeciesDescriptionVal" class="control-label">Descripción</label>
@@ -29,33 +29,52 @@
             </div>
             <div class="form-group">
                 <label asp-for="Species.WeightRangeMin" class="control-label">Peso mínimo(kg)</label>
-                <input asp-for="Species.WeightRangeMin" class="form-control" />
+                <input type="number" asp-for="Species.WeightRangeMin" class="form-control" />
                 <span asp-validation-for="Species.WeightRangeMin" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Species.WeightRangeMax" class="control-label">Peso máximo(kg)</label>
-                <input asp-for="Species.WeightRangeMax" class="form-control" />
+                <input type="number" asp-for="Species.WeightRangeMax" class="form-control" />
                 <span asp-validation-for="Species.WeightRangeMax" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Species.LongRangeAdultMin" class="control-label">Longitud mínima(mts) de specimen adulto</label>
-                <input asp-for="Species.LongRangeAdultMin" class="form-control" />
+                <input type="number" asp-for="Species.LongRangeAdultMin" class="form-control" />
                 <span asp-validation-for="Species.LongRangeAdultMin" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Species.LongRangeAdultMax" class="control-label">Longitud máxima(mts) de specimen adulto</label>
-                <input asp-for="Species.LongRangeAdultMax" class="form-control" />
+                <input type="number" asp-for="Species.LongRangeAdultMax" class="form-control" />
                 <span asp-validation-for="Species.LongRangeAdultMax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Estado de Conservación</label>
+                <select name="Species.SpeciesConservation.ConservationName.Value">
+                    <option selected value="">Seleccione estado</option>
+                    <option value="Malo">Malo</option>
+                    <option value="Aceptable">Aceptable</option>
+                    <option value="Bueno">Bueno</option>
+                    <option value="Óptimo">Óptimo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Species.SpeciesConservation.Security" class="control-label">Seguridad</label>
+                <input type="number" asp-for="Species.SpeciesConservation.Security" class="form-control" />
+                <span asp-validation-for="Species.SpeciesConservation.Security" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgSpecies" class="control-label">Imagen de la especie</label>
+                <input asp-for="ImgSpecies" class="form-control" />
+                <span asp-validation-for="ImgSpecies" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 <br />
-<h4>@ViewBag.Success</h4>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
