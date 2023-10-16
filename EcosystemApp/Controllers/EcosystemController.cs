@@ -16,9 +16,10 @@ namespace EcosystemApp.Controllers
         public IFindEcosystem FindUC { get; set; }
         public IWebHostEnvironment WHE { get; set; }
         public IListCountries ListCountriesUC { get; set; }
+        public IFindCountry FindCountryUC { get; set; }
 
         public EcosystemController(IAddEcosystem addUC, IRemoveEcosystem removeUC, IListEcosystem listUC,
-            IFindEcosystem findUC, IWebHostEnvironment whe, IListCountries listCountries)
+            IFindEcosystem findUC, IWebHostEnvironment whe, IListCountries listCountries, IFindCountry findCountryUC)
         {
             AddUC = addUC;
             RemoveUC = removeUC;
@@ -26,6 +27,7 @@ namespace EcosystemApp.Controllers
             FindUC = findUC;
             WHE = whe;
             ListCountriesUC = listCountries;
+            FindCountryUC = findCountryUC;
         }
 
         public ActionResult Index()
@@ -48,7 +50,7 @@ namespace EcosystemApp.Controllers
         [Private]
         public ActionResult AddEcosystem() {
             IEnumerable<Country> countries = ListCountriesUC.List();
-            VMEcosystem vmEcosystem = new VMEcosystem() { Countries = countries };
+            VMEcosystem vmEcosystem = new VMEcosystem() { Countries = countries, IdSelectedCountry = new List<int>() };
             return View(vmEcosystem);
         }
 
@@ -59,14 +61,13 @@ namespace EcosystemApp.Controllers
         public IActionResult AddEcosystem(VMEcosystem model)
         {
 
-            Country c = new Country() { Id = model.IdSelectedCountry };
-            
 
+            model.Countries = ListCountriesUC.List();
+            if (model.Ecosystem.Countries == null) { model.Ecosystem.Countries = new List<Country>(); };
+            foreach (int country in model.IdSelectedCountry) { model.Ecosystem.Countries.Add(FindCountryUC.FindById(country)); };        
             model.Ecosystem.EcosystemName = new Domain.ValueObjects.Name(model.EcosystemNameVAL);
             model.Ecosystem.EcoDescription = new Domain.ValueObjects.Description(model.EcoDescriptionVAL);
             model.Ecosystem.GeoDetails = model.Lat + model.Long;
-            model.Ecosystem.Countries = new List<Country>();
-            model.Ecosystem.Countries.Add(c);
             try
             {
                 FileInfo fi = new(model.ImgEco.FileName);
@@ -79,9 +80,10 @@ namespace EcosystemApp.Controllers
 
                     string rootDir = WHE.WebRootPath;
                     string route = Path.Combine(rootDir, "img/Ecosystems", fileName);
-                    FileStream fs = new(route, FileMode.Create);
-
-                    model.ImgEco.CopyTo(fs);
+                    using (FileStream fs = new(route, FileMode.Create))
+                    {
+                        model.ImgEco.CopyTo(fs);
+                    }
                     model.Ecosystem.Validate();
                     AddUC.Add(model.Ecosystem);
 

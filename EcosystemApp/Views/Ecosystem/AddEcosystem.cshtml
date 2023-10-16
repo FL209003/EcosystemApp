@@ -44,10 +44,17 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Paises</label>
-                <select name="IdSelectedCountry">
+                <select name="IdSelectedCountry" multiple>
                     @foreach (Domain.Entities.Country country in Model.Countries)
                     {
+                        if (Model.IdSelectedCountry.Contains(country.Id))
+                        {
                             <option selected value="@country.Id">@country.CountryName.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@country.Id">@country.Alpha3</option>
+                        }
                     }
                 </select>
             </div>

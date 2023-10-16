@@ -40,6 +40,7 @@ builder.Services.AddScoped<IAddThreat, AddThreatUC>();
 //Countries
 builder.Services.AddScoped<IRepositoryCountries, CountriesRepository>();
 builder.Services.AddScoped<IListCountries, ListCountriesUC>();
+builder.Services.AddScoped<IFindCountry, FindCountryUC>();
 
 
 // DB config

@@ -20,7 +20,7 @@ namespace EcosystemApp.Models
 
         public IEnumerable<Country> Countries { get; set; }
 
-        public int IdSelectedCountry { get; set; }
+        public List<int> IdSelectedCountry { get; set; }
 
         public  IFormFile ImgEco { get; set; }
     }
