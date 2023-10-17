@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace AppLogic.UseCases
 {
-    public class RemoveSpeciesUC : IRemoveSpecies
+    public class FindThreatUC : IFindThreat
     {
-        public IRepositorySpecies SpeciesRepo { get; set; }
 
-        public RemoveSpeciesUC(IRepositorySpecies repo)
+        public IRepositoryThreats ThreatRepo { get; set; }
+
+        public FindThreatUC(IRepositoryThreats repo)
         {
-            SpeciesRepo = repo;
+            ThreatRepo = repo;
         }
-
-        public void Remove(Species s)
+        public Threat Find(int id)
         {
-            SpeciesRepo.Remove(s);
+            return ThreatRepo.FindById(id);
         }
     }
 }

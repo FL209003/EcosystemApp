@@ -11,6 +11,7 @@ namespace Domain.ValueObjects
     public class Description
     {        
         [Required(ErrorMessage = "Descripción requerida.")]
+        [Column("Descripcion")]
         public string Value { get; private set; }
         public static int MinDescLength { get; set; }
         public static int MaxDescLength { get; set; }

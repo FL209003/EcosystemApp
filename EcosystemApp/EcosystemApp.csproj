@@ -28,7 +28,7 @@
   <ItemGroup>
     <Folder Include="Views\Admin\" />
     <Folder Include="wwwroot\img\Ecosystems\" />
-    <Folder Include="wwwroot\img\Species\" />
+    <Folder Include="wwwroot\img\Species\NewFolder\" />
   </ItemGroup>
 
 </Project>

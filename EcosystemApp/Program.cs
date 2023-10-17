@@ -32,10 +32,15 @@ builder.Services.AddScoped<IFindEcosystem, FindEcoUC>();
 // Species
 builder.Services.AddScoped<IRepositorySpecies, SpeciesRepository>();
 builder.Services.AddScoped<IAddSpecies, AddSpeciesUC>();
+builder.Services.AddScoped<IListSpecies, ListSpeciesUC>();
+builder.Services.AddScoped<IRemoveSpecies, RemoveSpeciesUC>();
+builder.Services.AddScoped<IFindSpecies, FindSpeciesUC>();
 
 // Threats
 builder.Services.AddScoped<IRepositoryThreats, ThreatsRepository>();
 builder.Services.AddScoped<IAddThreat, AddThreatUC>();
+builder.Services.AddScoped<IListThreats, ListThreatsUC>();
+builder.Services.AddScoped<IFindThreat, FindThreatUC>();
 
 //Countries
 builder.Services.AddScoped<IRepositoryCountries, CountriesRepository>();

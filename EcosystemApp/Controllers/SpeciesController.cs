@@ -6,6 +6,7 @@ using EcosystemApp.Filters;
 using Exceptions;
 using Domain.Entities;
 using System.Collections.Generic;
+using AppLogic.UseCases;
 
 namespace EcosystemApp.Controllers
 {
@@ -21,10 +22,14 @@ namespace EcosystemApp.Controllers
 
         public IListThreats ListThreatsUC { get; set; }
 
+        public IFindThreat FindThreatUC { get; set; }
+
         public IWebHostEnvironment WHE { get; set; }
 
+        public IFindConservationBySec FindConservationBySec { get; set; }
+
         public SpeciesController(IAddSpecies addUC, IWebHostEnvironment whe, IListSpecies listUC,
-            IRemoveSpecies removeUC, IFindSpecies findUC, IListThreats listThreatsUC)
+            IRemoveSpecies removeUC, IFindSpecies findUC, IListThreats listThreatsUC, IFindConservationBySec findConservationBySec, IFindThreat findThreatUC)
         {
             AddUC = addUC;
             ListUC = listUC;
@@ -32,6 +37,8 @@ namespace EcosystemApp.Controllers
             FindUC = findUC;
             RemoveUC = removeUC;
             ListThreatsUC = listThreatsUC;
+            FindConservationBySec = findConservationBySec;
+            FindThreatUC = findThreatUC;
         }
         public ActionResult Index()
         {
@@ -53,7 +60,8 @@ namespace EcosystemApp.Controllers
         public ActionResult AddSpecies()
         {
             IEnumerable<Threat> threats = ListThreatsUC.List();
-            return View(threats);
+            VMSpecies vm = new () { Threats = threats, IdSelectedThreats = new List<int>() };
+            return View(vm);
         }
 
         // POST: SpeciesController/Create
@@ -62,31 +70,35 @@ namespace EcosystemApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddSpecies(VMSpecies model)
         {
-            model.Species.SpeciesName = new Domain.ValueObjects.Name(model.SpeciesNameVal);
-            model.Species.SpeciesDescription = new Domain.ValueObjects.Description(model.SpeciesDescriptionVal);
-
-            //Threat t = new Threat() { Id = model.IdSelectedThreat };
-            //model.Species.Threats.Add(t);
-
             try
             {
-                model.Species.Validate();
+                if (model.Species.Threats == null) { model.Species.Threats = new List<Threat>(); };
 
+                model.Threats = ListThreatsUC.List();
+                
+                foreach (int threat in model.IdSelectedThreats) { model.Species.Threats.Add(FindThreatUC.Find(threat)); };
+
+                model.Species.SpeciesConservation = FindConservationBySec.FindBySecutiry(model.Species.Security);
+                model.Species.SpeciesName = new Domain.ValueObjects.Name(model.SpeciesNameVal);
+                model.Species.SpeciesDescription = new Domain.ValueObjects.Description(model.SpeciesDescriptionVal);
+                //Threat t = new Threat() { Id = model.IdSelectedThreat };
+                //model.Species.Threats.Add(t);
                 FileInfo fi = new(model.ImgSpecies.FileName);
                 string ext = fi.Extension;
 
                 if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
                 {
-                    model.Species.Validate();
 
                     string fileName = model.Species.Id + "_001" + ext;
                     model.Species.ImgRoute = fileName;
 
                     string rootDir = WHE.WebRootPath;
                     string route = Path.Combine(rootDir, "img/Species", fileName);
-                    FileStream fs = new(route, FileMode.Create);
-
-                    model.ImgSpecies.CopyTo(fs);
+                    using (FileStream fs = new(route, FileMode.Create))
+                    {
+                        model.ImgSpecies.CopyTo(fs);
+                    }
+                    model.Species.Validate();
                     AddUC.Add(model.Species);
 
                     return RedirectToAction(nameof(Index));

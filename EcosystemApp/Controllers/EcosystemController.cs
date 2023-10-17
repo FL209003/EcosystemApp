@@ -65,9 +65,13 @@ namespace EcosystemApp.Controllers
             try
             {
                 model.Ecosystem.EcoConservation = FindConservationBySec.FindBySecutiry(model.Ecosystem.Security);
+
+
                 model.Countries = ListCountriesUC.List();
                 if (model.Ecosystem.Countries == null) { model.Ecosystem.Countries = new List<Country>(); };
                 foreach (int country in model.IdSelectedCountry) { model.Ecosystem.Countries.Add(FindCountryUC.FindById(country)); };        
+
+
                 model.Ecosystem.EcosystemName = new Domain.ValueObjects.Name(model.EcosystemNameVAL);
                 model.Ecosystem.EcoDescription = new Domain.ValueObjects.Description(model.EcoDescriptionVAL);
                 model.Ecosystem.GeoDetails = model.Lat + model.Long;

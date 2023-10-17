@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddSpecies">
+        <form asp-action="AddSpecies" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
             <div class="form-group">
                 <label asp-for="Species.CientificName" class="control-label">Nombre científico</label>
@@ -48,28 +48,34 @@
                 <span asp-validation-for="Species.LongRangeAdultMax" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Estado de Conservación</label>
-                <select name="Species.SpeciesConservation.ConservationName.Value">
-                    <option selected value="">Seleccione estado</option>
-                    <option value="Malo">Malo</option>
-                    <option value="Aceptable">Aceptable</option>
-                    <option value="Bueno">Bueno</option>
-                    <option value="Óptimo">Óptimo</option>
-                </select>
+                <label asp-for="Species.Security" class="control-label">Nivel de seguridad (0-100)</label>
+                <input type="number" asp-for="Species.Security" class="form-control" />
+                <span asp-validation-for="Species.Security" class="text-danger"></span>
             </div>
-@*             <div class="form-group">
-                <label asp-for="Species.SpeciesConservation.Security" class="control-label">Seguridad</label>
-                <input type="number" asp-for="Species.SpeciesConservation.Security" class="form-control" />
-                <span asp-validation-for="Species.SpeciesConservation.Security" class="text-danger"></span>
-            </div> *@
             <div class="form-group">
                 <label asp-for="ImgSpecies" class="control-label">Imagen de la especie</label>
                 <input asp-for="ImgSpecies" class="form-control" />
                 <span asp-validation-for="ImgSpecies" class="text-danger"></span>
             </div>
+                <div class="form-group">
+                    <label class="control-label">Amenazas</label>
+                    <select name="IdSelectedThreats" multiple>
+                        @foreach (Domain.Entities.Threat threat in Model.Threats)
+                        {
+                            if (Model.IdSelectedThreats.Contains(threat.Id))
+                            {
+                            <option selected value="@threat.Id">@threat.ThreatName.Value</option>
+                            }
+                            else
+                            {
+                            <option value="@threat.Id">@threat.ThreatName.Value</option>
+                            }
+                        }
+                    </select>
+                </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
