@@ -29,6 +29,7 @@ builder.Services.AddScoped<IAddEcosystem, AddEcoUC>();
 builder.Services.AddScoped<IRemoveEcosystem, RemoveEcoUC>();
 builder.Services.AddScoped<IListEcosystem, ListEcosUC>();
 builder.Services.AddScoped<IFindEcosystem, FindEcoUC>();
+builder.Services.AddScoped<IFindAllNotUsedBySpecies, FindAllNotUsedBySpeciesUC>();
 
 // Species
 builder.Services.AddScoped<IRepositorySpecies, SpeciesRepository>();
@@ -36,6 +37,7 @@ builder.Services.AddScoped<IAddSpecies, AddSpeciesUC>();
 builder.Services.AddScoped<IListSpecies, ListSpeciesUC>();
 builder.Services.AddScoped<IRemoveSpecies, RemoveSpeciesUC>();
 builder.Services.AddScoped<IFindSpecies, FindSpeciesUC>();
+builder.Services.AddScoped<IUpdateSpecies, UpdateSpeciesUC>();
 
 // Threats
 builder.Services.AddScoped<IRepositoryThreats, ThreatsRepository>();

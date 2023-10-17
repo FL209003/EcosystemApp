@@ -43,10 +43,19 @@ namespace AccessLogic.Repositories
         }
 
         //public void 
+        public IEnumerable<Ecosystem> FindAllNotUsedBySpecies(Species s)
+        {
+            //Verifica que no sufran las mismas amenazas.
 
+            var sharedThreatIds = s.Threats.Select(st => st.Id).ToList();
+
+            return Context.Ecosystems
+                .Where(e => !e.Species.Contains(s) && e.Security > s.Security && !e.Threats.Any(et => sharedThreatIds.Contains(et.Id)))
+                .ToList();
+        }
         public Ecosystem FindById(int id)
         {
-            Ecosystem? e = Context.Ecosystems.Find(id);
+            Ecosystem? e = Context.Ecosystems.Include(e => e.Species).FirstOrDefault(e => e.Id == id);
             if (e != null)
             {
                 return e;
@@ -60,7 +69,7 @@ namespace AccessLogic.Repositories
             {
                 if (e != null)
                 {
-                    if (e.Species == null)
+                    if (e.Species == null || e.Species.Count == 0)
                     {
                         Context.Ecosystems.Remove(e);
                         Context.SaveChanges();

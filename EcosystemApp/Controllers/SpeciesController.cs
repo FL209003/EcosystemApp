@@ -28,8 +28,15 @@ namespace EcosystemApp.Controllers
 
         public IFindConservationBySec FindConservationBySec { get; set; }
 
+        public IListEcosystem ListEcosystemUC { get; set; }
+
+        public IFindEcosystem FindEcosystemUC { get; set; }
+        public IFindAllNotUsedBySpecies FindAllNotUsedBySpecies { get; set; }
+        public IUpdateSpecies UpdateSpeciesUC { get; set; }
+
         public SpeciesController(IAddSpecies addUC, IWebHostEnvironment whe, IListSpecies listUC,
-            IRemoveSpecies removeUC, IFindSpecies findUC, IListThreats listThreatsUC, IFindConservationBySec findConservationBySec, IFindThreat findThreatUC)
+            IRemoveSpecies removeUC, IFindSpecies findUC, IListThreats listThreatsUC, IFindConservationBySec findConservationBySec,
+            IFindThreat findThreatUC, IListEcosystem listEcosystemUC, IFindEcosystem findEcosystemUC, IFindAllNotUsedBySpecies findAllNotUsedBySpecies, IUpdateSpecies updateSpecies)
         {
             AddUC = addUC;
             ListUC = listUC;
@@ -39,6 +46,10 @@ namespace EcosystemApp.Controllers
             ListThreatsUC = listThreatsUC;
             FindConservationBySec = findConservationBySec;
             FindThreatUC = findThreatUC;
+            ListEcosystemUC = listEcosystemUC;
+            FindEcosystemUC = findEcosystemUC;
+            FindAllNotUsedBySpecies = findAllNotUsedBySpecies;
+            UpdateSpeciesUC = updateSpecies;
         }
         public ActionResult Index()
         {
@@ -60,7 +71,9 @@ namespace EcosystemApp.Controllers
         public ActionResult AddSpecies()
         {
             IEnumerable<Threat> threats = ListThreatsUC.List();
-            VMSpecies vm = new () { Threats = threats, IdSelectedThreats = new List<int>() };
+            IEnumerable<Ecosystem> ecos = ListEcosystemUC.List();
+            VMSpecies vm = new () { Threats = threats, IdSelectedThreats = new List<int>(), Ecosystems = ecos, IdSelectedEcos = new List<int>() };
+            
             return View(vm);
         }
 
@@ -73,16 +86,18 @@ namespace EcosystemApp.Controllers
             try
             {
                 if (model.Species.Threats == null) { model.Species.Threats = new List<Threat>(); };
+                if(model.Species.Ecosystems == null) { model.Species.Ecosystems = new List<Ecosystem>(); };
 
                 model.Threats = ListThreatsUC.List();
-                
+                model.Ecosystems = ListEcosystemUC.List();
+
                 foreach (int threat in model.IdSelectedThreats) { model.Species.Threats.Add(FindThreatUC.Find(threat)); };
+                foreach (int eco in model.IdSelectedEcos) { model.Species.Ecosystems.Add(FindEcosystemUC.Find(eco)); };
 
                 model.Species.SpeciesConservation = FindConservationBySec.FindBySecutiry(model.Species.Security);
                 model.Species.SpeciesName = new Domain.ValueObjects.Name(model.SpeciesNameVal);
                 model.Species.SpeciesDescription = new Domain.ValueObjects.Description(model.SpeciesDescriptionVal);
-                //Threat t = new Threat() { Id = model.IdSelectedThreat };
-                //model.Species.Threats.Add(t);
+
                 FileInfo fi = new(model.ImgSpecies.FileName);
                 string ext = fi.Extension;
 
@@ -127,6 +142,35 @@ namespace EcosystemApp.Controllers
             }
         }
 
+        public ActionResult AssignEcosystem(int id)
+        {
+            Species species = FindUC.Find(id);
+            IEnumerable<Ecosystem> ecos = FindAllNotUsedBySpecies.FindAllNotUsedBySpecies(species);
+            if (species == null)
+            {
+                ViewBag.Error = "El cliente con el id " + id + " noexiste";
+            }
+            VMSpecies vm = new VMSpecies() { Species = species, Ecosystems = ecos, IdSelectedThreats = new List<int>(), };
+            return View(vm);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AssignEcosystem(VMSpecies s, int speciesId)
+        {
+            try
+            {
+                Species species = FindUC.Find(speciesId);
+                foreach (int eco in s.IdSelectedEcos) { species.Ecosystems.Add(FindEcosystemUC.Find(eco)); };
+                UpdateSpeciesUC.UpdateSpecies(species);
+            }
+            catch(Exception e)
+            {
+                ViewBag.Error = e.Message;
+            }
+            
+            return View();
+        }
+
         public ActionResult Edit(int id) { return View(id); }
 
         // POST: SpeciesController/Edit
@@ -144,14 +188,20 @@ namespace EcosystemApp.Controllers
             }
         }
 
-        public ActionResult DeleteConfirmation(int id) { return View(id); }
+        public ActionResult Delete(int id) {
+            Species species = FindUC.Find(id);
+            if (species == null)
+            {
+                ViewBag.Error = "El cliente con el id " + id + " noexiste";
+            }
+            return View(species);
+        }
 
         // POST: SpeciesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Species s)
         {
-            var s = FindUC.Find(id);
             try
             {
                 if (s != null)
@@ -159,7 +209,7 @@ namespace EcosystemApp.Controllers
                     RemoveUC.Remove(s);
                     return RedirectToAction("Index", "Species");
                 }
-                else throw new InvalidOperationException("No se encontró la espcie que desea eliminar.");
+                else throw new InvalidOperationException("No se encontró la specie que desea eliminar.");
             }
             catch (SpeciesException ex)
             {

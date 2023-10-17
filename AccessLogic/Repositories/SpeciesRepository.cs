@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.RepositoryInterfaces;
 using Exceptions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace AccessLogic.Repositories
                 }
                 else throw new SpeciesException("Error al crear una especie, intente nuevamente.");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw;
             }
@@ -43,12 +44,16 @@ namespace AccessLogic.Repositories
 
         public Species FindById(int id)
         {
-            Species? s = Context.Species.Find(id);
+            Species? s = Context.Species
+                .Include(s => s.Ecosystems)
+                .ThenInclude(e => e.Threats)
+                .Include(e => e.Threats)
+                .FirstOrDefault(s => s.Id == id);
             if (s != null)
             {
                 return s;
             }
-            throw new SpeciesException("No se encontró una especie con ese id.");
+            else throw new SpeciesException("No se encontró una especie con ese id.");
         }
 
         public void Remove(Species s)
@@ -58,7 +63,7 @@ namespace AccessLogic.Repositories
                 Context.Species.Remove(s);
                 Context.SaveChanges();
             }
-            throw new SpeciesException("La especie que intenta eliminar no existe.");
+            else throw new SpeciesException("La especie que intenta eliminar no existe.");
         }
 
         public void Update(Species s)
@@ -68,7 +73,7 @@ namespace AccessLogic.Repositories
                 Context.Species.Update(s);
                 Context.SaveChanges();
             }
-            throw new SpeciesException("La especie que intenta actualizar no existe.");
+            else throw new SpeciesException("La especie que intenta actualizar no existe.");
         }
     }
 }

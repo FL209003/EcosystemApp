@@ -59,12 +59,11 @@
                 @Html.DisplayFor(modelItem => item.LongRangeAdultMax)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImgRoute)
+                <img src="/img/Species/@item.ImgRoute" height="60" />
             </td>
             <td>
-                @* @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) | *@
-                    @Html.ActionLink("Eliminar", "DeleteConfirmation", new { id=item.Id })
+                @Html.ActionLink("Borrar", "Delete", new {id = item.Id})
+                @Html.ActionLink("Asignar ecosistema", "AssignEcosystem", new {id = item.Id})
             </td>
         </tr>}
     </tbody>

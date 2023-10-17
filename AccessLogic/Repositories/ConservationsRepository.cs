@@ -35,7 +35,7 @@ namespace AccessLogic.Repositories
         public Conservation FindBySecurity(int security) {
             try {
                 var result = Context.Conservations
-                    .Where(cons => cons.MaxSecurityRange > security && cons.MinSecurityRange <= security)
+                    .Where(cons => cons.MaxSecurityRange >= security && cons.MinSecurityRange < security)
                     .SingleOrDefault();
                 return result == null ? throw new Exception("No se ha encontrado ninguna conservacion que corresponda a ese nivel de seguridad") : result;
             }
