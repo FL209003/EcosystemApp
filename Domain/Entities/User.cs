@@ -1,13 +1,8 @@
 ﻿using Domain.DomainInterfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
+using Utility;
 
 namespace Domain.Entities
 {
@@ -23,6 +18,8 @@ namespace Domain.Entities
         [Range(8, int.MaxValue, ErrorMessage = "La contraseña debe tener al menos 8 caracteres.")]
         public required string Password { get; set; }
 
+        public required string HashPassword { get; set; }
+
         [Required(ErrorMessage = "Defina el rol del usuario.")]
         public required string Role { get; set; }
 
@@ -33,6 +30,7 @@ namespace Domain.Entities
         {
             Username = username;
             Password = password;
+            HashPassword = Hash.ComputeSha256Hash(password);
             Role = role;            
             RegDate = DateTime.Now;
         }
@@ -43,9 +41,10 @@ namespace Domain.Entities
         {
             if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Role))
             { throw new Exception("Todos los campos son obligatorios."); }
+            if (string.IsNullOrEmpty(HashPassword)) throw new Exception("Password no ha hasheado con éxito.");
             if (Username.Length < 6) throw new Exception("El nombre de usuario debe tener al menos 6 caracteres.");
             if (Password.Length < 8) throw new Exception("La contraseña debe tener al menos 8 caracteres.");
             if (string.IsNullOrEmpty(Role)) throw new Exception("Especifique el rol del usuario.");
-        }
+        }        
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Domain.Entities;
 using Domain.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
+using Utility;
 
 namespace AccessLogic.Repositories
 {
@@ -15,7 +18,6 @@ namespace AccessLogic.Repositories
 
         public void Add(User u)
         {
-
             try
             {
                 if (u != null)
@@ -75,5 +77,11 @@ namespace AccessLogic.Repositories
             }
             throw new InvalidOperationException("El usuario que intenta actualizar no existe.");
         }
+
+        public bool CompareHash(string rawData, string user)
+        {
+            User u = FindByName(user);
+            return Hash.ValidateHash(rawData, u.HashPassword);            
+        }       
     }
 }
