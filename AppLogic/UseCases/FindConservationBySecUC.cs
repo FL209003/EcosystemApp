@@ -19,7 +19,14 @@ namespace AppLogic.UseCases
         }
         public Conservation FindBySecutiry(int sec)
         {
-            return ConsRepo.FindBySecurity(sec);
+            try {
+                return ConsRepo.FindBySecurity(sec);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
         }
     }
 }

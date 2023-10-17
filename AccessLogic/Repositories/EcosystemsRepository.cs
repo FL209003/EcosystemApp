@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.RepositoryInterfaces;
 using Exceptions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace AccessLogic.Repositories
 
         public IEnumerable<Ecosystem> FindAll()
         {
-            return Context.Ecosystems;
+            return Context.Ecosystems.Include(e => e.EcoConservation).ToList();
         }
 
         //public void 
@@ -50,7 +51,7 @@ namespace AccessLogic.Repositories
             {
                 return e;
             }
-            throw new EcosystemException("No se encontró un ecosistema con ese id.");
+            else throw new EcosystemException("No se encontró un ecosistema con ese id.");
         }
 
         public void Remove(Ecosystem e)

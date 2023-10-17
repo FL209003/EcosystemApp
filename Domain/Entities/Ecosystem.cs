@@ -10,6 +10,7 @@ namespace Domain.Entities
         public int Id { get; set; }
         
         [Required(ErrorMessage = "Nombre del ecosistema requerido.")]
+        [Column("Nombre")]
         public required Name EcosystemName { get; set; }
 
         [Column("Ubicación")]

@@ -15,20 +15,26 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EcosystemName)
+                Nombre
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GeoDetails)
+                Coordenadas
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Area)
+                Area
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EcoDescription)
+                Descripcion
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImgRoute)
-            </th>            
+                Nivel de Seguridad
+            </th>
+            <th>
+                Estado de conservacion
+            </th>
+            <th>
+                Imagen
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -36,7 +42,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EcosystemName)
+                    @Html.DisplayFor(modelItem => item.EcosystemName.Value)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.GeoDetails)
@@ -45,15 +51,19 @@
                     @Html.DisplayFor(modelItem => item.Area)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EcoDescription)
+                    @Html.DisplayFor(modelItem => item.EcoDescription.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Security)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EcoConservation.ConservationName.Value)
                 </td>
                 <td>
                     <img src="/img/Ecosystems/@item.ImgRoute" height="60" />
                 </td>
                 <td>
-                    <!--Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })-->
-                    <!--Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |-->
-                    @Html.ActionLink("Eliminar", "DeleteConfirmation", new { id=item.Id })
+                    @Html.ActionLink("Borrar", "Delete", new {id = item.Id})                  
                 </td>
             </tr>
         }

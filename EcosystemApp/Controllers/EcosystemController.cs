@@ -62,16 +62,16 @@ namespace EcosystemApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddEcosystem(VMEcosystem model)
         {
-
-            model.Ecosystem.EcoConservation = FindConservationBySec.FindBySecutiry(model.Ecosystem.Security);
-            model.Countries = ListCountriesUC.List();
-            if (model.Ecosystem.Countries == null) { model.Ecosystem.Countries = new List<Country>(); };
-            foreach (int country in model.IdSelectedCountry) { model.Ecosystem.Countries.Add(FindCountryUC.FindById(country)); };        
-            model.Ecosystem.EcosystemName = new Domain.ValueObjects.Name(model.EcosystemNameVAL);
-            model.Ecosystem.EcoDescription = new Domain.ValueObjects.Description(model.EcoDescriptionVAL);
-            model.Ecosystem.GeoDetails = model.Lat + model.Long;
             try
             {
+                model.Ecosystem.EcoConservation = FindConservationBySec.FindBySecutiry(model.Ecosystem.Security);
+                model.Countries = ListCountriesUC.List();
+                if (model.Ecosystem.Countries == null) { model.Ecosystem.Countries = new List<Country>(); };
+                foreach (int country in model.IdSelectedCountry) { model.Ecosystem.Countries.Add(FindCountryUC.FindById(country)); };        
+                model.Ecosystem.EcosystemName = new Domain.ValueObjects.Name(model.EcosystemNameVAL);
+                model.Ecosystem.EcoDescription = new Domain.ValueObjects.Description(model.EcoDescriptionVAL);
+                model.Ecosystem.GeoDetails = model.Lat + model.Long;
+            
                 FileInfo fi = new(model.ImgEco.FileName);
                 string ext = fi.Extension;
 
@@ -115,15 +115,23 @@ namespace EcosystemApp.Controllers
             }
         }
 
-        public ActionResult DeleteConfirmation(int id) { return View(id); }
+        public ActionResult Delete(int id) {
+
+            Ecosystem eco = FindUC.Find(id);
+            if (eco == null)
+            {
+                ViewBag.Error = "El cliente con el id " + id + " noexiste";
+            }
+            return View(eco);        
+        }
 
         // POST: EcosystemController/Delete
         [Private]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Ecosystem e)
         {
-            var e = FindUC.Find(id);
+            
             try
             {
                 if (e != null)
