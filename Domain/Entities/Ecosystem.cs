@@ -8,22 +8,21 @@ namespace Domain.Entities
     public class Ecosystem : IValidate
     {
         public int Id { get; set; }
-        
-        [Required(ErrorMessage = "Nombre del ecosistema requerido.")]
+                
         [Column("Nombre")]
-        public required Name EcosystemName { get; set; }
+        public Name EcosystemName { get; set; }
 
         [Column("Ubicación")]
         [Required(ErrorMessage = "Ubicación geográfica requerida.")]
-        public required string GeoDetails { get; set; }
+        public string GeoDetails { get; set; }
 
         [Column("Área")]
         [Required(ErrorMessage = "Área requerida.")]
         [Range(1, int.MaxValue, ErrorMessage = "El area no debe ser menor a 1.")]
-        public required decimal Area { get; set; }
+        public decimal Area { get; set; }
 
-        [Column("Descripción")]              
-        public required Description EcoDescription { get; set; }
+        [Column("Descripción")]
+        public Description EcoDescription { get; set; }
 
         [Column("Estado de conservación")]
         [Required(ErrorMessage = "Estado de conservación requerido.")]
@@ -32,7 +31,7 @@ namespace Domain.Entities
         [Column("Imagen")]
         [Required(ErrorMessage = "Se requiere una imagen.")]
         [Display(Name = "Imagen")]
-        public required string ImgRoute { get; set; }
+        public string ImgRoute { get; set; }
 
         [Column("Seguridad")]
         public int Security { get; set; }
@@ -64,6 +63,16 @@ namespace Domain.Entities
             if (Area < 1) throw new Exception("El área no debe ser menor a 1 km cuadrado.");
             if (string.IsNullOrEmpty(ImgRoute)) throw new Exception("Imagen del ecosistema requerida.");
             if (Countries == null) throw new Exception("El ecosistema debe estar en al menos un país.");
+            if (Security < 0 || Security > 100) throw new Exception("Indique un valor entre 0 y 100.");
+            if (EcoConservation.ConservationName.Value == "Malo" && Security > 59) throw new Exception("Conservación mala: 0 - 59");
+            if (EcoConservation.ConservationName.Value == "Aceptable" && Security < 60 ||
+                EcoConservation.ConservationName.Value == "Aceptable" && Security > 70)
+            { throw new Exception("Conservación aceptable: 60 - 70"); }
+            if (EcoConservation.ConservationName.Value == "Bueno" && Security < 71 ||
+                EcoConservation.ConservationName.Value == "Bueno" && Security > 94)
+            { throw new Exception("Conservación aceptable: 71 - 94"); }
+            if (EcoConservation.ConservationName.Value == "Óptimo" && Security < 95)
+            { throw new Exception("Conservación aceptable: 95 - 100"); }
         }
     }
 }

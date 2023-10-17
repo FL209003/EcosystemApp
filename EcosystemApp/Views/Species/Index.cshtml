@@ -10,6 +10,21 @@
 <hr />
 
 <h4 class="text-dark"><b><a asp-action="AddSpecies">Nueva especie</a></b></h4>
+
+<form asp-action="Index">
+    <input type="submit" value="Nombre Científico" class="btn btn-success" />    
+</form>
+<form asp-action="Index">
+    <input type="submit" value="Peligro de Extinción" class="btn btn-success" />
+</form>
+<form asp-action="Index">
+    <input type="submit" value="Peso" class="btn btn-success" />
+</form>
+<form asp-action="Index">
+    <select></select>
+    <input type="submit" value="Ecosistema" class="btn btn-success" />
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -32,40 +47,46 @@
                 @Html.DisplayNameFor(model => model.LongRangeAdultMax)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.SpeciesConservation.ConservationName.Value)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ImgRoute)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CientificName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WeightRangeMin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WeightRangeMax)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LongRangeAdultMin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LongRangeAdultMax)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImgRoute)
-            </td>
-            <td>
-                @* @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) | *@
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CientificName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WeightRangeMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WeightRangeMax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LongRangeAdultMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LongRangeAdultMax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpeciesConservation.ConservationName.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImgRoute)
+                </td>
+                <td>
                     @Html.ActionLink("Eliminar", "DeleteConfirmation", new { id=item.Id })
-            </td>
-        </tr>}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

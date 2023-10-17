@@ -13,7 +13,7 @@ namespace Domain.Entities
     public class Conservation : IValidate
     {
         public int Id { get; set; }
-        
+
         [Required(ErrorMessage = "Estado de conservación requerido.")]
         public Name ConservationName { get; set; }
 
@@ -27,7 +27,7 @@ namespace Domain.Entities
 
         public List<Species>? ConservationSpecies { get; set; }
 
-        public Conservation(Name conservationName, int security)
+        public Conservation(Name conservationName)
         {
             ConservationName = conservationName;
             MinSecurityRange = SetMinSecurityRange(conservationName.Value);
@@ -36,21 +36,7 @@ namespace Domain.Entities
 
         public Conservation() { }
 
-        public void Validate()
-        {
-            //if (string.IsNullOrEmpty(ConservationName.Value)) throw new Exception("El estado de la conservación es requerido.");
-            //if (Security < 0 || Security > 100) throw new Exception("Indique un valor entre 0 y 100.");
-            //if (ConservationName.Value == "Malo" && Security > 59) throw new Exception("Conservación mala: 0 - 59");
-            //if (ConservationName.Value == "Aceptable" && Security < 60 || ConservationName.Value == "Aceptable" && Security > 70)
-            //{
-            //    throw new Exception("Conservación aceptable: 60 - 70");
-            //}
-            //if (ConservationName.Value == "Bueno" && Security < 71 || ConservationName.Value == "Bueno" && Security > 94)
-            //{
-            //    throw new Exception("Conservación aceptable: 71 - 94");
-            //}
-            //if (ConservationName.Value == "Óptimo" && Security < 95) throw new Exception("Conservación aceptable: 95 - 100");
-        }
+        public void Validate() { }
 
         public static int SetMinSecurityRange(string conservationName)
         {
