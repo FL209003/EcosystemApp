@@ -4,6 +4,7 @@ using AccessLogic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    partial class EcosystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231016213425_fixes5")]
+    partial class fixes5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,6 +55,10 @@ namespace AccessLogic.Migrations
                     b.Property<int>("MinSecurityRange")
                         .HasColumnType("int")
                         .HasColumnName("Rango de seguridad mínimo");
+
+                    b.Property<int>("Security")
+                        .HasColumnType("int")
+                        .HasColumnName("Seguridad");
 
                     b.HasKey("Id");
 
@@ -104,10 +111,6 @@ namespace AccessLogic.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Imagen");
 
-                    b.Property<int>("Security")
-                        .HasColumnType("int")
-                        .HasColumnName("Seguridad");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EcoConservationId");
@@ -140,10 +143,6 @@ namespace AccessLogic.Migrations
                     b.Property<decimal>("LongRangeAdultMin")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("Min length");
-
-                    b.Property<int>("Security")
-                        .HasColumnType("int")
-                        .HasColumnName("Seguridad");
 
                     b.Property<int>("SpeciesConservationId")
                         .HasColumnType("int");
@@ -187,10 +186,6 @@ namespace AccessLogic.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("HashPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()

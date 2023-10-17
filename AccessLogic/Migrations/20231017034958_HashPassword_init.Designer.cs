@@ -4,6 +4,7 @@ using AccessLogic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    partial class EcosystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231017034958_HashPassword_init")]
+    partial class HashPassword_init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,7 +372,8 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Descripcion");
 
                             b1.HasKey("EcosystemId");
 
@@ -424,7 +428,8 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Descripcion");
 
                             b1.HasKey("SpeciesId");
 
@@ -473,7 +478,8 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Descripcion");
 
                             b1.HasKey("ThreatId");
 
