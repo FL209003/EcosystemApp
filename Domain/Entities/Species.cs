@@ -16,31 +16,31 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
 
-        [Column("Cientific name")]        
-        public required string CientificName { get; set; }
-        
-        public required Name SpeciesName { get; set; }
+        [Column("Cientific name")]
+        public string CientificName { get; set; }
+
+        public Name SpeciesName { get; set; }
 
         [Column("Descripción")]
-        public required Description SpeciesDescription { get; set; }
+        public Description SpeciesDescription { get; set; }
 
-        [Column("Min weight")]        
+        [Column("Min weight")]
         public decimal WeightRangeMin { get; set; }
 
-        [Column("Max weight")]        
+        [Column("Max weight")]
         public decimal WeightRangeMax { get; set; }
 
-        [Column("Min length")]        
+        [Column("Min length")]
         public decimal LongRangeAdultMin { get; set; }
 
-        [Column("Max length")]        
+        [Column("Max length")]
         public decimal LongRangeAdultMax { get; set; }
 
-        [Column("Estado de conservación")]        
+        [Column("Estado de conservación")]
         public Conservation SpeciesConservation { get; set; }
 
         [Column("Image")]
-        [Display(Name = "Imagen")]        
+        [Display(Name = "Imagen")]
         public string ImgRoute { get; set; }
 
         [Column("Seguridad")]
@@ -63,18 +63,27 @@ namespace Domain.Entities
             Security = security;
             Threats = threats;
         }
-        
+
         public Species() { }
 
         public void Validate()
         {
-            if (string.IsNullOrEmpty(CientificName)) throw new SpeciesException("El nombre científico de la especie es requerido.");            
-            if (WeightRangeMin <= 0 || WeightRangeMax <= 0 || LongRangeAdultMin <= 0 || LongRangeAdultMax <= 0) {
-                throw new SpeciesException("Los rangos no pueden ser menores a 1.");
-            }
+            if (string.IsNullOrEmpty(CientificName)) throw new SpeciesException("El nombre científico de la especie es requerido.");
+            if (WeightRangeMin <= 0 || WeightRangeMax <= 0 || LongRangeAdultMin <= 0 || LongRangeAdultMax <= 0)
+            { throw new SpeciesException("Los rangos no pueden ser menores a 1."); }
             if (string.IsNullOrEmpty(SpeciesName.Value)) throw new SpeciesException("El nombre de la especie es requerido.");
             if (string.IsNullOrEmpty(SpeciesDescription.Value)) throw new SpeciesException("La descripción es requerida.");
             if (string.IsNullOrEmpty(ImgRoute)) throw new SpeciesException("La imagen de la especie es requerida.");
+            if (Security < 0 || Security > 100) throw new Exception("Indique un valor entre 0 y 100.");
+            if (SpeciesConservation.ConservationName.Value == "Malo" && Security > 59) throw new Exception("Conservación mala: 0 - 59");
+            if (SpeciesConservation.ConservationName.Value == "Aceptable" && Security < 60 ||
+                SpeciesConservation.ConservationName.Value == "Aceptable" && Security > 70)
+            { throw new Exception("Conservación aceptable: 60 - 70"); }
+            if (SpeciesConservation.ConservationName.Value == "Bueno" && Security < 71 ||
+                SpeciesConservation.ConservationName.Value == "Bueno" && Security > 94)
+            { throw new Exception("Conservación aceptable: 71 - 94"); }
+            if (SpeciesConservation.ConservationName.Value == "Óptimo" && Security < 95)
+            { throw new Exception("Conservación aceptable: 95 - 100"); }
         }
     }
 }

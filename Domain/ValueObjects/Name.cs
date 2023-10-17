@@ -12,6 +12,7 @@ namespace Domain.ValueObjects
     public class Name : IValidate
     {
         [Column("Nombre")]
+        [Required(ErrorMessage = "Ingrese nombre")]
         public string Value { get; private set; }
         public static int MinNameLength { get; set; }
         public static int MaxNameLength { get; set; }
@@ -26,7 +27,7 @@ namespace Domain.ValueObjects
 
         public void Validate()
         {
-            if (string.IsNullOrEmpty(Value)) throw new Exception("El nombre es requerido.");
+            if (string.IsNullOrEmpty(Value)) throw new Exception("Nombre es requerido.");
             if (Value.Length < MinNameLength || Value.Length > MaxNameLength)
             { throw new Exception("Nombre debe tener entre " + MinNameLength + " y " + MaxNameLength + " caracteres."); }
             if (MinNameLength < 0 || MaxNameLength < 0) throw new Exception("Debe ser un número positivo.");
