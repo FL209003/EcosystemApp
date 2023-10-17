@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.RepositoryInterfaces
+namespace AppLogic.UCInterfaces
 {
-    public interface IRepositoryEcosystems : IRepository<Ecosystem>
+    public interface IFindAllNotUsedBySpecies
     {
         IEnumerable<Ecosystem> FindAllNotUsedBySpecies(Species s);
     }

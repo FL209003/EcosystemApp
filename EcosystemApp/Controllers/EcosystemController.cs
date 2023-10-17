@@ -18,9 +18,13 @@ namespace EcosystemApp.Controllers
         public IListCountries ListCountriesUC { get; set; }
         public IFindCountry FindCountryUC { get; set; }
         public IFindConservationBySec FindConservationBySec { get; set; }
+        public IListThreats ListThreatsUC { get; set; }
+        public IFindThreat FindThreatUC { get; set; }
+
+
 
         public EcosystemController(IAddEcosystem addUC, IRemoveEcosystem removeUC, IListEcosystem listUC,
-            IFindEcosystem findUC, IWebHostEnvironment whe, IListCountries listCountries, IFindCountry findCountryUC, IFindConservationBySec findConservationBySec)
+            IFindEcosystem findUC, IWebHostEnvironment whe, IListCountries listCountries, IFindCountry findCountryUC, IFindConservationBySec findConservationBySec, IListThreats listThreatsUC, IFindThreat findThreatUC)
         {
             AddUC = addUC;
             RemoveUC = removeUC;
@@ -30,6 +34,8 @@ namespace EcosystemApp.Controllers
             ListCountriesUC = listCountries;
             FindCountryUC = findCountryUC;
             FindConservationBySec = findConservationBySec;
+            ListThreatsUC = listThreatsUC;
+            FindThreatUC = findThreatUC;
         }
 
         public ActionResult Index()
@@ -52,7 +58,8 @@ namespace EcosystemApp.Controllers
         [Private]
         public ActionResult AddEcosystem() {
             IEnumerable<Country> countries = ListCountriesUC.List();
-            VMEcosystem vmEcosystem = new VMEcosystem() { Countries = countries, IdSelectedCountry = new List<int>() };
+            IEnumerable<Threat> threats = ListThreatsUC.List();
+            VMEcosystem vmEcosystem = new VMEcosystem() { Countries = countries, IdSelectedCountry = new List<int>(), Threats = threats, IdSelectedThreats = new List<int>() };
             return View(vmEcosystem);
         }
 
@@ -69,12 +76,16 @@ namespace EcosystemApp.Controllers
 
                 model.Countries = ListCountriesUC.List();
                 if (model.Ecosystem.Countries == null) { model.Ecosystem.Countries = new List<Country>(); };
-                foreach (int country in model.IdSelectedCountry) { model.Ecosystem.Countries.Add(FindCountryUC.FindById(country)); };        
+                foreach (int country in model.IdSelectedCountry) { model.Ecosystem.Countries.Add(FindCountryUC.FindById(country)); };
+
+                model.Threats = ListThreatsUC.List();
+                if(model.Ecosystem.Threats == null) { model.Ecosystem.Threats = new List<Threat>();};
+                foreach (int threat in model.IdSelectedThreats) { model.Ecosystem.Threats.Add(FindThreatUC.Find(threat)); };
 
 
                 model.Ecosystem.EcosystemName = new Domain.ValueObjects.Name(model.EcosystemNameVAL);
                 model.Ecosystem.EcoDescription = new Domain.ValueObjects.Description(model.EcoDescriptionVAL);
-                model.Ecosystem.GeoDetails = model.Lat + model.Long;
+                model.Ecosystem.GeoDetails = new Domain.ValueObjects.GeoUbication(model.Lat, model.Long);
             
                 FileInfo fi = new(model.ImgEco.FileName);
                 string ext = fi.Extension;
@@ -134,13 +145,17 @@ namespace EcosystemApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Ecosystem e)
-        {
-            
+        {           
             try
             {
-                if (e != null)
+                Ecosystem eco = FindUC.Find(e.Id);
+                if (eco != null)
                 {
-                    RemoveUC.Remove(e);
+                    if(eco.Species == null || eco.Species.Count > 0)
+                    {
+                        throw new InvalidOperationException("Este ecosistema tiene especies asociadas y por lo tanto no se puede eliminar");
+                    }
+                    RemoveUC.Remove(eco);
                     return RedirectToAction("Index", "Ecosystem");
                 }
                 else throw new InvalidOperationException("No se encontró el ecosistema que desea eliminar.");

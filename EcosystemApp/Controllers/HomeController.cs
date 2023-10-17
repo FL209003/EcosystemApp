@@ -13,10 +13,13 @@ namespace EcosystemApp.Controllers
         private readonly ILogger<HomeController> _logger;
         public IFindUser FindUserUC { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, IFindUser findUser)
+        public ICompareHash CompareHashUC { get; set; }
+
+        public HomeController(ILogger<HomeController> logger, IFindUser findUser, ICompareHash compareHash)
         {
             _logger = logger;
             FindUserUC = findUser;
+            CompareHashUC = compareHash;
         }
 
         public IActionResult Index() { return View(); }
@@ -32,13 +35,13 @@ namespace EcosystemApp.Controllers
                 try
                 {
                     User u = FindUserUC.Find(model.Username);
-                    if (u != null && model.Password == u.Password)
+                    if (u != null && CompareHashUC.CompareHash(model.Password, u.Username))
                     {
                         HttpContext.Session.SetString("username", u.Username);
                         HttpContext.Session.SetString("rol", u.Role);
                         return RedirectToAction("Index", "Home");
                     }
-                    else throw new InvalidOperationException("El usuario no existe.");
+                    else throw new InvalidOperationException("Nombre de usuario y/o contraseña incorrectos.");
                 }
                 catch (InvalidOperationException ex)
                 {

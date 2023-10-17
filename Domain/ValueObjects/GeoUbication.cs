@@ -18,28 +18,25 @@ namespace Domain.ValueObjects
         [Range(-180, 180, ErrorMessage = "Rango de -180 a 180.")]
         public decimal Longitude { get; private set; }
 
-        [Required(ErrorMessage = "Longitud requerida.")]
-        public string GeoDetails { get; private set; }
-
         public GeoUbication(decimal latitude, decimal longitude)
-        {
-            GeoDetails = SetGeoDetails(latitude, longitude);
+        {   
+            Latitude = latitude;
+            Longitude = longitude;
             Validate();
         }
 
         public GeoUbication() { }
 
-        private static string SetGeoDetails(decimal latitude, decimal longitude)
+        public override string ToString()
         {
-            string lat = latitude.ToString();
-            string lon = longitude.ToString();
-            string ubication = "Latitud: " + lat + "Longitud: " + lon;
-            return ubication;
+            return "Latitud: " + Latitude + "Longitud: " + Longitude;
         }
 
         public void Validate()
         {
-            throw new NotImplementedException();
+            if(Latitude>90 || Latitude < -90) throw new ArgumentException("La latitud debe estar entre 90 y -90 grados");
+            if(Longitude>180 || Longitude < -180) throw new ArgumentException("La longitud debe estar entre 180 y -180 grados");
+
         }        
     }
 }

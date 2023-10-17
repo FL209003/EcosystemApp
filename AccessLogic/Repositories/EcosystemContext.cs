@@ -23,6 +23,7 @@ namespace AccessLogic.Repositories
 
             modelBuilder.Entity<Ecosystem>().OwnsOne(e => e.EcosystemName).HasIndex(n => n.Value).IsUnique();
             modelBuilder.Entity<Ecosystem>().OwnsOne(e => e.EcoDescription);
+            modelBuilder.Entity<Ecosystem>().OwnsOne(e => e.GeoDetails);
 
 
             modelBuilder.Entity<Country>().OwnsOne(c => c.CountryName).HasIndex(n => n.Value).IsUnique();

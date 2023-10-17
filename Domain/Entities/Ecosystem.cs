@@ -14,7 +14,8 @@ namespace Domain.Entities
 
         [Column("Ubicación")]
         [Required(ErrorMessage = "Ubicación geográfica requerida.")]
-        public string GeoDetails { get; set; }
+
+        public required GeoUbication GeoDetails { get; set; }
 
         [Column("Área")]
         [Required(ErrorMessage = "Área requerida.")]
@@ -41,7 +42,7 @@ namespace Domain.Entities
         [Required(ErrorMessage = "Seleccione al menos un país.")]
         public List<Country> Countries { get; set; }
 
-        public Ecosystem(Name name, decimal area, Description description, string geoDetails, Conservation ecoConservation, string imgRoute, List<Species>? species, List<Threat>? threats, List<Country> countries, int security)
+        public Ecosystem(Name name, decimal area, Description description, GeoUbication geoDetails, Conservation ecoConservation, string imgRoute, List<Species>? species, List<Threat>? threats, List<Country> countries, int security)
         {
             EcosystemName = name;
             GeoDetails = geoDetails;
@@ -59,7 +60,6 @@ namespace Domain.Entities
 
         public void Validate()
         {
-            if (string.IsNullOrEmpty(GeoDetails)) throw new Exception("Los detalles geográficos son requeridos.");
             if (Area < 1) throw new Exception("El área no debe ser menor a 1 km cuadrado.");
             if (string.IsNullOrEmpty(ImgRoute)) throw new Exception("Imagen del ecosistema requerida.");
             if (Countries == null) throw new Exception("El ecosistema debe estar en al menos un país.");

@@ -11,13 +11,16 @@ namespace EcosystemApp.Models
 
         public  String EcoDescriptionVAL { get; set; }
 
-        public  String Lat { get; set; }
+        public  Decimal Lat { get; set; }
 
-        public  String Long { get; set; }
+        public  Decimal Long { get; set; }
 
         public IEnumerable<Country> Countries { get; set; }
 
         public List<int> IdSelectedCountry { get; set; }
+
+        public IEnumerable<Threat> Threats { get; set; }
+        public List<int>IdSelectedThreats { get; set; }
 
         public  IFormFile ImgEco { get; set; }
     }

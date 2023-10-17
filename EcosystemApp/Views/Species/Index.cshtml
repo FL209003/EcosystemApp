@@ -81,10 +81,11 @@
                     @Html.DisplayFor(modelItem => item.SpeciesConservation.ConservationName.Value)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ImgRoute)
+                    <img src="/img/Species/@item.ImgRoute" height="60" />
                 </td>
                 <td>
                     @Html.ActionLink("Eliminar", "DeleteConfirmation", new { id=item.Id })
+                    @Html.ActionLink("Asignar ecosistema", "AssignEcosystem", new {id = item.Id})
                 </td>
             </tr>
         }

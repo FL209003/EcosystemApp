@@ -14,7 +14,9 @@ namespace EcosystemApp.Models
         public IEnumerable<Threat> Threats { get; set; }
 
         public List<int> IdSelectedThreats { get; set; }
-
+        
+        public IEnumerable<Ecosystem> Ecosystems { get; set; }
+        public List<int> IdSelectedEcos { get; set; }
         public IFormFile ImgSpecies { get; set; }
     }
 }

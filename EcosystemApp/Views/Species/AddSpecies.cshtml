@@ -73,6 +73,22 @@
                         }
                     </select>
                 </div>
+                <div class="form-group">
+                    <label class="control-label">Ecosistemas</label>
+                    <select name="IdSelectedEcos" multiple>
+                        @foreach (Domain.Entities.Ecosystem eco in Model.Ecosystems)
+                        {
+                            if (Model.IdSelectedThreats.Contains(eco.Id))
+                            {
+                                <option selected value="@eco.Id">@eco.EcosystemName.Value</option>
+                            }
+                            else
+                            {
+                            <option value="@eco.Id">@eco.EcosystemName.Value</option>
+                            }
+                        }
+                    </select>
+                </div>
             <br />
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />

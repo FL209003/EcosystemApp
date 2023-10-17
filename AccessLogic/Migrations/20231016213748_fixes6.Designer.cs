@@ -4,6 +4,7 @@ using AccessLogic.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AccessLogic.Migrations
 {
     [DbContext(typeof(EcosystemContext))]
-    partial class EcosystemContextModelSnapshot : ModelSnapshot
+    [Migration("20231016213748_fixes6")]
+    partial class fixes6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,6 +55,10 @@ namespace AccessLogic.Migrations
                     b.Property<int>("MinSecurityRange")
                         .HasColumnType("int")
                         .HasColumnName("Rango de seguridad mínimo");
+
+                    b.Property<int>("Security")
+                        .HasColumnType("int")
+                        .HasColumnName("Seguridad");
 
                     b.HasKey("Id");
 
@@ -94,14 +101,15 @@ namespace AccessLogic.Migrations
                     b.Property<int>("EcoConservationId")
                         .HasColumnType("int");
 
+                    b.Property<string>("GeoDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Ubicación");
+
                     b.Property<string>("ImgRoute")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Imagen");
-
-                    b.Property<int>("Security")
-                        .HasColumnType("int")
-                        .HasColumnName("Seguridad");
 
                     b.HasKey("Id");
 
@@ -135,10 +143,6 @@ namespace AccessLogic.Migrations
                     b.Property<decimal>("LongRangeAdultMin")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("Min length");
-
-                    b.Property<int>("Security")
-                        .HasColumnType("int")
-                        .HasColumnName("Seguridad");
 
                     b.Property<int>("SpeciesConservationId")
                         .HasColumnType("int");
@@ -182,10 +186,6 @@ namespace AccessLogic.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("HashPassword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -364,8 +364,7 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Descripcion");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("EcosystemId");
 
@@ -396,34 +395,12 @@ namespace AccessLogic.Migrations
                                 .HasForeignKey("EcosystemId");
                         });
 
-                    b.OwnsOne("Domain.ValueObjects.GeoUbication", "GeoDetails", b1 =>
-                        {
-                            b1.Property<int>("EcosystemId")
-                                .HasColumnType("int");
-
-                            b1.Property<decimal>("Latitude")
-                                .HasColumnType("decimal(18,2)");
-
-                            b1.Property<decimal>("Longitude")
-                                .HasColumnType("decimal(18,2)");
-
-                            b1.HasKey("EcosystemId");
-
-                            b1.ToTable("Ecosystems");
-
-                            b1.WithOwner()
-                                .HasForeignKey("EcosystemId");
-                        });
-
                     b.Navigation("EcoConservation");
 
                     b.Navigation("EcoDescription")
                         .IsRequired();
 
                     b.Navigation("EcosystemName")
-                        .IsRequired();
-
-                    b.Navigation("GeoDetails")
                         .IsRequired();
                 });
 
@@ -442,8 +419,7 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Descripcion");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("SpeciesId");
 
@@ -492,8 +468,7 @@ namespace AccessLogic.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Descripcion");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("ThreatId");
 
