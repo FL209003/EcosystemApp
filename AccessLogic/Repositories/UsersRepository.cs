@@ -25,8 +25,9 @@ namespace AccessLogic.Repositories
                     u.Validate();
                     Context.Users.Add(u);
                     Context.SaveChanges();
-                } else throw new InvalidOperationException("Error al crear usuario, intente nuevamente.");
-            }            
+                }
+                else throw new InvalidOperationException("Error al crear usuario, intente nuevamente.");
+            }
             catch (Exception)
             {
                 throw;
@@ -77,11 +78,5 @@ namespace AccessLogic.Repositories
             }
             throw new InvalidOperationException("El usuario que intenta actualizar no existe.");
         }
-
-        public bool CompareHash(string rawData, string user)
-        {
-            User u = FindByName(user);
-            return Hash.ValidateHash(rawData, u.HashPassword);            
-        }       
     }
 }

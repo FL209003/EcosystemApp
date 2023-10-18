@@ -42,11 +42,10 @@ namespace AccessLogic.Repositories
             return Context.Ecosystems.Include(e => e.EcoConservation).ToList();
         }
 
-        //public void 
-        public IEnumerable<Ecosystem> FindAllNotUsedBySpecies(Species s)
+        public IEnumerable<Ecosystem> FindUninhabitableEcos(int id)
         {
             //Verifica que no sufran las mismas amenazas.
-
+            Species? s = Context.Species.Find(id);
             var sharedThreatIds = s.Threats.Select(st => st.Id).ToList();
 
             return Context.Ecosystems

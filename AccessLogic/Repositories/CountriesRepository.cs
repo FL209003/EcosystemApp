@@ -17,7 +17,7 @@ namespace AccessLogic.Repositories
         {
             Context = context;
         }
-        
+
         public void Add(Country obj)
         {
             throw new NotImplementedException();

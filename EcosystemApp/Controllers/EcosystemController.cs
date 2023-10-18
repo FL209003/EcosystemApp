@@ -17,14 +17,12 @@ namespace EcosystemApp.Controllers
         public IWebHostEnvironment WHE { get; set; }
         public IListCountries ListCountriesUC { get; set; }
         public IFindCountry FindCountryUC { get; set; }
-        public IFindConservationBySec FindConservationBySec { get; set; }
+        public IFindConservation FindConservationUC { get; set; }
         public IListThreats ListThreatsUC { get; set; }
         public IFindThreat FindThreatUC { get; set; }
 
-
-
         public EcosystemController(IAddEcosystem addUC, IRemoveEcosystem removeUC, IListEcosystem listUC,
-            IFindEcosystem findUC, IWebHostEnvironment whe, IListCountries listCountries, IFindCountry findCountryUC, IFindConservationBySec findConservationBySec, IListThreats listThreatsUC, IFindThreat findThreatUC)
+            IFindEcosystem findUC, IWebHostEnvironment whe, IListCountries listCountries, IFindCountry findCountryUC, IFindConservation findConservationUC, IListThreats listThreatsUC, IFindThreat findThreatUC)
         {
             AddUC = addUC;
             RemoveUC = removeUC;
@@ -33,7 +31,7 @@ namespace EcosystemApp.Controllers
             WHE = whe;
             ListCountriesUC = listCountries;
             FindCountryUC = findCountryUC;
-            FindConservationBySec = findConservationBySec;
+            FindConservationUC = findConservationUC;
             ListThreatsUC = listThreatsUC;
             FindThreatUC = findThreatUC;
         }
@@ -56,7 +54,8 @@ namespace EcosystemApp.Controllers
         // public IActionResult Details() { return View(); }
 
         [Private]
-        public ActionResult AddEcosystem() {
+        public ActionResult AddEcosystem()
+        {
             IEnumerable<Country> countries = ListCountriesUC.List();
             IEnumerable<Threat> threats = ListThreatsUC.List();
             VMEcosystem vmEcosystem = new VMEcosystem() { Countries = countries, IdSelectedCountry = new List<int>(), Threats = threats, IdSelectedThreats = new List<int>() };
@@ -71,22 +70,21 @@ namespace EcosystemApp.Controllers
         {
             try
             {
-                model.Ecosystem.EcoConservation = FindConservationBySec.FindBySecutiry(model.Ecosystem.Security);
-
-
                 model.Countries = ListCountriesUC.List();
                 if (model.Ecosystem.Countries == null) { model.Ecosystem.Countries = new List<Country>(); };
+                if (model.IdSelectedCountry == null) { model.IdSelectedCountry = new List<int>(); };                
                 foreach (int country in model.IdSelectedCountry) { model.Ecosystem.Countries.Add(FindCountryUC.FindById(country)); };
 
                 model.Threats = ListThreatsUC.List();
-                if(model.Ecosystem.Threats == null) { model.Ecosystem.Threats = new List<Threat>();};
+                if (model.Ecosystem.Threats == null) { model.Ecosystem.Threats = new List<Threat>(); };
+                if (model.IdSelectedThreats == null) { model.IdSelectedThreats = new List<int>(); };
                 foreach (int threat in model.IdSelectedThreats) { model.Ecosystem.Threats.Add(FindThreatUC.Find(threat)); };
 
-
+                model.Ecosystem.EcoConservation = FindConservationUC.FindBySecurity(model.Ecosystem.Security);
                 model.Ecosystem.EcosystemName = new Domain.ValueObjects.Name(model.EcosystemNameVAL);
                 model.Ecosystem.EcoDescription = new Domain.ValueObjects.Description(model.EcoDescriptionVAL);
                 model.Ecosystem.GeoDetails = new Domain.ValueObjects.GeoUbication(model.Lat, model.Long);
-            
+
                 FileInfo fi = new(model.ImgEco.FileName);
                 string ext = fi.Extension;
 
@@ -130,14 +128,15 @@ namespace EcosystemApp.Controllers
             }
         }
 
-        public ActionResult Delete(int id) {
+        public ActionResult Delete(int id)
+        {
 
             Ecosystem eco = FindUC.Find(id);
             if (eco == null)
             {
                 ViewBag.Error = "El cliente con el id " + id + " noexiste";
             }
-            return View(eco);        
+            return View(eco);
         }
 
         // POST: EcosystemController/Delete
@@ -145,13 +144,13 @@ namespace EcosystemApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Ecosystem e)
-        {           
+        {
             try
             {
                 Ecosystem eco = FindUC.Find(e.Id);
                 if (eco != null)
                 {
-                    if(eco.Species == null || eco.Species.Count > 0)
+                    if (eco.Species == null || eco.Species.Count > 0)
                     {
                         throw new InvalidOperationException("Este ecosistema tiene especies asociadas y por lo tanto no se puede eliminar");
                     }

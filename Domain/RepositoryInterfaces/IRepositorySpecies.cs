@@ -9,5 +9,9 @@ namespace Domain.RepositoryInterfaces
 {
     public interface IRepositorySpecies : IRepository<Species>
     {
+        object FindByCientificName();
+        object FindByDangerOfExtinction();
+        object FindByEco();        
+        object FindByWeight();
     }
 }

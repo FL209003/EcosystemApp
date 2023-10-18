@@ -14,7 +14,7 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Estado de conservación requerido.")]
+        [Column("Estado")]
         public Name ConservationName { get; set; }
 
         [Column("Rango de seguridad mínimo")]

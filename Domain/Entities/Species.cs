@@ -16,7 +16,7 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
 
-        [Column("Cientific name")]
+        [Column("Nombre científico")]
         public string CientificName { get; set; }
 
         public Name SpeciesName { get; set; }

@@ -10,5 +10,9 @@ namespace AppLogic.UCInterfaces
     public interface IListSpecies
     {
         List<Species> List();
+        List<Species> ListByCientificName();
+        List<Species> ListByDangerOfExtinction();
+        List<Species> ListByWeight();
+        List<Species> ListByEco(int idEco);
     }
 }

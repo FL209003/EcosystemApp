@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace AppLogic.UCInterfaces
 {
-    public interface IFindConservationBySec
+    public interface IFindConservation
     {
-        Conservation FindBySecutiry(int sec);
+        Conservation FindBySecurity(int sec);
     }
 }
