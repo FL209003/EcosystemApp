@@ -44,13 +44,27 @@ namespace AccessLogic.Repositories
 
         public IEnumerable<Ecosystem> FindUninhabitableEcos(int id)
         {
-            //Verifica que no sufran las mismas amenazas.
-            Species? s = Context.Species.Find(id);
-            var sharedThreatIds = s.Threats.Select(st => st.Id).ToList();
+            try
+            {
+                Species? s = Context.Species.Include(s => s.Ecosystems).ThenInclude(e => e.Threats).Include(e => e.Threats).FirstOrDefault(s => s.Id == id);
+                if (s != null)
+                {
+                    var sharedThreatIds = s.Threats.Select(st => st.Id).ToList();
 
-            return Context.Ecosystems
-                .Where(e => !e.Species.Contains(s) && e.Security > s.Security && !e.Threats.Any(et => sharedThreatIds.Contains(et.Id)))
-                .ToList();
+                    return Context.Ecosystems
+                        .Where(e => !e.Species.Contains(s) && e.Security > s.Security && !e.Threats.Any(et => sharedThreatIds.Contains(et.Id)))
+                        .ToList();
+                }
+                else
+                {
+                    throw new Exception("Error inesperado no se pudo encontrar a la especie");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }             
         }
         public Ecosystem FindById(int id)
         {

@@ -7,6 +7,7 @@ using Exceptions;
 using Domain.Entities;
 using System.Collections.Generic;
 using AppLogic.UseCases;
+using System.Linq.Expressions;
 
 namespace EcosystemApp.Controllers
 {
@@ -40,44 +41,67 @@ namespace EcosystemApp.Controllers
             FindEcosystemUC = findEcosystemUC;
             UpdateSpeciesUC = updateSpeciesUC;
         }
-        public ActionResult Index(string? cientificName, string? extintion, string? weight, int idEco)
+        public ActionResult Index(string? option, int? optionParam1, int? optionParam2)
         {
-            //if (cientificName != null)
-            //{
-            //    IEnumerable<Species> species = ListUC.ListByCientificName();
-            //    return View(species);
-            //}
-            //if (extintion != null)
-            //{
-            //    IEnumerable<Species> species = ListUC.ListByDangerOfExtinction();
-            //    return View(species);
-            //}
-            //if (weight != null)
-            //{
-            //    IEnumerable<Species> species = ListUC.ListByWeight();
-            //    return View(species);
-            //}
-            //if (idEco != null)
-            //{
-            //    IEnumerable<Species> species = ListUC.ListByEco(idEco);
-            //    return View(species);
-            //}
-            IEnumerable<Species> species = ListUC.List();
-            if (species != null)
+            try
             {
-                return View(species);
+
+                IEnumerable<Species> species;
+                if (option == "Cientific")
+                {
+                    species = ListUC.ListByCientificName();
+                }
+                else if (option == "Extintion")
+                {
+                    species = ListUC.ListByDangerOfExtinction();
+                }
+                else if (option == "Weight" && optionParam1 != null && optionParam2 != null)
+                {
+                    int min = optionParam1.Value;
+                    int max = optionParam2.Value;
+                   species = ListUC.ListByWeight(min, max);
+                }
+                else if (option == "eco" && optionParam1 != null)
+                {
+                    int idEco = optionParam1.Value;
+                    species = ListUC.ListByEco(idEco);
+                }
+                else
+                {
+                    species = ListUC.List();
+                }
+            
+                if (species != null && species.Count() > 0)
+                {
+                    return View(species);
+                }
+                else            
+                {
+                    ViewBag.Error = "No se encontraron especies.";
+                    return RedirectToAction("Index", "Species", new { error = ViewBag.Error });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ViewBag.Error = "No se encontraron especies.";
+                ViewBag.Error = ex;
                 return RedirectToAction("Index", "Species", new { error = ViewBag.Error });
             }
         }
 
-        public ActionResult ListUninhabitableEcos(int idSpecies)
+        public ActionResult ListUninhabitableEcos(int id)
         {
-            IEnumerable<Ecosystem> ecos = ListEcosystemUC.ListUninhabitableEcos(idSpecies);
-            return View(ecos);
+            try
+            {
+                IEnumerable<Ecosystem> ecos = ListEcosystemUC.ListUninhabitableEcos(id);
+                return View(ecos);
+            }
+            catch(Exception ex)
+            {
+                ViewBag.Error = "Error inesperado a la hora de traer los ecosistemas";
+                ModelState.AddModelError(string.Empty, ViewBag.Error);
+                return RedirectToAction(nameof(Index));
+            }
+            
         }
 
         // public IActionResult Details() { return View(); }
@@ -162,14 +186,27 @@ namespace EcosystemApp.Controllers
 
         public ActionResult AssignEcosystem(int id)
         {
-            Species species = FindUC.Find(id);
-            IEnumerable<Ecosystem> ecos = ListEcosystemUC.ListUninhabitableEcos(id);
-            if (species == null)
+            try
             {
-                ViewBag.Error = "La espcie con el id " + id + " no existe";
+                Species species = FindUC.Find(id);
+                IEnumerable<Ecosystem> ecos = ListEcosystemUC.ListUninhabitableEcos(id);
+                if (species == null)
+                {
+                    ViewBag.Error = "La espcie con el id " + id + " no existe";
+                }
+                VMSpecies vm = new VMSpecies() { Species = species, Ecosystems = ecos, IdSelectedThreats = new List<int>(), };
+                return View(vm);
             }
-            VMSpecies vm = new VMSpecies() { Species = species, Ecosystems = ecos, IdSelectedThreats = new List<int>(), };
-            return View(vm);
+            catch (Exception ex)
+            {
+                Species species = FindUC.Find(id);
+                IEnumerable<Ecosystem> ecos = ListEcosystemUC.ListUninhabitableEcos(id);
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                VMSpecies vm = new VMSpecies() { Species = species, Ecosystems = ecos, IdSelectedThreats = new List<int>(), };
+                return View(vm);
+
+            }
+            
         }
 
         [HttpPost]
@@ -182,12 +219,17 @@ namespace EcosystemApp.Controllers
                 foreach (int eco in s.IdSelectedEcos) { species.Ecosystems.Add(FindEcosystemUC.Find(eco)); };
                 UpdateSpeciesUC.UpdateSpecies(species);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                ViewBag.Error = e.Message;
+                Species species = FindUC.Find(speciesId);
+                IEnumerable<Ecosystem> ecos = ListEcosystemUC.ListUninhabitableEcos(speciesId);               
+                VMSpecies vm = new VMSpecies() { Species = species, Ecosystems = ecos, IdSelectedThreats = new List<int>(), };
+                ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
+                ViewBag.Error = ex.Message;
+                return View(vm);
             }
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         public ActionResult Edit(int id) { return View(id); }

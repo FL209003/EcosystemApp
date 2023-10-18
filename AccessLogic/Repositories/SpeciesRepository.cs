@@ -26,6 +26,7 @@ namespace AccessLogic.Repositories
                 if (s != null)
                 {
                     s.Validate();
+                    ValidateEcosystems(s);
                     Context.Species.Add(s);
                     Context.SaveChanges();
                 }
@@ -36,10 +37,24 @@ namespace AccessLogic.Repositories
                 throw e;
             }
         }
+        private void ValidateEcosystems(Species s)
+        {
+            var speciesThreatIds = s.Threats.Select(t => t.Id).ToList();
+            var invalidEcosystem = Context.Ecosystems
+                .Include(e => e.Threats)
+                .Where(e => s.Ecosystems.Contains(e) && (e.Threats.Any(et => speciesThreatIds.Contains(et.Id)) || s.Security < e.Security))
+                .FirstOrDefault();
+
+            if (invalidEcosystem != null)
+            {
+                throw new EcosystemException("Error al crear una especie: La especie " + s.SpeciesName.Value + " no puede ser asignada a " + invalidEcosystem.EcosystemName.Value);
+            }
+
+        }
 
         public IEnumerable<Species> FindAll()
         {
-            return Context.Species;
+            return Context.Species.Include(s => s.SpeciesConservation).Include(s => s.Ecosystems).ToList();
         }
 
         public Species FindById(int id)
@@ -76,24 +91,62 @@ namespace AccessLogic.Repositories
             else throw new SpeciesException("La especie que intenta actualizar no existe.");
         }
 
-        object IRepositorySpecies.FindByCientificName()
+        public IEnumerable<Species> FindByCientificName()
         {
-            throw new NotImplementedException();
+            return Context.Species.OrderBy(s => s.CientificName).Include(s => s.Ecosystems).Include(s => s.SpeciesConservation).ToList();
         }
 
-        object IRepositorySpecies.FindByDangerOfExtinction()
+        public IEnumerable<Species> FindByDangerOfExtinction()
         {
-            throw new NotImplementedException();
+            try
+            {
+                //en dos pasos por que linq me tiraba excepcion de que no podia traducirlo a una consulta sql
+                int minSecurityForExtinction = 60;
+                int maxThreatsForExtinction = 3;
+                var speciesWithEcosystemsAndThreats = Context.Species
+                    .Include(s => s.Ecosystems)
+                    .Include(s => s.Threats)
+                    .ToList();
+
+                var filteredSpecies = speciesWithEcosystemsAndThreats
+                    .Where(s => s.Security < minSecurityForExtinction ||
+                                (s.Ecosystems != null && s.Ecosystems.Any(e => e.Security < minSecurityForExtinction)))
+                    .Where(s => s.Threats != null && s.Threats.Count > maxThreatsForExtinction)
+                    .ToList();
+
+                return filteredSpecies;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        object IRepositorySpecies.FindByWeight()
+        public IEnumerable<Species> FindByWeight(int min, int max)
         {
-            throw new NotImplementedException();
+            return Context.Species
+                .Include(s => s.SpeciesConservation)
+                .Include(s => s.Ecosystems)
+                .Where(s=> s.WeightRangeMin >= min && s.WeightRangeMax <= max)
+                .ToList();
         }
 
-        object IRepositorySpecies.FindByEco()
+        public IEnumerable<Species> FindByEco(int idEco)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Context.Ecosystems
+                    .Where(e => e.Id == idEco)
+                    .SelectMany(e => e.Species)
+                    .Include(s => s.SpeciesConservation)
+                    .Include(s => s.Ecosystems)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

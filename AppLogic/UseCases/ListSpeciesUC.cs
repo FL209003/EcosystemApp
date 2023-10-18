@@ -25,25 +25,22 @@ namespace AppLogic.UseCases
 
         public List<Species> ListByCientificName()
         {
-            //return SpeciesRepo.FindByCientificName().ToList();
-            throw new NotImplementedException();
+            return SpeciesRepo.FindByCientificName().ToList();
         }
 
         public List<Species> ListByDangerOfExtinction()
         {
-            //return SpeciesRepo.FindByDangerOfExtinction().ToList();
-            throw new NotImplementedException();
+            return SpeciesRepo.FindByDangerOfExtinction().ToList();
         }
 
-        public List<Species> ListByWeight()
+        public List<Species> ListByWeight(int min, int max)
         {
-            //return SpeciesRepo.FindByWeight().ToList();
-            throw new NotImplementedException();
+            return SpeciesRepo.FindByWeight(min, max).ToList();
         }        
 
-        List<Species> IListSpecies.ListByEco(int idEco)
+        public List<Species> ListByEco(int idEco)
         {
-            throw new NotImplementedException();
+            return SpeciesRepo.FindByEco(idEco).ToList();
         }
     }
 }

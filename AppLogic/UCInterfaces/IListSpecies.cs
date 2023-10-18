@@ -12,7 +12,7 @@ namespace AppLogic.UCInterfaces
         List<Species> List();
         List<Species> ListByCientificName();
         List<Species> ListByDangerOfExtinction();
-        List<Species> ListByWeight();
+        List<Species> ListByWeight(int min, int max);
         List<Species> ListByEco(int idEco);
     }
 }
