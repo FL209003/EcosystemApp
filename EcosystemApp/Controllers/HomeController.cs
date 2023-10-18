@@ -5,6 +5,7 @@ using EcosystemApp.Filters;
 using EcosystemApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Utility;
 
 namespace EcosystemApp.Controllers
 {
@@ -13,13 +14,10 @@ namespace EcosystemApp.Controllers
         private readonly ILogger<HomeController> _logger;
         public IFindUser FindUserUC { get; set; }
 
-        public ICompareHash CompareHashUC { get; set; }
-
-        public HomeController(ILogger<HomeController> logger, IFindUser findUser, ICompareHash compareHash)
+        public HomeController(ILogger<HomeController> logger, IFindUser findUser)
         {
             _logger = logger;
             FindUserUC = findUser;
-            CompareHashUC = compareHash;
         }
 
         public IActionResult Index() { return View(); }
@@ -35,7 +33,7 @@ namespace EcosystemApp.Controllers
                 try
                 {
                     User u = FindUserUC.Find(model.Username);
-                    if (u != null && CompareHashUC.CompareHash(model.Password, u.Username))
+                    if (u != null && Hash.ValidateHash(model.Password, u.HashPassword))
                     {
                         HttpContext.Session.SetString("username", u.Username);
                         HttpContext.Session.SetString("rol", u.Role);

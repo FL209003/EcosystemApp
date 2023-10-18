@@ -13,7 +13,7 @@ namespace Domain.Entities
 
         [Required(ErrorMessage = "Nombre de usuario requerido.")]
         public required string Username { get; set; }
-        
+
         [Required(ErrorMessage = "Contraseña requerida.")]
         [Range(8, int.MaxValue, ErrorMessage = "La contraseña debe tener al menos 8 caracteres.")]
         public required string Password { get; set; }
@@ -31,7 +31,7 @@ namespace Domain.Entities
             Username = username;
             Password = password;
             HashPassword = Hash.ComputeSha256Hash(password);
-            Role = role;            
+            Role = role;
             RegDate = DateTime.Now;
         }
 
@@ -45,6 +45,6 @@ namespace Domain.Entities
             if (Username.Length < 6) throw new Exception("El nombre de usuario debe tener al menos 6 caracteres.");
             if (Password.Length < 8) throw new Exception("La contraseña debe tener al menos 8 caracteres.");
             if (string.IsNullOrEmpty(Role)) throw new Exception("Especifique el rol del usuario.");
-        }        
+        }
     }
 }

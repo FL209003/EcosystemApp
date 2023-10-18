@@ -9,24 +9,17 @@ using System.Threading.Tasks;
 
 namespace AppLogic.UseCases
 {
-    public class FindConservationBySecUC : IFindConservationBySec
+    public class FindConservationUC : IFindConservation
     {
         public IRepositoryConservations ConsRepo { get; set; }
 
-        public FindConservationBySecUC(IRepositoryConservations repo)
+        public FindConservationUC(IRepositoryConservations repo)
         {
             ConsRepo = repo;
         }
-        public Conservation FindBySecutiry(int sec)
+        public Conservation FindBySecurity(int sec)
         {
-            try {
-                return ConsRepo.FindBySecurity(sec);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            
+            return ConsRepo.FindBySecurity(sec);
         }
     }
 }

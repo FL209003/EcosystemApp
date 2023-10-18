@@ -22,5 +22,10 @@ namespace AppLogic.UseCases
         {
             return EcosRepo.FindAll().ToList();
         }
+
+        public List<Ecosystem> ListUninhabitableEcos(int id)
+        {
+            return EcosRepo.FindUninhabitableEcos(id).ToList();
+        }
     }
 }

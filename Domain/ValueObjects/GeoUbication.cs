@@ -19,7 +19,7 @@ namespace Domain.ValueObjects
         public decimal Longitude { get; private set; }
 
         public GeoUbication(decimal latitude, decimal longitude)
-        {   
+        {
             Latitude = latitude;
             Longitude = longitude;
             Validate();
@@ -34,9 +34,8 @@ namespace Domain.ValueObjects
 
         public void Validate()
         {
-            if(Latitude>90 || Latitude < -90) throw new ArgumentException("La latitud debe estar entre 90 y -90 grados");
-            if(Longitude>180 || Longitude < -180) throw new ArgumentException("La longitud debe estar entre 180 y -180 grados");
-
-        }        
+            if (Latitude > 90 || Latitude < -90) throw new ArgumentException("La latitud debe estar entre 90 y -90 grados");
+            if (Longitude > 180 || Longitude < -180) throw new ArgumentException("La longitud debe estar entre 180 y -180 grados");
+        }
     }
 }

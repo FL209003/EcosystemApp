@@ -33,7 +33,7 @@ namespace AccessLogic.Repositories
             }
             catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -74,6 +74,26 @@ namespace AccessLogic.Repositories
                 Context.SaveChanges();
             }
             else throw new SpeciesException("La especie que intenta actualizar no existe.");
+        }
+
+        object IRepositorySpecies.FindByCientificName()
+        {
+            throw new NotImplementedException();
+        }
+
+        object IRepositorySpecies.FindByDangerOfExtinction()
+        {
+            throw new NotImplementedException();
+        }
+
+        object IRepositorySpecies.FindByWeight()
+        {
+            throw new NotImplementedException();
+        }
+
+        object IRepositorySpecies.FindByEco()
+        {
+            throw new NotImplementedException();
         }
     }
 }

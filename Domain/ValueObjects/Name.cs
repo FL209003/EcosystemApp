@@ -19,7 +19,7 @@ namespace Domain.ValueObjects
 
         public Name(string value)
         {
-            Value = value;            
+            Value = value;
             Validate();
         }
 

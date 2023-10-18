@@ -10,5 +10,6 @@ namespace AppLogic.UCInterfaces
     public interface IListEcosystem
     {
         List<Ecosystem> List();
+        List<Ecosystem> ListUninhabitableEcos(int id);
     }
 }

@@ -9,6 +9,6 @@ namespace Domain.RepositoryInterfaces
 {
     public interface IRepositoryEcosystems : IRepository<Ecosystem>
     {
-        IEnumerable<Ecosystem> FindAllNotUsedBySpecies(Species s);
+        IEnumerable<Ecosystem> FindUninhabitableEcos(int id);
     }
 }

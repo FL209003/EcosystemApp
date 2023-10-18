@@ -8,33 +8,17 @@
 <h4 style="color:red">@ViewBag.Error</h4>
 <br />
 <hr />
-
-<h4 class="text-dark"><b><a asp-action="AddEcosystem">Nuevo Ecosistema</a></b></h4>
-
+<h6 class="text-dark"><b><a class="btn btn-primary" asp-action="AddEcosystem">Nuevo Ecosistema</a></b></h6>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Coordenadas
-            </th>
-            <th>
-                Area
-            </th>
-            <th>
-                Descripcion
-            </th>
-            <th>
-                Nivel de Seguridad
-            </th>
-            <th>
-                Estado de conservacion
-            </th>
-            <th>
-                Imagen
-            </th>
+            <th>Nombre</th>
+            <th>Coordenadas</th>
+            <th>Área</th>
+            <th>Descripción</th>
+            <th>Nivel de Seguridad</th>
+            <th>Estado de conservación</th>
+            <th>Imagen</th>
         </tr>
     </thead>
     <tbody>
@@ -63,7 +47,8 @@
                     <img src="/img/Ecosystems/@item.ImgRoute" height="60" />
                 </td>
                 <td>
-                    @Html.ActionLink("Borrar", "Delete", new {id = item.Id})                  
+                    @Html.ActionLink("Borrar", "Delete", new {id = item.Id}) |
+                    @Html.ActionLink("Especies que lo habitan", "Index", "Species", new { id = item.Id })
                 </td>
             </tr>
         }

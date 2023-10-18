@@ -8,8 +8,7 @@ namespace Domain.Entities
     public class Ecosystem : IValidate
     {
         public int Id { get; set; }
-                
-        [Column("Nombre")]
+
         public Name EcosystemName { get; set; }
 
         [Column("Ubicación")]

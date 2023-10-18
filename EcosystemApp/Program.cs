@@ -21,7 +21,6 @@ builder.Services.AddSession(options => {
 builder.Services.AddScoped<IRepositoryUsers, UsersRepository>();
 builder.Services.AddScoped<IAddUser, AddUserUC>();
 builder.Services.AddScoped<IFindUser, FindUserUC>();
-builder.Services.AddScoped<ICompareHash, CompareHashUC>();
 
 // Ecosystems
 builder.Services.AddScoped<IRepositoryEcosystems, EcosystemsRepository>();
@@ -29,7 +28,6 @@ builder.Services.AddScoped<IAddEcosystem, AddEcoUC>();
 builder.Services.AddScoped<IRemoveEcosystem, RemoveEcoUC>();
 builder.Services.AddScoped<IListEcosystem, ListEcosUC>();
 builder.Services.AddScoped<IFindEcosystem, FindEcoUC>();
-builder.Services.AddScoped<IFindAllNotUsedBySpecies, FindAllNotUsedBySpeciesUC>();
 
 // Species
 builder.Services.AddScoped<IRepositorySpecies, SpeciesRepository>();
@@ -52,7 +50,7 @@ builder.Services.AddScoped<IFindCountry, FindCountryUC>();
 
 //Conservation
 builder.Services.AddScoped<IRepositoryConservations, ConservationsRepository>();
-builder.Services.AddScoped<IFindConservationBySec, FindConservationBySecUC>();
+builder.Services.AddScoped<IFindConservation, FindConservationUC>();
 
 // DB config
 ConfigurationBuilder configurationBuilder = new();
