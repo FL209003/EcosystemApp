@@ -12,6 +12,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Nombre</th>
             <th>Coordenadas</th>
             <th>Área</th>
@@ -25,6 +26,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EcosystemName.Value)
                 </td>
@@ -48,7 +52,6 @@
                 </td>
                 <td>
                     @Html.ActionLink("Borrar", "Delete", new {id = item.Id}) |
-                    @Html.ActionLink("Especies que lo habitan", "Index", "Species", new { id = item.Id })
                 </td>
             </tr>
         }

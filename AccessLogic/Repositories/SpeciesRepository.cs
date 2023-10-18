@@ -42,7 +42,7 @@ namespace AccessLogic.Repositories
             var speciesThreatIds = s.Threats.Select(t => t.Id).ToList();
             var invalidEcosystem = Context.Ecosystems
                 .Include(e => e.Threats)
-                .Where(e => s.Ecosystems.Contains(e) && (e.Threats.Any(et => speciesThreatIds.Contains(et.Id)) || s.Security < e.Security))
+                .Where(e => s.Ecosystems.Contains(e) && (e.Threats.Any(et => speciesThreatIds.Contains(et.Id)) || s.Security > e.Security))
                 .FirstOrDefault();
 
             if (invalidEcosystem != null)

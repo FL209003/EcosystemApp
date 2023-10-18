@@ -145,9 +145,13 @@ namespace EcosystemApp.Controllers
 
                 if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
                 {
-
-                    string fileName = model.Species.Id + "_001" + ext;
+                    //aca no lo hicimos por id por que no tenemos el id hasta que se suba a la bd
+                    string trimmedString = model.SpeciesNameVal.Replace(" ", "");
+                    string fileName = trimmedString + "_001" + ext;
                     model.Species.ImgRoute = fileName;
+
+                    model.Species.Validate();
+                    AddUC.Add(model.Species);
 
                     string rootDir = WHE.WebRootPath;
                     string route = Path.Combine(rootDir, "img/Species", fileName);
@@ -155,8 +159,6 @@ namespace EcosystemApp.Controllers
                     {
                         model.ImgSpecies.CopyTo(fs);
                     }
-                    model.Species.Validate();
-                    AddUC.Add(model.Species);
 
                     return RedirectToAction(nameof(Index));
                 }
