@@ -62,7 +62,8 @@ namespace Domain.Entities
             if (Area < 1) throw new Exception("El área no debe ser menor a 1 km cuadrado.");
             if (string.IsNullOrEmpty(ImgRoute)) throw new Exception("Imagen del ecosistema requerida.");
             if (Countries == null) throw new Exception("El ecosistema debe estar en al menos un país.");
-            if (Security < 0 || Security > 100) throw new Exception("Indique un valor entre 0 y 100.");          
+            if (Security < 0 || Security > 100) throw new Exception("Indique un valor entre 0 y 100.");
+
         }
     }
 }

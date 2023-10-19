@@ -43,6 +43,7 @@ namespace EcosystemApp.Controllers
         }
         public ActionResult Index(string? option, int? optionParam1, int? optionParam2)
         {
+            IEnumerable<Species> species = new List<Species>(); ;
             try
             {
                 IEnumerable<Species> species;
@@ -76,14 +77,14 @@ namespace EcosystemApp.Controllers
                 }
                 else            
                 {
-                    ViewBag.Error = "No se encontraron especies.";
-                    return RedirectToAction("Index", "Species", new { error = ViewBag.Error });
+                    ViewBag.Error = "No se encontraron Especies.";
+                    return View(species);
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex;
-                return RedirectToAction("Index", "Species", new { error = ViewBag.Error });
+                ViewBag.Error = "No se encontraron Especies.";
+                return View(species);
             }
         }
 
