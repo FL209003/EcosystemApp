@@ -16,7 +16,7 @@ namespace EcosystemApp.Controllers
             ModifyLengthParamUC = modifyUC;
         }
 
-        public ActionResult ModifyNameParams() { return View(); }        
+        public ActionResult ModifyNameLengths() { return View(); }        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -27,26 +27,24 @@ namespace EcosystemApp.Controllers
                 if (maxLength > minLength)
                 {
                     ModifyLengthParamUC.ModifyNameParams(minLength, maxLength);
-                    ViewBag.Success = "La longitud mínima y máxima del nombre se actualizó con éxito.";
-                    return RedirectToAction("ModifyNameParams", new { error = ViewBag.Success });
+                    TempData["SuccessMessage"] = "Valores limite cambiados con éxito.";
+                    return View();
                 }
                 else throw new InvalidOperationException("El largo máximo del nombre debe ser mayor al largo mínimo.");
             }
             catch (InvalidOperationException ex)
             {
-                ViewBag.Error = ex;
-                return RedirectToAction("ModifyNameParams", new { error = ViewBag.Error });
+                ViewBag.Error = ex.Message;
+                return View();
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex;
-                return RedirectToAction("ModifyNameParams", new { error = ViewBag.Error });
+                ViewBag.Error = ex.Message;
+                return View();
             }
-            ViewBag.Error = "Ha ocurrido un error inesperado, intente nuevamente.";
-            return RedirectToAction("ModifyNameParams", new { error = ViewBag.Error });
         }
 
-        public ActionResult ModifyDescParams() { return View(); }
+        public ActionResult ModifyDescLengths() { return View(); }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -57,23 +55,21 @@ namespace EcosystemApp.Controllers
                 if (maxLength > minLength)
                 {
                     ModifyLengthParamUC.ModifyDescParams(minLength, maxLength);
-                    ViewBag.Success = "La longitud mínima y máxima de la descripción se actualizó con éxito.";
-                    return RedirectToAction("ModifyDescParams", new { error = ViewBag.Success });
+                    TempData["SuccessMessage"] = "Valores limite cambiados con éxito.";
+                    return View();
                 }
                 else throw new InvalidOperationException("El largo máximo de la descripción debe ser mayor al largo mínimo.");
             }
             catch (InvalidOperationException ex)
             {
-                ViewBag.Error = ex;
-                return RedirectToAction("ModifyDescParams", new { error = ViewBag.Error });
+                ViewBag.Error = ex.Message;
+                return View();
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex;
-                return RedirectToAction("ModifyDescParams", new { error = ViewBag.Error });
+                ViewBag.Error = ex.Message;
+                return View();
             }
-            ViewBag.Error = "Ha ocurrido un error inesperado, intente nuevamente.";
-            return RedirectToAction("ModifyDescParams", new { error = ViewBag.Error });
         }
     }
 }

@@ -1,14 +1,20 @@
 ﻿@model EcosystemApp.Models.VMParam
 
 @{
-    ViewData["Title"] = "ModifyDescParams";
+    ViewData["Title"] = "ModifyDescLengths";
 }
 
 <h4>Editar rango de caracteres de las descripciones</h4>
 <hr />
+<h4 class="alert-danger">@ViewBag.Error</h4>
+@if (TempData["SuccessMessage"] != null)
+{
+    <h4 class="alert-success">@TempData["SuccessMessage"]</h4>
+}
+<br />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="ModifyDescParams">
+        <form asp-action="ModifyDescLengths">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="minLength" class="control-label">Min caracteres</label>
@@ -27,7 +33,6 @@
         </form>
     </div>
 </div>
-<span>@ViewBag.Success</span>
 
 @section Scripts {
     @{

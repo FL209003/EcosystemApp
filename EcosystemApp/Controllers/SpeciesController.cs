@@ -185,6 +185,7 @@ namespace EcosystemApp.Controllers
             }
         }
 
+        [Private]
         public ActionResult AssignEcosystem(int id)
         {
             try
@@ -210,6 +211,7 @@ namespace EcosystemApp.Controllers
             
         }
 
+        [Private]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AssignEcosystem(VMSpecies s, int speciesId)
@@ -236,6 +238,7 @@ namespace EcosystemApp.Controllers
         public ActionResult Edit(int id) { return View(id); }
 
         // POST: SpeciesController/Edit
+        [Private]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, IFormCollection collection)
@@ -249,7 +252,7 @@ namespace EcosystemApp.Controllers
                 return View();
             }
         }
-
+        [Private]
         public ActionResult Delete(int id)
         {
             Species species = FindUC.Find(id);
@@ -261,6 +264,7 @@ namespace EcosystemApp.Controllers
         }
 
         // POST: SpeciesController/Delete/5
+        [Private]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Species s)

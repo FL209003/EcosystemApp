@@ -46,7 +46,7 @@ namespace AccessLogic.Repositories
         {
             try
             {
-                Species? s = Context.Species.Include(s => s.Ecosystems).ThenInclude(e => e.Threats).Include(e => e.Threats).FirstOrDefault(s => s.Id == id);
+                Species? s = Context.Species.Include(s => s.Ecosystems).ThenInclude(e => e.Threats).Include(e => e.Threats).Include(s => s.SpeciesConservation).FirstOrDefault(s => s.Id == id);
                 if (s != null)
                 {
                     var sharedThreatIds = s.Threats.Select(st => st.Id).ToList();

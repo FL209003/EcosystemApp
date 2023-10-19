@@ -1,11 +1,17 @@
 ﻿@model EcosystemApp.Models.VMParam
 
 @{
-    ViewData["Title"] = "ModifyNameParams";
+    ViewData["Title"] = "ModifyNameLengths";
 }
 
 <h4>Editar rango de caracteres de los nombres</h4>
 <hr />
+<h4 class="alert-danger">@ViewBag.Error</h4>
+@if (TempData["SuccessMessage"] != null)
+{
+    <h4 class="alert-success">@TempData["SuccessMessage"]</h4>
+}
+<br />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="ModifyNameLengths">
@@ -27,7 +33,6 @@
         </form>
     </div>
 </div>
-<span>@ViewBag.Success</span>
 
 @section Scripts {
     @{

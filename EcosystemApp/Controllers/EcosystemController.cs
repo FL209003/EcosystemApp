@@ -129,6 +129,7 @@ namespace EcosystemApp.Controllers
             }
         }
 
+        [Private]
         public ActionResult Delete(int id)
         {
 
