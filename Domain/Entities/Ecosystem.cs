@@ -63,6 +63,7 @@ namespace Domain.Entities
             if (string.IsNullOrEmpty(ImgRoute)) throw new Exception("Imagen del ecosistema requerida.");
             if (Countries == null) throw new Exception("El ecosistema debe estar en al menos un país.");
             if (Security < 0 || Security > 100) throw new Exception("Indique un valor entre 0 y 100.");
+
         }
     }
 }

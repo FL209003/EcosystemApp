@@ -17,6 +17,7 @@ namespace AccessLogic.Repositories
         {
             Context = context;
         }
+
         public void Add(Conservation obj)
         {
             throw new NotImplementedException();
@@ -45,8 +46,6 @@ namespace AccessLogic.Repositories
             {
                 throw e;
             }
-
-
         }
 
         public void Remove(Conservation obj)

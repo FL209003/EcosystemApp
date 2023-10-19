@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Params;
 using Domain.RepositoryInterfaces;
+using Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -122,7 +123,12 @@ namespace AccessLogic.Repositories
 
         public void Update(Param p)
         {
-            throw new NotImplementedException();
+            if (p != null)
+            {
+                Context.Limits.Update(p);
+                Context.SaveChanges();
+            }
+            else throw new SpeciesException("La especie que intenta actualizar no existe.");
         }
     }
 }

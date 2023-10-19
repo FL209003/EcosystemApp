@@ -75,6 +75,7 @@ namespace Domain.Entities
             if (string.IsNullOrEmpty(SpeciesDescription.Value)) throw new SpeciesException("La descripción es requerida.");
             if (string.IsNullOrEmpty(ImgRoute)) throw new SpeciesException("La imagen de la especie es requerida.");
             if (Security < 0 || Security > 100) throw new Exception("Indique un valor entre 0 y 100 para la seguridad.");
+
         }
     }
 }
