@@ -63,15 +63,6 @@ namespace Domain.Entities
             if (string.IsNullOrEmpty(ImgRoute)) throw new Exception("Imagen del ecosistema requerida.");
             if (Countries == null) throw new Exception("El ecosistema debe estar en al menos un país.");
             if (Security < 0 || Security > 100) throw new Exception("Indique un valor entre 0 y 100.");
-            if (EcoConservation.ConservationName.Value == "Malo" && Security > 59) throw new Exception("Conservación mala: 0 - 59");
-            if (EcoConservation.ConservationName.Value == "Aceptable" && Security < 60 ||
-                EcoConservation.ConservationName.Value == "Aceptable" && Security > 70)
-            { throw new Exception("Conservación aceptable: 60 - 70"); }
-            if (EcoConservation.ConservationName.Value == "Bueno" && Security < 71 ||
-                EcoConservation.ConservationName.Value == "Bueno" && Security > 94)
-            { throw new Exception("Conservación aceptable: 71 - 94"); }
-            if (EcoConservation.ConservationName.Value == "Óptimo" && Security < 95)
-            { throw new Exception("Conservación aceptable: 95 - 100"); }
         }
     }
 }
