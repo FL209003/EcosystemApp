@@ -74,16 +74,7 @@ namespace Domain.Entities
             if (string.IsNullOrEmpty(SpeciesName.Value)) throw new SpeciesException("El nombre de la especie es requerido.");
             if (string.IsNullOrEmpty(SpeciesDescription.Value)) throw new SpeciesException("La descripción es requerida.");
             if (string.IsNullOrEmpty(ImgRoute)) throw new SpeciesException("La imagen de la especie es requerida.");
-            if (Security < 0 || Security > 100) throw new Exception("Indique un valor entre 0 y 100.");
-            if (SpeciesConservation.ConservationName.Value == "Malo" && Security > 59) throw new Exception("Conservación mala: 0 - 59");
-            if (SpeciesConservation.ConservationName.Value == "Aceptable" && Security < 60 ||
-                SpeciesConservation.ConservationName.Value == "Aceptable" && Security > 70)
-            { throw new Exception("Conservación aceptable: 60 - 70"); }
-            if (SpeciesConservation.ConservationName.Value == "Bueno" && Security < 71 ||
-                SpeciesConservation.ConservationName.Value == "Bueno" && Security > 94)
-            { throw new Exception("Conservación aceptable: 71 - 94"); }
-            if (SpeciesConservation.ConservationName.Value == "Óptimo" && Security < 95)
-            { throw new Exception("Conservación aceptable: 95 - 100"); }
+            if (Security < 0 || Security > 100) throw new InvalidOperationException("Indique un valor entre 0 y 100.");
         }
     }
 }

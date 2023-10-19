@@ -45,7 +45,6 @@ namespace EcosystemApp.Controllers
         {
             try
             {
-
                 IEnumerable<Species> species;
                 if (option == "Cientific")
                 {
