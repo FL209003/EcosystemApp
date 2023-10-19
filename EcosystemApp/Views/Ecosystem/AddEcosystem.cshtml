@@ -64,6 +64,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Amenazas</label>
+                <br />
                 <select name="IdSelectedThreats" multiple>
                     @foreach (Domain.Entities.Threat threat in Model.Threats)
                     {
@@ -78,6 +79,7 @@
                     }
                 </select>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
