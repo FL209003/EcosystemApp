@@ -10,7 +10,7 @@ namespace EcosystemApp.Filters
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var userName = context.HttpContext.Session.GetString("username");
-            var userRole = context.HttpContext.Session.GetString("role");
+            var userRole = context.HttpContext.Session.GetString("rol");
 
             if (!string.IsNullOrEmpty(userName))
             {

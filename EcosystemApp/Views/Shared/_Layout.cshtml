@@ -25,7 +25,7 @@
                         <li>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="Index"><b>Especies</b></a>
                         </li>
-                        @if (Context.Session.GetString("role") == "Admin")
+                        @if (Context.Session.GetString("rol") == "Admin")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AddUser">Crear Usuario</a>
