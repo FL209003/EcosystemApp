@@ -12,19 +12,18 @@ namespace Domain.Entities
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Nombre de usuario requerido.")]
-        public required string Username { get; set; }
+        public string Username { get; set; }
 
         [Required(ErrorMessage = "Contraseña requerida.")]
-        [Range(8, int.MaxValue, ErrorMessage = "La contraseña debe tener al menos 8 caracteres.")]
-        public required string Password { get; set; }
+        public string Password { get; set; }
 
-        public required string HashPassword { get; set; }
+        public string HashPassword { get; set; }
 
         [Required(ErrorMessage = "Defina el rol del usuario.")]
-        public required string Role { get; set; }
+        public string Role { get; set; }
 
         [Column("Fecha de registro")]
-        public required DateTime RegDate { get; set; }
+        public DateTime RegDate { get; set; }
 
         public User(string username, string password, string role)
         {

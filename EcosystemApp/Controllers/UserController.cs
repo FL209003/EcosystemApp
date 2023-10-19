@@ -2,6 +2,7 @@
 using EcosystemApp.Filters;
 using AppLogic.UCInterfaces;
 using EcosystemApp.Models;
+using Utility;
 
 namespace EcosystemApp.Controllers
 {
@@ -23,10 +24,9 @@ namespace EcosystemApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddUser(VMUser model)
         {
-            if (ModelState.IsValid)
-            {
                 try
                 {
+                    model.User.HashPassword = Hash.ComputeSha256Hash(model.User.Password);
                     model.User.Validate();
                     if (model.VerificationPass == model.User.Password)
                     {
@@ -45,9 +45,6 @@ namespace EcosystemApp.Controllers
                     ModelState.AddModelError(string.Empty, ViewBag.Error = ex.Message);
                     return View(model);
                 }
-            }
-            ViewBag.Error = "Especie no válida.";
-            return View(model);
         }
     }
 }
