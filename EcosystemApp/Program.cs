@@ -60,6 +60,8 @@ string connectionString = config.GetConnectionString("Connection1");
 builder.Services.AddDbContextPool<EcosystemContext>(Options => Options.UseSqlServer(connectionString));
 
 // Params
+builder.Services.AddScoped<IRepositoryParams, ParamsRepository>();
+builder.Services.AddScoped<IModifyLengthParam, ModifyLengthParamUC>();
 DbContextOptionsBuilder<EcosystemContext> b = new();
 b.UseSqlServer(connectionString);
 var options = b.Options;

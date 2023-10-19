@@ -45,8 +45,7 @@ namespace EcosystemApp.Controllers
         {
             IEnumerable<Species> species = new List<Species>(); ;
             try
-            {
-                IEnumerable<Species> species;
+            {                
                 if (option == "Cientific")
                 {
                     species = ListUC.ListByCientificName();

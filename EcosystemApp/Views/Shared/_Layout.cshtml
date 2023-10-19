@@ -21,14 +21,23 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Ecosystem" asp-action="Index"><b>Ecosistemas</b></a>
-                        </li>                        
+                        </li>
                         <li>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="Index"><b>Especies</b></a>
                         </li>
                         @if (Context.Session.GetString("rol") == "Admin")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AddUser">Crear Usuario</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AddUser"><b>Crear Usuario</b></a>
+                            </li>
+                        }
+                        @if (Context.Session.GetString("rol") == "Admin" || Context.Session.GetString("rol") == "User")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Param" asp-action="ModifyNameParams"><b>Cambiar largo Nombre</b></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Param" asp-action="ModifyDescParams"><b>Cambiar largo Descripción</b></a>
                             </li>
                         }
                     </ul>
